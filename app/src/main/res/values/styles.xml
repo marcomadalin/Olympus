@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CalendarMonth" parent="Theme.AppCompat">
+        <item name="android:textColorPrimary">@color/white</item>
+    </style>
+
+    <style name="CalendarDays" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:weekNumberColor">@color/text</item>
+        <item name="android:dayOfWeekBackground">@color/buttons</item>
+    </style>
+
+    <style name="CalendarWeeks" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textColor">@color/white</item>
+    </style>
+</resources>

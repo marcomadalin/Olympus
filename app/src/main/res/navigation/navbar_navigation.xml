@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigarion"
+    app:startDestination="@id/history">
+    <fragment
+        android:id="@+id/history"
+        android:name="com.marcomadalin.olympus.HistoryFragment"
+        android:label="fragment_history"
+        tools:layout="@layout/fragment_history" >
+        <action
+            android:id="@+id/action_history_to_exercise"
+            app:destination="@id/exercise" />
+        <action
+            android:id="@+id/action_history_to_workout"
+            app:destination="@id/workout" />
+        <action
+            android:id="@+id/action_history_to_profile"
+            app:destination="@id/profile" />
+    </fragment>
+    <fragment
+        android:id="@+id/exercise"
+        android:name="com.marcomadalin.olympus.ExerciseFragment"
+        android:label="fragment_exercise"
+        tools:layout="@layout/fragment_exercise" >
+        <action
+            android:id="@+id/action_exercise_to_history"
+            app:destination="@id/history" />
+        <action
+            android:id="@+id/action_exercise_to_workout"
+            app:destination="@id/workout" />
+        <action
+            android:id="@+id/action_exercise_to_profile"
+            app:destination="@id/profile" />
+    </fragment>
+    <fragment
+        android:id="@+id/workout"
+        android:name="com.marcomadalin.olympus.WorkoutFragment"
+        android:label="fragment_workout"
+        tools:layout="@layout/fragment_workout" >
+        <action
+            android:id="@+id/action_workout_to_profile"
+            app:destination="@id/profile" />
+        <action
+            android:id="@+id/action_workout_to_exercise"
+            app:destination="@id/exercise" />
+        <action
+            android:id="@+id/action_workout_to_history"
+            app:destination="@id/history" />
+    </fragment>
+    <fragment
+        android:id="@+id/profile"
+        android:name="com.marcomadalin.olympus.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profile_to_exercise"
+            app:destination="@id/exercise" />
+        <action
+            android:id="@+id/action_profile_to_history"
+            app:destination="@id/history" />
+        <action
+            android:id="@+id/action_profile_to_workout3"
+            app:destination="@id/workout" />
+    </fragment>
+</navigation>

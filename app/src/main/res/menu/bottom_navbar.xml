@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/history"
+        android:icon="@drawable/ic_baseline_history_24"
+        android:title="@string/history" />
+    <item
+        android:id="@+id/workout"
+        android:icon="@drawable/ic_baseline_add_24"
+        android:title="@string/workout" />
+    <item
+        android:id="@+id/exercise"
+        android:icon="@drawable/barbell"
+        android:title="@string/exercise" />
+    <item
+        android:id="@+id/profile"
+        android:icon="@drawable/ic_baseline_person_outline_24"
+        android:title="@string/profile" />
+
+</menu>

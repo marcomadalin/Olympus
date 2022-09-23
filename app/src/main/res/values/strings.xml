@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Olympus</string>
+    <string name="workout">workout</string>
+    <string name="history">history</string>
+    <string name="profile">profile</string>
+    <string name="exercise">exercise</string>
+    <string name="exercise_fragment">Exercise fragment</string>
+    <string name="textview">TextView</string>
+    <string name="exercise_layout">Exercise Layout</string>
+    <string name="history_fragment">History fragment</string>
+    <string name="profile_fragment">Profile fragment</string>
+    <string name="workout_fragment">Workout fragment</string>
+</resources>
