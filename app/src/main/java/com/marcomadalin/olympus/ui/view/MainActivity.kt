@@ -1,7 +1,6 @@
-package com.marcomadalin.olympus
+package com.marcomadalin.olympus.ui.view
 
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.TooltipCompat
 import androidx.core.view.forEach
