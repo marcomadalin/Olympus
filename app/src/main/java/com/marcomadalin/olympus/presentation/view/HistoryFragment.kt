@@ -1,4 +1,4 @@
-package com.marcomadalin.olympus.ui.view
+package com.marcomadalin.olympus.presentation.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,7 +13,7 @@ private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
 
-class ProfileFragment : Fragment() {
+class HistoryFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -31,7 +31,7 @@ class ProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false)
+        return inflater.inflate(R.layout.fragment_history, container, false)
     }
 
 }

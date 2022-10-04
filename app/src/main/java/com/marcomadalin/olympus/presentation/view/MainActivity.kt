@@ -1,4 +1,4 @@
-package com.marcomadalin.olympus.ui.view
+package com.marcomadalin.olympus.presentation.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

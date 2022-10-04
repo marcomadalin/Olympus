@@ -4,11 +4,11 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 
-@Entity(tableName = "WorkoutSet")
-data class WorkoutSetEntity(
+@Entity(tableName = "Set")
+data class SetEntity(
     @PrimaryKey(autoGenerate = true)
     val id : Int = 0,
-    val workoutExerciseId : Int,
+    val exerciseId : Int,
     val weight : Int,
     val reps : Int,
     val rir : Int,

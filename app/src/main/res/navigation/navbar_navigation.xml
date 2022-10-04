@@ -6,7 +6,7 @@
     app:startDestination="@id/history">
     <fragment
         android:id="@+id/history"
-        android:name="com.marcomadalin.olympus.ui.view.HistoryFragment"
+        android:name="com.marcomadalin.olympus.presentation.view.HistoryFragment"
         android:label="fragment_history"
         tools:layout="@layout/fragment_history" >
         <action
@@ -21,7 +21,7 @@
     </fragment>
     <fragment
         android:id="@+id/exercise"
-        android:name="com.marcomadalin.olympus.ui.view.ExerciseFragment"
+        android:name="com.marcomadalin.olympus.presentation.view.ExerciseFragment"
         android:label="fragment_exercise"
         tools:layout="@layout/fragment_exercise" >
         <action
@@ -36,7 +36,7 @@
     </fragment>
     <fragment
         android:id="@+id/workout"
-        android:name="com.marcomadalin.olympus.ui.view.WorkoutFragment"
+        android:name="com.marcomadalin.olympus.presentation.view.WorkoutFragment"
         android:label="fragment_workout"
         tools:layout="@layout/fragment_workout" >
         <action
@@ -51,7 +51,7 @@
     </fragment>
     <fragment
         android:id="@+id/profile"
-        android:name="com.marcomadalin.olympus.ui.view.ProfileFragment"
+        android:name="com.marcomadalin.olympus.presentation.view.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" >
         <action

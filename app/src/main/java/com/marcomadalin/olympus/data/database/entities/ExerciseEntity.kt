@@ -5,10 +5,12 @@ import androidx.room.PrimaryKey
 import kotlin.time.Duration
 
 
-@Entity(tableName = "WorkoutExercise")
-data class WorkoutExerciseEntity(
+@Entity(tableName = "Exercise")
+data class ExerciseEntity(
     @PrimaryKey(autoGenerate = true)
     val id : Int = 0,
+    val routineId : Int,
+    val exerciseInfoId : Int,
     val restTime : Duration,
     val note : String,
     val exerciseNumber : Int
