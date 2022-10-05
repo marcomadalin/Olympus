@@ -1,13 +1,12 @@
 package com.marcomadalin.olympus.data.database.entities
 
 import androidx.room.Entity
-import java.util.*
 
-@Entity(tableName = "Workout")
+@Entity(tableName = "Workouts")
 data class WorkoutEntity (
-    override val name : String,
-    override val note : String,
-    override val userId : Int,
-    val length : String,
-    val date : Date,
+    override var name : String = "",
+    override var note : String = "",
+    override var userId : Int = 0,
+    var length : String = "",
+    var date : String = "",
 ) : RoutineEntity (name = name, note = note, userId = userId)

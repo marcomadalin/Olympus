@@ -2,16 +2,15 @@ package com.marcomadalin.olympus.data.database.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import kotlin.time.Duration
 
 
-@Entity(tableName = "Exercise")
+@Entity(tableName = "Exercises")
 data class ExerciseEntity(
     @PrimaryKey(autoGenerate = true)
-    val id : Int = 0,
-    val routineId : Int,
-    val exerciseInfoId : Int,
-    val restTime : Duration,
-    val note : String,
-    val exerciseNumber : Int
+    var id : Int = 0,
+    var routineId : Int = 0,
+    var exerciseDataId : Int = 0,
+    var restTime : Long = 0,
+    var note : String = "",
+    var exerciseNumber : Int = 0
 )

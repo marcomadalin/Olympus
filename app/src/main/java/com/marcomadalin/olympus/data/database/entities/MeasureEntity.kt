@@ -2,14 +2,14 @@ package com.marcomadalin.olympus.data.database.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.util.*
 
-@Entity(tableName = "Measure")
+
+@Entity(tableName = "Measures")
 data class MeasureEntity (
     @PrimaryKey(autoGenerate = true)
-    val id : Int = 0,
-    val userId : Int,
-    val date : Date,
-    val value : Double,
-    val part : Int,
+    var id : Int = 0,
+    var userId : Int = 0,
+    var date : String = "",
+    var varue : Double = 0.0,
+    var part : Int = 0,
 )
