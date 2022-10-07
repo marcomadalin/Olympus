@@ -30,4 +30,7 @@ interface WorkoutDAO {
     @Delete
     suspend fun deleteWorkout(workout : RoutineEntity)
 
+    @Query("DELETE FROM Workouts")
+    suspend fun deleteAll()
+
 }

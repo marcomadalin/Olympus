@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId "com.marcomadalin.olympus"
-        minSdk 22
+        minSdk 26
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -62,7 +62,16 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:2.40"
     implementation "androidx.room:room-ktx:2.4.3"
     kapt "androidx.room:room-compiler:2.4.3"
+    implementation("com.google.dagger:hilt-android:2.38.1")
+    kapt("com.google.dagger:hilt-android-compiler:2.38.1")
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+}
+
+kapt {
+    correctErrorTypes = true
+    javacOptions {
+        option("-Adagger.hilt.android.internal.disableAndroidSuperclassValidation=true")
+    }
 }

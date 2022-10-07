@@ -25,4 +25,7 @@ interface SetDAO {
     @Delete
     suspend fun deleteSet(set : SetEntity)
 
+    @Query("DELETE FROM Sets")
+    suspend fun deleteAll()
+
 }

@@ -1,4 +1,4 @@
-package com.marcomadalin.olympus.data.database
+package com.marcomadalin.olympus.data.database.converters
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson

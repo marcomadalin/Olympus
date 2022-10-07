@@ -29,4 +29,7 @@ interface RoutineDAO {
     @Delete
     suspend fun deleteRoutine(routine : RoutineEntity)
 
+    @Query("DELETE FROM Routines")
+    suspend fun deleteAll()
+
 }

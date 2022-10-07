@@ -29,4 +29,8 @@ interface ExerciseDAO {
     @Delete
     suspend fun deleteExercise(exercise : ExerciseEntity)
 
+    @Query("DELETE FROM Exercises")
+    suspend fun deleteAll()
+
+
 }

@@ -3,7 +3,7 @@ package com.marcomadalin.olympus.data.database.entities
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
-import com.marcomadalin.olympus.data.database.SetConverters
+import com.marcomadalin.olympus.data.database.converters.SetConverters
 
 @Entity(tableName = "Users")
 open class UserEntity (

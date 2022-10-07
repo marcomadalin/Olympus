@@ -10,6 +10,6 @@ data class MeasureEntity (
     var id : Int = 0,
     var userId : Int = 0,
     var date : String = "",
-    var varue : Double = 0.0,
+    var value : Double = 0.0,
     var part : Int = 0,
 )

@@ -25,4 +25,7 @@ interface StatisticDAO {
     @Delete
     suspend fun deleteStatistic(statistic : StatisticEntity)
 
+    @Query("DELETE FROM Statistics")
+    suspend fun deleteAll()
+
 }
