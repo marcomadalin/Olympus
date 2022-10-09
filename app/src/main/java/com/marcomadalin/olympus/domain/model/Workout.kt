@@ -1,11 +1,15 @@
 package com.marcomadalin.olympus.domain.model
 
+import com.marcomadalin.olympus.data.database.entities.WorkoutEntity
 import java.time.Duration
-import java.util.*
+import java.time.LocalDate
 
 data class Workout (
-    override var name : String = "",
-    override var note : String = "",
-    var length : Duration = Duration.ofSeconds(0),
-    var date : Date = Date(),
-) : Routine (name = name, note = note)
+    var length  : Duration = Duration.ofSeconds(0),
+    var date : LocalDate = LocalDate.parse(""),
+) : Routine() {
+    fun WorkoutEntity.toDomain() = Workout(
+        Duration.ofSeconds(length),
+        LocalDate.parse(date)
+    )
+}

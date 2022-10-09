@@ -1,5 +1,6 @@
 package com.marcomadalin.olympus.domain.model
 
+import com.marcomadalin.olympus.data.database.entities.ExerciseDataEntity
 import com.marcomadalin.olympus.domain.model.enums.Equipment
 import com.marcomadalin.olympus.domain.model.enums.ExerciseType
 import com.marcomadalin.olympus.domain.model.enums.Muscle
@@ -17,4 +18,19 @@ data class ExerciseData(
     var orm: Double = 0.0,
     var bestSetWeight: Double = 0.0,
     var bestSetReps: Int = 0,
-)
+) {
+
+    fun ExerciseDataEntity.toDomain() = ExerciseData(
+        id,
+        userId,
+        ExerciseType.valueOf(type),
+        favourite,
+        Equipment.valueOf(equipment),
+        Muscle.valueOf(primaryMuscle),
+        secondaryMuscles.map { it -> Muscle.valueOf(it) }.toSet(),
+        maxWeight,
+        orm,
+        bestSetWeight,
+        bestSetReps
+    )
+}

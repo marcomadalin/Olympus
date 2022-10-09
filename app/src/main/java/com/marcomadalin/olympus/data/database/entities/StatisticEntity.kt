@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.marcomadalin.olympus.data.database.converters.MapConverters
+import com.marcomadalin.olympus.domain.model.Statistic
 
 
 @Entity(tableName = "Statistics")
@@ -11,7 +12,7 @@ data class StatisticEntity(
     @PrimaryKey(autoGenerate = true)
     var id : Int = 0,
     var userId : Int = 0,
-    var timeframe : Int = 0,
+    var timeframe : String = "",
     var totalWorkouts : Int = 0,
     var totalRestDays : Int = 0,
     var totalVolume : Double = 0.0,
@@ -21,5 +22,20 @@ data class StatisticEntity(
     var averageWorkoutReps : Double = 0.0,
     var averageWorkoutLength : Long = 0,
     @TypeConverters(MapConverters::class)
-    var muscleDivision : Map<Int,Int> = emptyMap()
-)
+    var muscleDivision : Map<String,Int> = emptyMap()
+) {
+    fun Statistic.toData() = StatisticEntity(
+        id,
+        userId,
+        timeframe.toString(),
+        totalWorkouts,
+        totalRestDays,
+        totalVolume,
+        totalReps,
+        totalWorkoutLength.seconds,
+        averageWorkoutVolume,
+        averageWorkoutReps,
+        averageWorkoutLength,
+        muscleDivision.mapKeys{ it -> it.key.toString() }
+    )
+}

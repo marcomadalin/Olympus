@@ -1,5 +1,6 @@
 package com.marcomadalin.olympus.domain.model
 
+import com.marcomadalin.olympus.data.database.entities.SetEntity
 import com.marcomadalin.olympus.domain.model.enums.SetType
 
 data class Set(
@@ -12,4 +13,16 @@ data class Set(
     var lastReps : Int = 0,
     var type : SetType = SetType.Warmup,
     var setNumber : Int = 0,
-)
+) {
+    fun SetEntity.toDomain() = Set(
+        id,
+        exerciseId,
+        weight,
+        reps,
+        rir,
+        lastWeight,
+        lastReps,
+        SetType.valueOf(type),
+        setNumber
+    )
+}

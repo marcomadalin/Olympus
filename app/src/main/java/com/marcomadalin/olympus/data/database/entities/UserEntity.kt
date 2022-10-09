@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.marcomadalin.olympus.data.database.converters.SetConverters
+import com.marcomadalin.olympus.domain.model.User
 
 @Entity(tableName = "Users")
 open class UserEntity (
@@ -16,4 +17,13 @@ open class UserEntity (
     var trackedExercises : Set<Int> = emptySet(),
     @TypeConverters(SetConverters::class)
     var trackedMeasures : Set<Int> = emptySet(),
-)
+) {
+    fun User.toData() = UserEntity(
+        id,
+        name,
+        totalWorkouts,
+        trackingTotalWorkouts,
+        trackedExercises,
+        trackedMeasures
+    )
+}

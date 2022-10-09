@@ -1,11 +1,15 @@
 package com.marcomadalin.olympus.data.database.entities
 
 import androidx.room.Entity
+import com.marcomadalin.olympus.domain.model.Workout
 
 @Entity(tableName = "Workouts")
 data class WorkoutEntity (
-    override var name : String = "",
-    override var note : String = "",
-    var length : String = "",
+    var length : Long = 0,
     var date : String = "",
-) : RoutineEntity (name = name, note = note)
+) : RoutineEntity () {
+    fun Workout.toData() = WorkoutEntity(
+        length.seconds,
+        date.toString()
+    )
+}
