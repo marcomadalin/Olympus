@@ -22,18 +22,17 @@ data class ExerciseDataEntity(
     var orm: Double = 0.0,
     var bestSetWeight: Double = 0.0,
     var bestSetReps: Int = 0,
-) {
-    fun ExerciseData.toData() = ExerciseDataEntity(
-        id,
-        userId,
-        type.toString(),
-        favourite,
-        equipment.toString(),
-        primaryMuscle.toString(),
-        secondaryMuscles.map{ it -> it.toString()}.toSet(),
-        maxWeight,
-        orm,
-        bestSetWeight,
-        bestSetReps
-    )
-}
+)
+fun ExerciseData.toData() = ExerciseDataEntity(
+    id,
+    userId,
+    type.toString(),
+    favourite,
+    equipment.toString(),
+    primaryMuscle.toString(),
+    secondaryMuscles.map{ it -> it.toString()}.toSet(),
+    maxWeight,
+    orm,
+    bestSetWeight,
+    bestSetReps
+)

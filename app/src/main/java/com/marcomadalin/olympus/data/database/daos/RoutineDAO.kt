@@ -12,13 +12,20 @@ import com.marcomadalin.olympus.data.database.entities.RoutineEntity
 @Dao
 interface RoutineDAO {
     @Query("SELECT * FROM Routines")
-    suspend fun getAllRoutines() : Array<RoutineEntity>
+    suspend fun getAllRoutines() : List<RoutineEntity>
 
-    @Query("SELECT * FROM Routines JOIN Exercises On Routines.id = Exercises.routineId")
-    suspend fun getAllRoutineExercises() : Array<ExerciseEntity>
+    @Query("SELECT * FROM Routines WHERE id = :id")
+    suspend fun getRoutine(id: Int) : RoutineEntity
+
+    @Query("SELECT * FROM Routines JOIN Exercises On Routines.id = Exercises.routineId " +
+            "WHERE Routines.id = :id")
+    suspend fun getAllRoutineExercises(id: Int) : List<ExerciseEntity>
 
     @Query("DELETE FROM Routines WHERE userId = :id")
     suspend fun deleteAllUserRoutines(id : Int)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAllRoutines(routine : List<RoutineEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertRoutine(routine : RoutineEntity)
@@ -30,6 +37,6 @@ interface RoutineDAO {
     suspend fun deleteRoutine(routine : RoutineEntity)
 
     @Query("DELETE FROM Routines")
-    suspend fun deleteAll()
+    suspend fun deleteAllRoutines()
 
 }

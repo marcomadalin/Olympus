@@ -14,13 +14,12 @@ data class ExerciseEntity(
     var restTime : Long = 0,
     var note : String = "",
     var exerciseNumber : Int = 0
-){
-    fun Exercise.toData() = ExerciseEntity(
-        id,
-        routineId,
-        exerciseDataId,
-        restTime.seconds,
-        note,
-        exerciseNumber
-    )
-}
+)
+fun Exercise.toData() = ExerciseEntity(
+    id,
+    routineId,
+    exerciseDataId,
+    restTime.seconds,
+    note,
+    exerciseNumber
+)

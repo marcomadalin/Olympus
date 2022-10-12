@@ -7,9 +7,8 @@ import com.marcomadalin.olympus.domain.model.Workout
 data class WorkoutEntity (
     var length : Long = 0,
     var date : String = "",
-) : RoutineEntity () {
-    fun Workout.toData() = WorkoutEntity(
-        length.seconds,
-        date.toString()
-    )
-}
+) : RoutineEntity ()
+fun Workout.toData() = WorkoutEntity(
+    length.seconds,
+    date.toString()
+)

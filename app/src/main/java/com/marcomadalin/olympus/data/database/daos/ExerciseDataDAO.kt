@@ -12,15 +12,20 @@ import com.marcomadalin.olympus.data.database.entities.ExerciseEntity
 @Dao
 interface ExerciseDataDAO {
     @Query("SELECT * FROM ExercisesData")
-    suspend fun getAllExercisesData() : Array<ExerciseDataEntity>
+    suspend fun getAllExercisesData() : List<ExerciseDataEntity>
 
-    @Query("SELECT * FROM ExercisesData JOIN Exercises On ExercisesData.id = Exercises.exerciseDataId")
-    suspend fun getAllExerciseDataExercises() : Array<ExerciseEntity>
+    @Query("SELECT * FROM ExercisesData WHERE id = :id")
+    suspend fun getExercisesData(id: Int) : ExerciseDataEntity
+
+    @Query("SELECT * FROM ExercisesData JOIN Exercises On ExercisesData.id = Exercises.exerciseDataId " +
+            "WHERE ExercisesData.id = :id")
+    suspend fun getAllExerciseDataExercises(id: Int) : List<ExerciseEntity>
 
     @Query("DELETE FROM ExercisesData WHERE userId = :id")
     suspend fun deleteAllUserExerciseData(id : Int)
 
-    //TODO query to check if routine has exercise in case we delete one ExerciseData so we can propagate deletes without problems
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAllExerciseData(exerciseData : List<ExerciseDataEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertExerciseData(exerciseData : ExerciseDataEntity)
@@ -32,6 +37,6 @@ interface ExerciseDataDAO {
     suspend fun deleteExerciseData(exerciseData : ExerciseDataEntity)
 
     @Query("DELETE FROM ExercisesData")
-    suspend fun deleteAll()
+    suspend fun deleteAllExercisesData()
 
 }

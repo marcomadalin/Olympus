@@ -7,11 +7,10 @@ open class Routine (
     open val userId : Int = 0,
     open var name : String = "",
     open var note : String = "",
-) {
-    fun RoutineEntity.toDomain() = Routine(
-        id,
-        userId,
-        name,
-        note
-    )
-}
+)
+fun RoutineEntity.toDomain() = Routine(
+    id,
+    userId,
+    name,
+    note
+)

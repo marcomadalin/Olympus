@@ -7,9 +7,8 @@ import java.time.LocalDate
 data class Workout (
     var length  : Duration = Duration.ofSeconds(0),
     var date : LocalDate = LocalDate.parse(""),
-) : Routine() {
-    fun WorkoutEntity.toDomain() = Workout(
-        Duration.ofSeconds(length),
-        LocalDate.parse(date)
-    )
-}
+) : Routine()
+fun WorkoutEntity.toDomain() = Workout(
+    Duration.ofSeconds(length),
+    LocalDate.parse(date)
+)

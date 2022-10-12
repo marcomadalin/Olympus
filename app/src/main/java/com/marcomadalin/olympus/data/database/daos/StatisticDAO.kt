@@ -11,10 +11,16 @@ import com.marcomadalin.olympus.data.database.entities.StatisticEntity
 @Dao
 interface StatisticDAO {
     @Query("SELECT * FROM Statistics")
-    suspend fun getAllStatistics() : Array<StatisticEntity>
+    suspend fun getAllStatistics() : List<StatisticEntity>
+
+    @Query("SELECT * FROM Statistics WHERE id = :id")
+    suspend fun getStatistic(id: Int) : StatisticEntity
 
     @Query("DELETE FROM Statistics WHERE userId = :id")
     suspend fun deleteAllUserStatistics(id : Int)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAllStatistic(statistic : List<StatisticEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertStatistic(statistic : StatisticEntity)
@@ -26,6 +32,6 @@ interface StatisticDAO {
     suspend fun deleteStatistic(statistic : StatisticEntity)
 
     @Query("DELETE FROM Statistics")
-    suspend fun deleteAll()
+    suspend fun deleteAllStatistics()
 
 }

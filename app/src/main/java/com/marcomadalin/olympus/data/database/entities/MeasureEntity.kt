@@ -13,12 +13,11 @@ data class MeasureEntity (
     var date : String = "",
     var value : Double = 0.0,
     var part : String = "",
-) {
-    fun Measure.toData() = MeasureEntity(
-        id,
-        userId,
-        date.toString(),
-        value,
-        part.toString()
-    )
-}
+)
+fun Measure.toData() = MeasureEntity(
+    id,
+    userId,
+    date.toString(),
+    value,
+    part.toString()
+)

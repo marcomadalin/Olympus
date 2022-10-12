@@ -11,11 +11,10 @@ open class RoutineEntity (
     open var userId : Int = 0,
     open var name : String = "",
     open var note : String = "",
-) {
-    fun Routine.toData() = RoutineEntity(
-        id,
-        userId,
-        name,
-        note
-    )
-}
+)
+fun Routine.toData() = RoutineEntity(
+    id,
+    userId,
+    name,
+    note
+)

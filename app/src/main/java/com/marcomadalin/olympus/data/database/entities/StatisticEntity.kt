@@ -23,19 +23,18 @@ data class StatisticEntity(
     var averageWorkoutLength : Long = 0,
     @TypeConverters(MapConverters::class)
     var muscleDivision : Map<String,Int> = emptyMap()
-) {
-    fun Statistic.toData() = StatisticEntity(
-        id,
-        userId,
-        timeframe.toString(),
-        totalWorkouts,
-        totalRestDays,
-        totalVolume,
-        totalReps,
-        totalWorkoutLength.seconds,
-        averageWorkoutVolume,
-        averageWorkoutReps,
-        averageWorkoutLength,
-        muscleDivision.mapKeys{ it -> it.key.toString() }
-    )
-}
+)
+fun Statistic.toData() = StatisticEntity(
+    id,
+    userId,
+    timeframe.toString(),
+    totalWorkouts,
+    totalRestDays,
+    totalVolume,
+    totalReps,
+    totalWorkoutLength.seconds,
+    averageWorkoutVolume,
+    averageWorkoutReps,
+    averageWorkoutLength,
+    muscleDivision.mapKeys{ it -> it.key.toString() }
+)

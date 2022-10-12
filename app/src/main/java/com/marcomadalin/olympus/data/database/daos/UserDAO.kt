@@ -15,25 +15,31 @@ import com.marcomadalin.olympus.data.database.entities.UserEntity
 @Dao
 interface UserDAO {
     @Query("SELECT * FROM Users")
-    suspend fun getAllUsers() : Array<UserEntity>
+    suspend fun getAllUsers() : List<UserEntity>
 
-    @Query("SELECT * FROM Users JOIN Routines On Users.id = Routines.userId")
-    suspend fun getAllUserRoutines() : Array<RoutineEntity>
+    @Query("SELECT * FROM Users WHERE id = :id")
+    suspend fun getUser(id :Int) : UserEntity
 
-    @Query("SELECT * FROM Users JOIN ExercisesData On Users.id = ExercisesData.userId")
-    suspend fun getAllUserExercisesData() : Array<ExerciseDataEntity>
+    @Query("SELECT * FROM Users JOIN Routines On Users.id = Routines.userId WHERE Users.id = :id")
+    suspend fun getAllUserRoutines(id :Int) : List<RoutineEntity>
+
+    @Query("SELECT * FROM Users JOIN ExercisesData On Users.id = ExercisesData.userId WHERE Users.id = :id")
+    suspend fun getAllUserExercisesData(id :Int) : List<ExerciseDataEntity>
 
     @Query("SELECT * FROM Users JOIN ExercisesData On Users.id = ExercisesData.userId WHERE ExercisesData.userId in (:ids)")
-    suspend fun getUserExercisesData(ids : Set<Int>) : Array<ExerciseDataEntity>
+    suspend fun getUserExercisesData(ids : Set<Int>) : List<ExerciseDataEntity>
 
-    @Query("SELECT * FROM Users JOIN Measures On Users.id = Measures.userId")
-    suspend fun getAllUserMeasures() : Array<MeasureEntity>
+    @Query("SELECT * FROM Users JOIN Measures On Users.id = Measures.userId WHERE Users.id = :id")
+    suspend fun getAllUserMeasures(id :Int) : List<MeasureEntity>
 
     @Query("SELECT * FROM Users JOIN Measures On Users.id = Measures.userId WHERE Measures.userId in (:ids)")
-    suspend fun getUserMeasures(ids : Set<Int>) : Array<MeasureEntity>
+    suspend fun getUserMeasures(ids : Set<Int>) : List<MeasureEntity>
 
-    @Query("SELECT * FROM Users JOIN Statistics On Users.id = Statistics.userId")
-    suspend fun getAllUserStatistics() : Array<StatisticEntity>
+    @Query("SELECT * FROM Users JOIN Statistics On Users.id = Statistics.userId WHERE Users.id = :id")
+    suspend fun getAllUserStatistics(id :Int) : List<StatisticEntity>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAllUsers(user : List<UserEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertUser(user : UserEntity)
@@ -45,6 +51,6 @@ interface UserDAO {
     suspend fun deleteUser(user : UserEntity)
 
     @Query("DELETE FROM Users")
-    suspend fun deleteAll()
+    suspend fun deleteAllUsers()
 
 }

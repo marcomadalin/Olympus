@@ -11,10 +11,16 @@ import com.marcomadalin.olympus.data.database.entities.SetEntity
 @Dao
 interface SetDAO {
     @Query("SELECT * FROM Sets")
-    suspend fun getAllSets() : Array<SetEntity>
+    suspend fun getAllSets() : List<SetEntity>
+
+    @Query("SELECT * FROM Sets WHERE id = :id")
+    suspend fun getSet(id: Int) : SetEntity
 
     @Query("DELETE FROM Sets WHERE exerciseId = :id")
     suspend fun deleteAllExerciseSets(id : Int)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAllSet(set : List<SetEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertSet(set : SetEntity)
@@ -26,6 +32,6 @@ interface SetDAO {
     suspend fun deleteSet(set : SetEntity)
 
     @Query("DELETE FROM Sets")
-    suspend fun deleteAll()
+    suspend fun deleteAllSets()
 
 }

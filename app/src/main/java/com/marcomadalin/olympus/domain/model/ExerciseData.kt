@@ -7,8 +7,8 @@ import com.marcomadalin.olympus.domain.model.enums.Muscle
 import kotlin.collections.Set
 
 data class ExerciseData(
-    private val id: Int = 0,
-    private val userId: Int = 0,
+    val id: Int = 0,
+    val userId: Int = 0,
     var type: ExerciseType = ExerciseType.WeightReps,
     var favourite: Boolean = false,
     var equipment: Equipment = Equipment.None,
@@ -18,19 +18,17 @@ data class ExerciseData(
     var orm: Double = 0.0,
     var bestSetWeight: Double = 0.0,
     var bestSetReps: Int = 0,
-) {
-
-    fun ExerciseDataEntity.toDomain() = ExerciseData(
-        id,
-        userId,
-        ExerciseType.valueOf(type),
-        favourite,
-        Equipment.valueOf(equipment),
-        Muscle.valueOf(primaryMuscle),
-        secondaryMuscles.map { it -> Muscle.valueOf(it) }.toSet(),
-        maxWeight,
-        orm,
-        bestSetWeight,
-        bestSetReps
-    )
-}
+)
+fun ExerciseDataEntity.toDomain() = ExerciseData(
+    id,
+    userId,
+    ExerciseType.valueOf(type),
+    favourite,
+    Equipment.valueOf(equipment),
+    Muscle.valueOf(primaryMuscle),
+    secondaryMuscles.map { it -> Muscle.valueOf(it) }.toSet(),
+    maxWeight,
+    orm,
+    bestSetWeight,
+    bestSetReps
+)

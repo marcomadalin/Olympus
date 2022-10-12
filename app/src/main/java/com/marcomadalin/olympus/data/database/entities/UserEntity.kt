@@ -17,13 +17,12 @@ open class UserEntity (
     var trackedExercises : Set<Int> = emptySet(),
     @TypeConverters(SetConverters::class)
     var trackedMeasures : Set<Int> = emptySet(),
-) {
-    fun User.toData() = UserEntity(
-        id,
-        name,
-        totalWorkouts,
-        trackingTotalWorkouts,
-        trackedExercises,
-        trackedMeasures
-    )
-}
+)
+fun User.toData() = UserEntity(
+    id,
+    name,
+    totalWorkouts,
+    trackingTotalWorkouts,
+    trackedExercises,
+    trackedMeasures
+)

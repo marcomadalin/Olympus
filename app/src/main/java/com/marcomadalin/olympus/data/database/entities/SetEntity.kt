@@ -17,16 +17,15 @@ data class SetEntity(
     var lastReps : Int = 0,
     var type : String = "",
     var setNumber : Int = 0,
-) {
-    fun Set.toData() = SetEntity(
-        id,
-        exerciseId,
-        weight,
-        reps,
-        rir,
-        lastWeight,
-        lastReps,
-        type.toString(),
-        setNumber
-    )
-}
+)
+fun Set.toData() = SetEntity(
+    id,
+    exerciseId,
+    weight,
+    reps,
+    rir,
+    lastWeight,
+    lastReps,
+    type.toString(),
+    setNumber
+)

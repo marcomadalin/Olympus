@@ -7,8 +7,8 @@ import java.time.Duration
 
 
 data class Statistic(
-    private val id : Int = 0,
-    private val userId : Int = 0,
+    val id : Int = 0,
+    val userId : Int = 0,
     var timeframe : StatisticTimeframe = StatisticTimeframe.month,
     var totalWorkouts : Int = 0,
     var totalRestDays : Int = 0,
@@ -19,19 +19,18 @@ data class Statistic(
     var averageWorkoutReps : Double = 0.0,
     var averageWorkoutLength : Long = 0,
     var muscleDivision : Map<Muscle,Int> = emptyMap()
-) {
-    fun StatisticEntity.toDomain() = Statistic(
-        id,
-        userId,
-        StatisticTimeframe.valueOf(timeframe),
-        totalWorkouts,
-        totalRestDays,
-        totalVolume,
-        totalReps,
-        Duration.ofSeconds(totalWorkoutLength),
-        averageWorkoutVolume,
-        averageWorkoutReps,
-        averageWorkoutLength,
-        muscleDivision.mapKeys{ it -> Muscle.valueOf(it.key) }
-    )
-}
+)
+fun StatisticEntity.toDomain() = Statistic(
+    id,
+    userId,
+    StatisticTimeframe.valueOf(timeframe),
+    totalWorkouts,
+    totalRestDays,
+    totalVolume,
+    totalReps,
+    Duration.ofSeconds(totalWorkoutLength),
+    averageWorkoutVolume,
+    averageWorkoutReps,
+    averageWorkoutLength,
+    muscleDivision.mapKeys{ it -> Muscle.valueOf(it.key) }
+)
