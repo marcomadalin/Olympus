@@ -3,7 +3,7 @@ package com.marcomadalin.olympus.data.database.entities
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
-import com.marcomadalin.olympus.data.database.converters.SetConverters
+import com.marcomadalin.olympus.data.database.converters.StringSetConverters
 import com.marcomadalin.olympus.domain.model.ExerciseData
 
 
@@ -16,7 +16,7 @@ data class ExerciseDataEntity(
     var favourite: Boolean = false,
     var equipment: String = "",
     var primaryMuscle: String = "",
-    @TypeConverters(SetConverters::class)
+    @TypeConverters(StringSetConverters::class)
     var secondaryMuscles: Set<String> = emptySet(),
     var maxWeight: Double = 0.0,
     var orm: Double = 0.0,

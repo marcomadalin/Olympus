@@ -8,13 +8,13 @@ import java.lang.reflect.Type
 
 object MapConverters {
     @TypeConverter
-    fun fromString(value: String): Map<Int,Int> {
-        val mapType: Type = object : TypeToken<Map<Int,Int>>() {}.type
+    fun fromString(value: String): Map<String,Int> {
+        val mapType: Type = object : TypeToken<Map<String,Int>>() {}.type
         return Gson().fromJson(value, mapType)
     }
 
     @TypeConverter
-    fun fromSet(map: Map<Int,Int>): String {
+    fun fromSet(map: Map<String,Int>): String {
         val gson = Gson()
         return gson.toJson(map)
     }

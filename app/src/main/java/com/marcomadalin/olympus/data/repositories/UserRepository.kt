@@ -17,8 +17,8 @@ class UserRepository @Inject constructor(private val userDAO: UserDAO) {
         return userDAO.getAllUsers().map { it.toDomain() }
     }
 
-    suspend fun getUser(id: Int) : User {
-        return userDAO.getUser(id).toDomain()
+    suspend fun getUser() : User {
+        return userDAO.getUser(1).toDomain()
     }
 
     suspend fun getAllUserRoutines(id :Int) : List<Routine> {

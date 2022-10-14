@@ -6,15 +6,15 @@ import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
 
 
-object SetConverters {
+object StringSetConverters {
     @TypeConverter
-    fun fromString(value: String): Set<Int> {
-        val setType: Type = object : TypeToken<Set<Int>>() {}.type
+    fun fromString(value: String): Set<String> {
+        val setType: Type = object : TypeToken<Set<String>>() {}.type
         return Gson().fromJson(value, setType)
     }
 
     @TypeConverter
-    fun fromSet(set: Set<Int>): String {
+    fun fromSet(set: Set<String>): String {
         val gson = Gson()
         return gson.toJson(set)
     }
