@@ -18,15 +18,15 @@ class UserViewModel @Inject constructor(
 
     val userModel = MutableLiveData<User>()
 
-    fun onCreate() {
+    fun saveUser(user: User) {
+        viewModelScope.launch { saveUserUseCase.invoke(user) }
+    }
+
+    fun getUser() {
         viewModelScope.launch {
             val result = getUsersUseCase()
             userModel.postValue(result)
         }
-    }
-
-    fun saveUser(user: User) {
-        viewModelScope.launch { saveUserUseCase.invoke(user) }
     }
 
 }

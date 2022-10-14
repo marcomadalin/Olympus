@@ -10,4 +10,5 @@
     <string name="history_fragment">History fragment</string>
     <string name="profile_fragment">Profile fragment</string>
     <string name="workout_fragment">Workout fragment</string>
+    <string name="log_in">Log in</string>
 </resources>
