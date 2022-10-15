@@ -26,12 +26,12 @@ class WorkoutRepository @Inject constructor(private val workoutDAO: WorkoutDAO) 
         workoutDAO.deleteAllUserWorkouts(id)
     }
 
-    suspend fun insertAllWorkouts(workouts : List<Workout>) {
+    suspend fun saveAllWorkouts(workouts : List<Workout>) {
         workoutDAO.insertAllWorkouts(workouts.map { it.toData() })
     }
 
-    suspend fun insertWorkout(workout : Workout) {
-        workoutDAO.insertWorkout(workout.toData())
+    suspend fun saveWorkout(workout : Workout) : Int {
+        return workoutDAO.insertWorkout(workout.toData())
     }
 
     suspend fun updateWorkout(workout: Workout) {

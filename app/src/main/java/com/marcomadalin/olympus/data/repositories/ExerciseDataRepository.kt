@@ -28,11 +28,11 @@ class ExerciseDataRepository @Inject constructor(private val exerciseDataDAO: Ex
         exerciseDataDAO.deleteAllUserExerciseData(id)
     }
 
-    suspend fun insertAllExerciseData(exercisesData : List<ExerciseData>) {
+    suspend fun saveAllExerciseData(exercisesData : List<ExerciseData>) {
         exerciseDataDAO.insertAllExerciseData(exercisesData.map { it.toData() })
     }
 
-    suspend fun insertExerciseData(exerciseData : ExerciseData) {
+    suspend fun saveExerciseData(exerciseData : ExerciseData) {
         exerciseDataDAO.insertExerciseData(exerciseData.toData())
     }
 

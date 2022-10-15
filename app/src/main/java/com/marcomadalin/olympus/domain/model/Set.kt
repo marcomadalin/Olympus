@@ -4,8 +4,8 @@ import com.marcomadalin.olympus.data.database.entities.SetEntity
 import com.marcomadalin.olympus.domain.model.enums.SetType
 
 data class Set(
-    val id : Int = 0,
-    val exerciseId : Int = 0,
+    var id : Int = 0,
+    var exerciseId : Int = 0,
     var weight : Int = 0,
     var reps : Int = 0,
     var rir : Int = 0,

@@ -21,11 +21,11 @@ class StatisticRepository @Inject constructor(private val statisticDAO: Statisti
         statisticDAO.deleteAllUserStatistics(id)
     }
 
-    suspend fun insertAllStatistic(statistics : List<Statistic>) {
+    suspend fun saveAllStatistic(statistics : List<Statistic>) {
         statisticDAO.insertAllStatistic(statistics.map { it.toData() })
     }
 
-    suspend fun insertStatistic(statistic : Statistic) {
+    suspend fun saveStatistic(statistic : Statistic) {
         statisticDAO.insertStatistic(statistic.toData())
     }
 

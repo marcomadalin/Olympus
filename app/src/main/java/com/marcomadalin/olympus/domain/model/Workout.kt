@@ -7,6 +7,7 @@ import java.time.LocalDate
 data class Workout (
     var length  : Duration = Duration.ofSeconds(0),
     var date : LocalDate = LocalDate.parse(""),
+    var exercises: List<Exercise> = emptyList()
 ) : Routine()
 fun WorkoutEntity.toDomain() = Workout(
     Duration.ofSeconds(length),

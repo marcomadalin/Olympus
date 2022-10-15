@@ -23,7 +23,7 @@ interface SetDAO {
     suspend fun insertAllSet(set : List<SetEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertSet(set : SetEntity)
+    suspend fun insertSet(set : SetEntity) : Int
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateSet(set: SetEntity)

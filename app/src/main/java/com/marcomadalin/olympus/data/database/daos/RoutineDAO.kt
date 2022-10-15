@@ -17,7 +17,7 @@ interface RoutineDAO {
     @Query("SELECT * FROM Routines WHERE id = :id")
     suspend fun getRoutine(id: Int) : RoutineEntity
 
-    @Query("SELECT * FROM Routines JOIN Exercises On Routines.id = Exercises.routineId " +
+    @Query("SELECT * FROM Routines JOIN Exercises On Routines.id = Exercises.workoutId " +
             "WHERE Routines.id = :id")
     suspend fun getAllRoutineExercises(id: Int) : List<ExerciseEntity>
 

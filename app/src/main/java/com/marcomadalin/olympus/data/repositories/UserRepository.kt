@@ -45,11 +45,11 @@ class UserRepository @Inject constructor(private val userDAO: UserDAO) {
         return userDAO.getAllUserStatistics(id).map { it.toDomain() }
     }
 
-    suspend fun insertAllUsers(users : List<User>) {
+    suspend fun saveAllUsers(users : List<User>) {
         userDAO.insertAllUsers(users.map { it.toData() })
     }
 
-    suspend fun insertUser(user : User) {
+    suspend fun saveUser(user : User) {
         userDAO.insertUser(user.toData())
     }
 

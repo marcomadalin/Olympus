@@ -17,7 +17,8 @@ interface ExerciseDAO {
     @Query("SELECT * FROM Exercises")
     suspend fun getAllExercises() : List<ExerciseEntity>
 
-    @Query("SELECT * FROM Exercises JOIN Sets On Exercises.id = Sets.exerciseId WHERE Exercises.id = :id")
+    @Query("SELECT * FROM Exercises JOIN Sets On Exercises.id = Sets.exerciseId " +
+            "WHERE Exercises.id = :id ORDER BY Sets.setNumber")
     suspend fun getAllExerciseSets(id: Int) : List<SetEntity>
 
     @Query("DELETE FROM Exercises WHERE routineId = :id")
@@ -27,7 +28,7 @@ interface ExerciseDAO {
     suspend fun insertAllExercises(exercises : List<ExerciseEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertExercise(exercise : ExerciseEntity)
+    suspend fun insertExercise(exercise : ExerciseEntity) : Int
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateExercise(exercise: ExerciseEntity)

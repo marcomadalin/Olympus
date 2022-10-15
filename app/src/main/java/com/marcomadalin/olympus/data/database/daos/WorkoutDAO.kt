@@ -17,7 +17,8 @@ interface WorkoutDAO {
     @Query("SELECT * FROM Workouts WHERE id = :id")
     suspend fun getWorkout(id: Int) : WorkoutEntity
 
-    @Query("SELECT * FROM Workouts JOIN Exercises On Workouts.id = Exercises.routineId WHERE Workouts.id = :id")
+    @Query("SELECT * FROM Workouts JOIN Exercises On Workouts.id = Exercises.workoutId " +
+            "WHERE Workouts.id = :id ORDER BY Exercises.exerciseNumber")
     suspend fun getAllWorkoutExercises(id: Int) : List<ExerciseEntity>
 
     @Query("DELETE FROM Workouts WHERE userId = :id")
@@ -27,7 +28,7 @@ interface WorkoutDAO {
     suspend fun insertAllWorkouts(workout : List<WorkoutEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertWorkout(workout : WorkoutEntity)
+    suspend fun insertWorkout(workout : WorkoutEntity) : Int
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateWorkout(workout: WorkoutEntity)

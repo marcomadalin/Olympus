@@ -5,19 +5,21 @@ import java.time.Duration
 
 
 data class Exercise(
-    val id : Int = 0,
-    val routineId : Int = 0,
-    val exerciseDataId : Int = 0,
+    var id : Int = 0,
+    var workoutId : Int = 0,
+    var exerciseDataId : Int = 0,
     var restTime : Duration = Duration.ofSeconds(0),
     var note : String = "",
-    var exerciseNumber : Int = 0
+    var exerciseNumber : Int = 0,
+    var sets: List<Set>
 )
 
 fun ExerciseEntity.toDomain() = Exercise(
     id,
-    routineId,
+    workoutId,
     exerciseDataId,
     Duration.ofSeconds(restTime),
     note,
-    exerciseNumber
+    exerciseNumber,
+    emptyList()
 )

@@ -21,11 +21,11 @@ class MeasureRepository @Inject constructor(private val measureDAO: MeasureDAO) 
         measureDAO.deleteAllUserMeasures(id)
     }
 
-    suspend fun insertAllMeasures(measures : List<Measure>) {
+    suspend fun saveAllMeasures(measures : List<Measure>) {
         measureDAO.insertAllMeasures(measures.map { it.toData() })
     }
 
-    suspend fun insertMeasure(measure : Measure) {
+    suspend fun savetMeasure(measure : Measure) {
         measureDAO.insertMeasure(measure.toData())
     }
 

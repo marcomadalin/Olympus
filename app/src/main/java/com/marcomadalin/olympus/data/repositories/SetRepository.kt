@@ -21,12 +21,12 @@ class SetRepository @Inject constructor(private val setDAO: SetDAO) {
         setDAO.deleteAllExerciseSets(id)
     }
 
-    suspend fun insertAllSet(sets : List<Set>) {
+    suspend fun saveAllSet(sets : List<Set>) {
         setDAO.insertAllSet(sets.map { it.toData() })
     }
 
-    suspend fun insertSet(set : Set) {
-        setDAO.insertSet(set.toData())
+    suspend fun saveSet(set : Set) : Int {
+        return setDAO.insertSet(set.toData())
     }
 
     suspend fun updateSet(set: Set) {

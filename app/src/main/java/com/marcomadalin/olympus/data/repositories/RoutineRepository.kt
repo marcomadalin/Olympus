@@ -26,11 +26,11 @@ class RoutineRepository @Inject constructor(private val routineDAO: RoutineDAO) 
         routineDAO.deleteAllUserRoutines(id)
     }
 
-    suspend fun insertAllRoutines(routines : List<Routine>) {
+    suspend fun saveAllRoutines(routines : List<Routine>) {
         routineDAO.insertAllRoutines(routines.map { it.toData() })
     }
 
-    suspend fun insertRoutine(routine : Routine) {
+    suspend fun saveRoutine(routine : Routine) {
         routineDAO.insertRoutine(routine.toData())
     }
 
