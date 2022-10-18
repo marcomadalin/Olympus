@@ -16,15 +16,15 @@ class ExerciseDataRepository @Inject constructor(private val exerciseDataDAO: Ex
         return exerciseDataDAO.getAllExercisesData().map { it.toDomain() }
     }
 
-    suspend fun getExercisesData(id: Int) : ExerciseData {
+    suspend fun getExercisesData(id: Long) : ExerciseData {
         return exerciseDataDAO.getExercisesData(id).toDomain()
     }
 
-    suspend fun getAllExerciseDataExercises(id: Int) : List<Exercise> {
+    suspend fun getAllExerciseDataExercises(id: Long) : List<Exercise> {
         return exerciseDataDAO.getAllExerciseDataExercises(id).map { it.toDomain() }
     }
 
-    suspend fun deleteAllUserExerciseData(id : Int) {
+    suspend fun deleteAllUserExerciseData(id : Long) {
         exerciseDataDAO.deleteAllUserExerciseData(id)
     }
 

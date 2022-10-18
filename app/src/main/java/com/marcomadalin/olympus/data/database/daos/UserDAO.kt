@@ -18,25 +18,25 @@ interface UserDAO {
     suspend fun getAllUsers() : List<UserEntity>
 
     @Query("SELECT * FROM Users WHERE id = :id")
-    suspend fun getUser(id :Int) : UserEntity
+    suspend fun getUser(id :Long) : UserEntity
 
     @Query("SELECT * FROM Users JOIN Routines On Users.id = Routines.userId WHERE Users.id = :id")
-    suspend fun getAllUserRoutines(id :Int) : List<RoutineEntity>
+    suspend fun getAllUserRoutines(id :Long) : List<RoutineEntity>
 
     @Query("SELECT * FROM Users JOIN ExercisesData On Users.id = ExercisesData.userId WHERE Users.id = :id")
-    suspend fun getAllUserExercisesData(id :Int) : List<ExerciseDataEntity>
+    suspend fun getAllUserExercisesData(id :Long) : List<ExerciseDataEntity>
 
     @Query("SELECT * FROM Users JOIN ExercisesData On Users.id = ExercisesData.userId WHERE ExercisesData.userId in (:ids)")
-    suspend fun getUserExercisesData(ids : Set<Int>) : List<ExerciseDataEntity>
+    suspend fun getUserExercisesData(ids : Set<Long>) : List<ExerciseDataEntity>
 
     @Query("SELECT * FROM Users JOIN Measures On Users.id = Measures.userId WHERE Users.id = :id")
-    suspend fun getAllUserMeasures(id :Int) : List<MeasureEntity>
+    suspend fun getAllUserMeasures(id :Long) : List<MeasureEntity>
 
     @Query("SELECT * FROM Users JOIN Measures On Users.id = Measures.userId WHERE Measures.userId in (:ids)")
-    suspend fun getUserMeasures(ids : Set<Int>) : List<MeasureEntity>
+    suspend fun getUserMeasures(ids : Set<Long>) : List<MeasureEntity>
 
     @Query("SELECT * FROM Users JOIN Statistics On Users.id = Statistics.userId WHERE Users.id = :id")
-    suspend fun getAllUserStatistics(id :Int) : List<StatisticEntity>
+    suspend fun getAllUserStatistics(id :Long) : List<StatisticEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllUsers(user : List<UserEntity>)

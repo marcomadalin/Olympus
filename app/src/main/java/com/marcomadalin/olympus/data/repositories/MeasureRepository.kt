@@ -13,11 +13,11 @@ class MeasureRepository @Inject constructor(private val measureDAO: MeasureDAO) 
         return measureDAO.getAllMeasures().map { it.toDomain() }
     }
 
-    suspend fun getMeasure(id: Int) : Measure {
+    suspend fun getMeasure(id: Long) : Measure {
         return measureDAO.getMeasure(id).toDomain()
     }
 
-    suspend fun deleteAllUserMeasures(id : Int) {
+    suspend fun deleteAllUserMeasures(id : Long) {
         measureDAO.deleteAllUserMeasures(id)
     }
 
@@ -25,7 +25,7 @@ class MeasureRepository @Inject constructor(private val measureDAO: MeasureDAO) 
         measureDAO.insertAllMeasures(measures.map { it.toData() })
     }
 
-    suspend fun savetMeasure(measure : Measure) {
+    suspend fun saveMeasure(measure : Measure) {
         measureDAO.insertMeasure(measure.toData())
     }
 

@@ -8,8 +8,8 @@ import com.marcomadalin.olympus.domain.model.Set
 @Entity(tableName = "Sets")
 data class SetEntity(
     @PrimaryKey(autoGenerate = true)
-    var id : Int = 0,
-    var exerciseId : Int = 0,
+    var id : Long = 0,
+    var exerciseId : Long = 0,
     var weight : Int = 0,
     var reps : Int = 0,
     var rir : Int = 0,

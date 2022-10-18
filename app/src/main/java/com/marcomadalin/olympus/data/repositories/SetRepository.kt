@@ -13,11 +13,11 @@ class SetRepository @Inject constructor(private val setDAO: SetDAO) {
         return setDAO.getAllSets().map { it.toDomain() }
     }
 
-    suspend fun getSet(id: Int) : Set {
+    suspend fun getSet(id: Long) : Set {
         return setDAO.getSet(id).toDomain()
     }
 
-    suspend fun deleteAllExerciseSets(id : Int) {
+    suspend fun deleteAllExerciseSets(id : Long) {
         setDAO.deleteAllExerciseSets(id)
     }
 
@@ -25,7 +25,7 @@ class SetRepository @Inject constructor(private val setDAO: SetDAO) {
         setDAO.insertAllSet(sets.map { it.toData() })
     }
 
-    suspend fun saveSet(set : Set) : Int {
+    suspend fun saveSet(set : Set) : Long {
         return setDAO.insertSet(set.toData())
     }
 

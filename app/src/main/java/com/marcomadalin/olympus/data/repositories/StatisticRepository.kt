@@ -13,11 +13,11 @@ class StatisticRepository @Inject constructor(private val statisticDAO: Statisti
         return statisticDAO.getAllStatistics().map { it.toDomain() }
     }
 
-    suspend fun getStatistic(id: Int) : Statistic {
+    suspend fun getStatistic(id: Long) : Statistic {
         return statisticDAO.getStatistic(id).toDomain()
     }
 
-    suspend fun deleteAllUserStatistics(id : Int) {
+    suspend fun deleteAllUserStatistics(id : Long) {
         statisticDAO.deleteAllUserStatistics(id)
     }
 

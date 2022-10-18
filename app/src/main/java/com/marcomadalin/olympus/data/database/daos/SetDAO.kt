@@ -14,16 +14,16 @@ interface SetDAO {
     suspend fun getAllSets() : List<SetEntity>
 
     @Query("SELECT * FROM Sets WHERE id = :id")
-    suspend fun getSet(id: Int) : SetEntity
+    suspend fun getSet(id: Long) : SetEntity
 
     @Query("DELETE FROM Sets WHERE exerciseId = :id")
-    suspend fun deleteAllExerciseSets(id : Int)
+    suspend fun deleteAllExerciseSets(id : Long)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllSet(set : List<SetEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertSet(set : SetEntity) : Int
+    suspend fun insertSet(set : SetEntity) : Long
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateSet(set: SetEntity)

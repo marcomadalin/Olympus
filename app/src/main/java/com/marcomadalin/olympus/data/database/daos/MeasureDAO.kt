@@ -14,10 +14,10 @@ interface MeasureDAO {
     suspend fun getAllMeasures() : List<MeasureEntity>
 
     @Query("SELECT * FROM Measures WHERE id = :id")
-    suspend fun getMeasure(id: Int) : MeasureEntity
+    suspend fun getMeasure(id: Long) : MeasureEntity
 
     @Query("DELETE FROM Measures WHERE userId = :id")
-    suspend fun deleteAllUserMeasures(id : Int)
+    suspend fun deleteAllUserMeasures(id : Long)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllMeasures(measure : List<MeasureEntity>)

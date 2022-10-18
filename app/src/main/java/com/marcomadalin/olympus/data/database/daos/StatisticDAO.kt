@@ -14,10 +14,10 @@ interface StatisticDAO {
     suspend fun getAllStatistics() : List<StatisticEntity>
 
     @Query("SELECT * FROM Statistics WHERE id = :id")
-    suspend fun getStatistic(id: Int) : StatisticEntity
+    suspend fun getStatistic(id: Long) : StatisticEntity
 
     @Query("DELETE FROM Statistics WHERE userId = :id")
-    suspend fun deleteAllUserStatistics(id : Int)
+    suspend fun deleteAllUserStatistics(id : Long)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllStatistic(statistic : List<StatisticEntity>)

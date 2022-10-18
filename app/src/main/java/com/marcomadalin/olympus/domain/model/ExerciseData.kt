@@ -7,8 +7,8 @@ import com.marcomadalin.olympus.domain.model.enums.Muscle
 import kotlin.collections.Set
 
 data class ExerciseData(
-    var id: Int = 0,
-    var userId: Int = 0,
+    var id: Long = 0,
+    var userId: Long = 0,
     var type: ExerciseType = ExerciseType.WeightReps,
     var favourite: Boolean = false,
     var equipment: Equipment = Equipment.None,

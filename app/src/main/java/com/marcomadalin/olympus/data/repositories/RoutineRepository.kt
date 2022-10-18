@@ -14,15 +14,15 @@ class RoutineRepository @Inject constructor(private val routineDAO: RoutineDAO) 
         return routineDAO.getAllRoutines().map { it.toDomain() }
     }
 
-    suspend fun getRoutine(id: Int) : Routine {
+    suspend fun getRoutine(id: Long) : Routine {
         return routineDAO.getRoutine(id).toDomain()
     }
 
-    suspend fun getAllRoutineExercises(id: Int) : List<Exercise> {
+    suspend fun getAllRoutineExercises(id: Long) : List<Exercise> {
         return routineDAO.getAllRoutineExercises(id).map { it.toDomain() }
     }
 
-    suspend fun deleteAllUserRoutines(id : Int) {
+    suspend fun deleteAllUserRoutines(id : Long) {
         routineDAO.deleteAllUserRoutines(id)
     }
 

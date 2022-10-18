@@ -10,8 +10,8 @@ import com.marcomadalin.olympus.domain.model.ExerciseData
 @Entity(tableName = "ExercisesData")
 data class ExerciseDataEntity(
     @PrimaryKey(autoGenerate = true)
-    var id: Int = 0,
-    var userId: Int = 0,
+    var id: Long = 0,
+    var userId: Long = 0,
     var type: String = "",
     var favourite: Boolean = false,
     var equipment: String = "",

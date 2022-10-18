@@ -15,14 +15,14 @@ interface ExerciseDataDAO {
     suspend fun getAllExercisesData() : List<ExerciseDataEntity>
 
     @Query("SELECT * FROM ExercisesData WHERE id = :id")
-    suspend fun getExercisesData(id: Int) : ExerciseDataEntity
+    suspend fun getExercisesData(id: Long) : ExerciseDataEntity
 
     @Query("SELECT * FROM ExercisesData JOIN Exercises On ExercisesData.id = Exercises.exerciseDataId " +
             "WHERE ExercisesData.id = :id")
-    suspend fun getAllExerciseDataExercises(id: Int) : List<ExerciseEntity>
+    suspend fun getAllExerciseDataExercises(id: Long) : List<ExerciseEntity>
 
     @Query("DELETE FROM ExercisesData WHERE userId = :id")
-    suspend fun deleteAllUserExerciseData(id : Int)
+    suspend fun deleteAllUserExerciseData(id : Long)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllExerciseData(exerciseData : List<ExerciseDataEntity>)

@@ -21,27 +21,27 @@ class UserRepository @Inject constructor(private val userDAO: UserDAO) {
         return userDAO.getUser(1).toDomain()
     }
 
-    suspend fun getAllUserRoutines(id :Int) : List<Routine> {
+    suspend fun getAllUserRoutines(id :Long) : List<Routine> {
         return userDAO.getAllUserRoutines(id).map { it.toDomain() }
     }
 
-    suspend fun getAllUserExercisesData(id :Int) : List<ExerciseData> {
+    suspend fun getAllUserExercisesData(id :Long) : List<ExerciseData> {
         return userDAO.getAllUserExercisesData(id).map { it.toDomain() }
     }
 
-    suspend fun getUserExercisesData(ids : Set<Int>) : List<ExerciseData> {
+    suspend fun getUserExercisesData(ids : Set<Long>) : List<ExerciseData> {
         return userDAO.getUserExercisesData(ids).map { it.toDomain() }
     }
 
-    suspend fun getAllUserMeasures(id :Int) : List<Measure> {
+    suspend fun getAllUserMeasures(id :Long) : List<Measure> {
         return userDAO.getAllUserMeasures(id).map { it.toDomain() }
     }
 
-    suspend fun getUserMeasures(ids : Set<Int>) : List<Measure> {
+    suspend fun getUserMeasures(ids : Set<Long>) : List<Measure> {
         return userDAO.getUserMeasures(ids).map { it.toDomain() }
     }
 
-    suspend fun getAllUserStatistics(id :Int) : List<Statistic> {
+    suspend fun getAllUserStatistics(id :Long) : List<Statistic> {
         return userDAO.getAllUserStatistics(id).map { it.toDomain() }
     }
 

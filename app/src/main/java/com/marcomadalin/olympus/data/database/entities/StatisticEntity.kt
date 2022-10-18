@@ -10,8 +10,8 @@ import com.marcomadalin.olympus.domain.model.Statistic
 @Entity(tableName = "Statistics")
 data class StatisticEntity(
     @PrimaryKey(autoGenerate = true)
-    var id : Int = 0,
-    var userId : Int = 0,
+    var id : Long = 0,
+    var userId : Long = 0,
     var timeframe : String = "",
     var totalWorkouts : Int = 0,
     var totalRestDays : Int = 0,

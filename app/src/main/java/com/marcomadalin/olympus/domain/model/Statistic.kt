@@ -7,8 +7,8 @@ import java.time.Duration
 
 
 data class Statistic(
-    var id : Int = 0,
-    var userId : Int = 0,
+    var id : Long = 0,
+    var userId : Long = 0,
     var timeframe : StatisticTimeframe = StatisticTimeframe.month,
     var totalWorkouts : Int = 0,
     var totalRestDays : Int = 0,

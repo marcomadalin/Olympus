@@ -15,14 +15,14 @@ interface RoutineDAO {
     suspend fun getAllRoutines() : List<RoutineEntity>
 
     @Query("SELECT * FROM Routines WHERE id = :id")
-    suspend fun getRoutine(id: Int) : RoutineEntity
+    suspend fun getRoutine(id: Long) : RoutineEntity
 
     @Query("SELECT * FROM Routines JOIN Exercises On Routines.id = Exercises.workoutId " +
             "WHERE Routines.id = :id")
-    suspend fun getAllRoutineExercises(id: Int) : List<ExerciseEntity>
+    suspend fun getAllRoutineExercises(id: Long) : List<ExerciseEntity>
 
     @Query("DELETE FROM Routines WHERE userId = :id")
-    suspend fun deleteAllUserRoutines(id : Int)
+    suspend fun deleteAllUserRoutines(id : Long)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllRoutines(routine : List<RoutineEntity>)

@@ -8,8 +8,8 @@ import com.marcomadalin.olympus.domain.model.Measure
 @Entity(tableName = "Measures")
 data class MeasureEntity (
     @PrimaryKey(autoGenerate = true)
-    var id : Int = 0,
-    var userId : Int = 0,
+    var id : Long = 0,
+    var userId : Long = 0,
     var date : String = "",
     var value : Double = 0.0,
     var part : String = "",

@@ -4,7 +4,7 @@ import com.marcomadalin.olympus.data.database.entities.UserEntity
 import kotlin.collections.Set
 
 open class User (
-    var id : Int = 0,
+    var id : Long = 0,
     var name : String = "",
     var totalWorkouts : Int = 0,
     var trackingTotalWorkouts : Boolean = false,

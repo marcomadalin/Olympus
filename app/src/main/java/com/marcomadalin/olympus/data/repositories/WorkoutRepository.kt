@@ -14,15 +14,15 @@ class WorkoutRepository @Inject constructor(private val workoutDAO: WorkoutDAO) 
         return workoutDAO.getAllWorkouts().map { it.toDomain() }
     }
 
-    suspend fun getWorkout(id: Int) : Workout {
+    suspend fun getWorkout(id: Long) : Workout {
         return workoutDAO.getWorkout(id).toDomain()
     }
 
-    suspend fun getAllWorkoutExercises(id: Int) : List<Exercise> {
+    suspend fun getAllWorkoutExercises(id: Long) : List<Exercise> {
         return workoutDAO.getAllWorkoutExercises(id).map { it.toDomain() }
     }
 
-    suspend fun deleteAllUserWorkouts(id : Int) {
+    suspend fun deleteAllUserWorkouts(id : Long) {
         workoutDAO.deleteAllUserWorkouts(id)
     }
 
@@ -30,7 +30,7 @@ class WorkoutRepository @Inject constructor(private val workoutDAO: WorkoutDAO) 
         workoutDAO.insertAllWorkouts(workouts.map { it.toData() })
     }
 
-    suspend fun saveWorkout(workout : Workout) : Int {
+    suspend fun saveWorkout(workout : Workout) : Long {
         return workoutDAO.insertWorkout(workout.toData())
     }
 

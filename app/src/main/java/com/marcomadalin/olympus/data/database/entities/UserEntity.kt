@@ -9,7 +9,7 @@ import com.marcomadalin.olympus.domain.model.User
 @Entity(tableName = "Users")
 open class UserEntity (
     @PrimaryKey(autoGenerate = true)
-    var id : Int = 0,
+    var id : Long = 0,
     var name : String = "",
     var totalWorkouts : Int = 0,
     var trackingTotalWorkouts : Boolean = false,

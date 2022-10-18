@@ -15,20 +15,20 @@ interface WorkoutDAO {
     suspend fun getAllWorkouts() : List<WorkoutEntity>
 
     @Query("SELECT * FROM Workouts WHERE id = :id")
-    suspend fun getWorkout(id: Int) : WorkoutEntity
+    suspend fun getWorkout(id: Long) : WorkoutEntity
 
     @Query("SELECT * FROM Workouts JOIN Exercises On Workouts.id = Exercises.workoutId " +
             "WHERE Workouts.id = :id ORDER BY Exercises.exerciseNumber")
-    suspend fun getAllWorkoutExercises(id: Int) : List<ExerciseEntity>
+    suspend fun getAllWorkoutExercises(id: Long) : List<ExerciseEntity>
 
     @Query("DELETE FROM Workouts WHERE userId = :id")
-    suspend fun deleteAllUserWorkouts(id : Int)
+    suspend fun deleteAllUserWorkouts(id : Long)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllWorkouts(workout : List<WorkoutEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertWorkout(workout : WorkoutEntity) : Int
+    suspend fun insertWorkout(workout : WorkoutEntity) : Long
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateWorkout(workout: WorkoutEntity)
