@@ -54,10 +54,7 @@ class MainActivity : AppCompatActivity() {
         var set5 = Set(0, 0, 15, 9, 9, 12, 14, SetType.Normal, 1)
         var exercise2 = Exercise(0, 0, 1, Duration.ofSeconds(40),"Felt Fresh", 0, listOf(set4, set5))
 
-        var workout = Workout(Duration.ofSeconds(1300), LocalDate.now(), listOf(exercise1, exercise2))
-        workout.name = "Legs"
-        workout.note = "Felt easy"
-        workout.userId = 1
+        var workout = Workout(0, 1, "Legs", "Pretty chill workout",Duration.ofSeconds(1300), LocalDate.now(), listOf(exercise1, exercise2))
         workoutViewModel.saveWorkout(workout)
     }
 

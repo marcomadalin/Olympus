@@ -5,6 +5,7 @@ import com.marcomadalin.olympus.data.database.entities.toData
 import com.marcomadalin.olympus.domain.model.Exercise
 import com.marcomadalin.olympus.domain.model.Workout
 import com.marcomadalin.olympus.domain.model.toDomain
+import java.time.LocalDate
 import javax.inject.Inject
 
 
@@ -16,6 +17,12 @@ class WorkoutRepository @Inject constructor(private val workoutDAO: WorkoutDAO) 
 
     suspend fun getWorkout(id: Long) : Workout {
         return workoutDAO.getWorkout(id).toDomain()
+    }
+
+    suspend fun getWorkout(date: LocalDate) : Workout? {
+        val result =  workoutDAO.getWorkout(date.toString())
+        if (result != null) return result.toDomain()
+        else return null
     }
 
     suspend fun getAllWorkoutExercises(id: Long) : List<Exercise> {
