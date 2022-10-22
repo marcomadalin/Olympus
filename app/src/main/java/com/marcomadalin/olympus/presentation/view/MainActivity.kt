@@ -5,6 +5,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.TooltipCompat
 import androidx.core.view.forEach
+import androidx.core.view.isVisible
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.marcomadalin.olympus.databinding.ActivityMainBinding
@@ -62,5 +63,15 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
         userViewModel.deleteUsers()
         workoutViewModel.deleteWorkouts()
+    }
+
+    fun hideNavigationBar() {
+        binding.navbar.isVisible = false
+        binding.dropShadow.isVisible = false
+    }
+
+    fun showNavigationBar() {
+        binding.navbar.isVisible = true
+        binding.dropShadow.isVisible = true
     }
 }

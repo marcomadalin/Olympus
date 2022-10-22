@@ -11,4 +11,7 @@
     <string name="profile_fragment">Profile fragment</string>
     <string name="workout_fragment">Workout fragment</string>
     <string name="log_in">Log in</string>
+    <string name="no_workouts_registered_this_day">No workouts registered this day</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

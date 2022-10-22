@@ -11,11 +11,10 @@
         android:id="@+id/workoutEmpty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No workouts registered this day"
+        android:layout_marginTop="150dp"
+        android:text="@string/no_workouts_registered_this_day"
         android:textAlignment="center"
         android:textSize="20sp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/calendarView" />
@@ -24,23 +23,20 @@
         android:id="@+id/calendarView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="5dp"
         android:background="@drawable/calendar"
         android:dateTextAppearance="@style/CalendarDays"
         android:theme="@style/CalendarMonth"
         android:weekDayTextAppearance="@style/CalendarWeeks"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/workoutSummary"
-        android:layout_width="344dp"
-        android:layout_height="272dp"
-        android:layout_marginTop="24dp"
+        android:layout_width="347dp"
+        android:layout_height="266dp"
+        android:layout_marginTop="18dp"
         android:background="@drawable/workout_layout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -55,32 +51,31 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:text="TextView"
+            android:text="-"
             android:textColor="@color/black"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/imageView7"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginStart="36dp"
-            android:layout_marginTop="56dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="52dp"
+            android:layout_marginEnd="68dp"
             android:src="@drawable/trophy"
-            app:layout_constraintStart_toEndOf="@+id/workoutVolume"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/workoutTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="60dp"
-            android:text="2h 10 min"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="54dp"
+            android:text="- min"
             android:textColor="@color/black"
-            android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@+id/imageView"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
@@ -88,7 +83,7 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="56dp"
+            android:layout_marginTop="54dp"
             android:src="@drawable/ic_baseline_history_24"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -97,11 +92,10 @@
             android:id="@+id/imageView2"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:layout_marginStart="36dp"
-            android:layout_marginTop="60dp"
-            android:layout_marginEnd="188dp"
+            android:layout_marginTop="52dp"
             android:src="@drawable/weight"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/imageView7"
+            app:layout_constraintHorizontal_bias="0.403"
             app:layout_constraintStart_toEndOf="@+id/workoutTime"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -109,11 +103,12 @@
             android:id="@+id/workoutVolume"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="60dp"
-            android:text="19200 kg"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="54dp"
+            android:text="- kg"
             android:textColor="@color/black"
-            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/imageView2"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -121,15 +116,52 @@
             android:id="@+id/workoutRecord"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="52dp"
             android:layout_marginEnd="16dp"
-            android:text="2 PRs"
+            android:text="PRs"
             android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/imageView7"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/summaryRecycler"
+            android:layout_width="308dp"
+            android:layout_height="161dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="10dp"
+            android:text="Sets"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="40dp"
+            android:text="Top Set"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView7" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

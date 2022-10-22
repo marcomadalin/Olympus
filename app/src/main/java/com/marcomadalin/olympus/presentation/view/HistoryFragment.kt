@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.marcomadalin.olympus.databinding.FragmentHistoryBinding
 import com.marcomadalin.olympus.domain.model.Workout
 import com.marcomadalin.olympus.presentation.viewmodel.WorkoutViewModel
@@ -49,10 +50,17 @@ class HistoryFragment : Fragment() {
         else {
             binding.workoutEmpty.isVisible = false;
             binding.workoutTitle.text = workout.name
+            var volume = 0
+            workout.exercises.forEach{
+                    it -> it.sets.forEach{volume += it.weight}
+            }
+            binding.workoutVolume.text = "$volume kg"
             binding.workoutTime.text = (workout.length.seconds%60).toString() + " min"
             if (workout.length.toHours().toInt() != 0) {
                 binding.workoutTime.text = workout.length.toHours().toString() + " " + binding.workoutTime.text
             }
+            binding.summaryRecycler.layoutManager = LinearLayoutManager(this.context)
+            binding.summaryRecycler.adapter = WorkoutSummaryAdapter(workout.exercises)
             binding.workoutSummary.isVisible = true;
         }
     }
