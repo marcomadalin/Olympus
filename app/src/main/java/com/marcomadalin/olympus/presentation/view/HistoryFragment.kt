@@ -7,13 +7,17 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.marcomadalin.olympus.R
 import com.marcomadalin.olympus.databinding.FragmentHistoryBinding
 import com.marcomadalin.olympus.domain.model.Workout
 import com.marcomadalin.olympus.presentation.viewmodel.WorkoutViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
 
+//TODO SHOW SUPERSETS IN SUMMARY
+//TODO TRANSITION IN WORKOUT REVIEW
 
 @AndroidEntryPoint
 class HistoryFragment : Fragment() {
@@ -21,25 +25,25 @@ class HistoryFragment : Fragment() {
     private var _binding : FragmentHistoryBinding? = null
     private val binding get() = _binding!!
 
-    private var selectedDate : LocalDate = LocalDate.now()
     private val workoutViewModel : WorkoutViewModel by viewModels()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentHistoryBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onStart() {
         super.onStart()
+        binding.workoutSummary2.setOnClickListener {
+            (activity as MainActivity).hideNavigationBar()
+            Navigation.findNavController(binding.root).navigate(R.id.workoutReview)
+        }
         binding.calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
-            selectedDate = LocalDate.of(year, month+1, dayOfMonth)
-            workoutViewModel.getWorkout(selectedDate)
+            workoutViewModel.selectedDate.postValue(LocalDate.of(year, month+1, dayOfMonth))
+            workoutViewModel.getWorkout()
         }
         workoutViewModel.workoutModel.observe(viewLifecycleOwner) {updateWorkoutSummary(it)}
-        workoutViewModel.getWorkout(selectedDate)
+        workoutViewModel.getWorkout()
     }
 
     private fun updateWorkoutSummary(workout: Workout?) {

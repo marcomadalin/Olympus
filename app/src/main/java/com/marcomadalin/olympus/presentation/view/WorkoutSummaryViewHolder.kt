@@ -10,8 +10,8 @@ class WorkoutSummaryViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     var binding = WorkoutSummaryItemBinding.bind(view)
 
     fun render(exercise : Exercise) {
-        binding.summarySets.text = exercise.sets.size.toString() + " X " + exercise.exerciseDataId
+        binding.summarySets.text = exercise.sets.size.toString() + " x " + exercise.exerciseDataId
         var max = exercise.sets.maxBy {it.weight * it.reps }
-        binding.summaryTop.text = max.weight.toString() + " kg X " + max.reps.toString()
+        binding.summaryTop.text = max.weight.toString() + " kg x " + max.reps.toString()
     }
 }

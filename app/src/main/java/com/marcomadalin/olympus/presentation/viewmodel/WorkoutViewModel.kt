@@ -19,10 +19,12 @@ class WorkoutViewModel @Inject constructor(
     private val deleteWorkoutsUseCase: DeleteWorkoutsUseCase
     ) : ViewModel() {
 
+    val selectedDate = MutableLiveData(LocalDate.now())
+
     val workoutModel = MutableLiveData<Workout?>()
 
-    fun getWorkout(date: LocalDate) {
-        viewModelScope.launch {workoutModel.postValue(getWorkoutUseCase(date))}
+    fun getWorkout() {
+        viewModelScope.launch {workoutModel.postValue(getWorkoutUseCase(selectedDate.value!!))}
     }
 
     fun saveWorkout(workout: Workout) {

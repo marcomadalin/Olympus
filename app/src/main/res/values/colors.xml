@@ -11,4 +11,7 @@
     <color name="background">#EBEBED</color>
     <color name="layout">#D9D9D9</color>
     <color name="text">#5E5D5D</color>
+    <color name="drop">#7A0098</color>
+    <color name="failure">#700000</color>
+    <color name="warmup">#D86800</color>
 </resources>

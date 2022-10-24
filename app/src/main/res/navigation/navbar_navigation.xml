@@ -18,6 +18,9 @@
         <action
             android:id="@+id/action_history_to_profile"
             app:destination="@id/profile" />
+        <action
+            android:id="@+id/action_history_to_workoutSummaryFragment"
+            app:destination="@id/workoutReview" />
     </fragment>
     <fragment
         android:id="@+id/exercise"
@@ -63,5 +66,14 @@
         <action
             android:id="@+id/action_profile_to_workout3"
             app:destination="@id/workout" />
+    </fragment>
+    <fragment
+        android:id="@+id/workoutReview"
+        android:name="com.marcomadalin.olympus.presentation.view.WorkoutReviewFragment"
+        android:label="fragment_workout_summary"
+        tools:layout="@layout/fragment_workout_review" >
+        <action
+            android:id="@+id/action_workoutSummaryFragment_to_history"
+            app:destination="@id/history" />
     </fragment>
 </navigation>
