@@ -17,19 +17,18 @@ class SetReviewViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         binding.setType.text = if (setType == "N") (set.setNumber+1).toString() else setType
         binding.setName.text = set.weight.toString() + " kg x " + set.reps.toString()
         binding.rir.text = set.rir.toString()
-        binding.urm.text = (((set.weight / ( 1.0278 - 0.0278 * set.reps)) * 100.0).roundToInt() / 100.0).toString()
+        binding.urm.text = (((set.weight / ( 1.0278 - 0.0278 * set.reps)) * 100.0).roundToInt() / 100.0).toString() + " kg"
         var color : Int = Color.parseColor(getColor(set.type))
         binding.setType.setTextColor(color)
-        binding.setName.setTextColor(color)
 
     }
 
-    fun getColor(type : SetType) : String {
+    private fun getColor(type : SetType) : String {
         return when (type) {
             SetType.Normal -> "#5E5D5D"
             SetType.Warmup -> "#D86800"
-            SetType.Drop -> "#7A0098"
-            else -> "#700000"
+            SetType.Drop -> "#2196F3"
+            else -> "#7A0098"
         }
     }
 }

@@ -48,12 +48,12 @@ class WorkoutReviewFragment : Fragment() {
             binding.summaryTitle.text = workout.name
             binding.summaryDate.text = workout.date.dayOfMonth.toString() + " " +
                     workout.date.month.toString().toLowerCase(Locale.ROOT) + " " + workout.date.year
-            var volume = 0
+            var volume = 0.0
             workout.exercises.forEach{
                     it -> it.sets.forEach{volume += it.weight}
             }
             binding.workoutVolume2.text = "$volume kg"
-            binding.workoutTime2.text = (workout.length.seconds%60).toString() + " min"
+            binding.workoutTime2.text = ((workout.length.seconds%3600)/60).toString() + " min"
             if (workout.length.toHours().toInt() != 0) {
                 binding.workoutTime2.text = workout.length.toHours().toString() + " " + binding.workoutTime2.text
             }

@@ -75,5 +75,17 @@
         <action
             android:id="@+id/action_workoutSummaryFragment_to_history"
             app:destination="@id/history" />
+        <action
+            android:id="@+id/action_workoutReview_to_blankFragment"
+            app:destination="@id/workoutEdit" />
+    </fragment>
+    <fragment
+        android:id="@+id/workoutEdit"
+        android:name="com.marcomadalin.olympus.presentation.view.WorkoutEditFragment"
+        android:label="fragment_workout_edit"
+        tools:layout="@layout/fragment_workout_edit" >
+        <action
+            android:id="@+id/action_blankFragment_to_workoutReview"
+            app:destination="@id/workoutReview" />
     </fragment>
 </navigation>

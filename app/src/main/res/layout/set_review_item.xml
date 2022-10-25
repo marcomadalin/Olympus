@@ -41,10 +41,10 @@
         android:id="@+id/rir"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="60dp"
+        android:layout_marginEnd="120dp"
         android:text="RIR"
         android:textColor="@color/text"
-        app:layout_constraintEnd_toStartOf="@+id/urm"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
