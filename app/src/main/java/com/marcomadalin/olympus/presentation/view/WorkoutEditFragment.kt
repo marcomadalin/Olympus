@@ -44,9 +44,27 @@ class WorkoutEditFragment : Fragment() {
         }
         binding.button2.setOnClickListener { addExercise() }
         binding.editRecycler.layoutManager = LinearLayoutManager(this.context)
-        adapter = ExerciseEditAdapter(workoutViewModel.workoutModel.value!!.exercises, {addSet(it)})
+        adapter = ExerciseEditAdapter(workoutViewModel.workoutModel.value!!.exercises, {addSet(it)}, {onItemClick(it)})
         binding.editRecycler.adapter = adapter
         updateWorkoutReview( workoutViewModel.workoutModel.value)
+    }
+
+    private fun onItemClick(data : Pair<Int, Int>) : Boolean {
+        return when (data.first) {
+            R.id.order -> {
+                true
+            }
+            R.id.superset -> {
+                true
+            }
+            R.id.swap -> {
+                true
+            }
+            R.id.deleteExercise -> {
+                true
+            }
+            else -> false
+        }
     }
 
     private fun updateWorkoutReview(workout: Workout?) {

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/order"
+        android:icon="@drawable/swap_vert"
+        android:title="Reorder" />
+    <item
+        android:id="@+id/superset"
+        android:icon="@drawable/link"
+        android:title="Superset" />
+    <item
+        android:id="@+id/swap"
+        android:icon="@drawable/swap"
+        android:title="Swap" />
+    <item
+        android:id="@+id/deleteExercise"
+        android:icon="@drawable/delete"
+        android:title="Delete" />
+
+</menu>
