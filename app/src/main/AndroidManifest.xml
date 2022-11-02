@@ -14,20 +14,6 @@
         android:theme="@style/Theme.Olympus"
         tools:targetApi="31">
         <activity
-            android:name=".SecondaryActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".WorkoutDetails"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".presentation.view.MainActivity"
             android:exported="true">
             <intent-filter>

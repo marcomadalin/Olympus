@@ -14,4 +14,6 @@
     <color name="drop">#2196F3</color>
     <color name="failure">#7A0098</color>
     <color name="warmup">#D86800</color>
+    <color name="red">#C84747</color>
+    <color name="green">#7EBE78</color>
 </resources>
