@@ -10,11 +10,12 @@ class ExerciseEditViewHolder(private val view: View) : RecyclerView.ViewHolder(v
 
     var binding = ExerciseEditItemBinding.bind(view)
 
-    fun render(exercise : Exercise) {
+    fun render(exercise: Exercise, onClickAdd: (Int) -> Unit) {
         binding.exerciseName4.text = exercise.exerciseDataId.toString()
         binding.exerciseNoteEdit.setText(exercise.note)
         binding.setRecycler2.layoutManager = LinearLayoutManager(view.context)
         binding.setRecycler2.adapter = SetEditAdapter(exercise.sets)
+        binding.addSet.setOnClickListener{onClickAdd(adapterPosition)}
     }
 
 }

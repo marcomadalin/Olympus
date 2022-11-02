@@ -16,9 +16,9 @@ class GetWorkoutsUseCase @Inject constructor(
         result.forEach{ workout ->
             val exercises = workoutRepository.getAllWorkoutExercises(workout.id)
             exercises.forEach{ exercise ->
-                exercise.sets = exerciseRepository.getAllExerciseSets(exercise.id)
+                exercise.sets = exerciseRepository.getAllExerciseSets(exercise.id).toMutableList()
             }
-            workout.exercises = exercises
+            workout.exercises = exercises.toMutableList()
         }
         return result.groupBy{ it.date }.mapValues{it.value[0]}.toMutableMap()
     }

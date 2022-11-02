@@ -17,6 +17,8 @@ import com.marcomadalin.olympus.domain.model.enums.SetType
 import com.marcomadalin.olympus.presentation.viewmodel.UserViewModel
 import com.marcomadalin.olympus.presentation.viewmodel.WorkoutViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.time.Duration
 import java.time.LocalDate
 
@@ -72,7 +74,11 @@ class MainActivity : AppCompatActivity() {
         var exercise5 = Exercise(0, 0, 0, Duration.ofSeconds(130),"Can improve next time", 0, listOf(set12, set13, set14, set15))
 
         var workout = Workout(0, 1, "Legs", "Pretty chill workout",Duration.ofSeconds(1780), LocalDate.now(), listOf(exercise1, exercise2, exercise3, exercise4, exercise5))
-        workoutViewModel.saveWorkout(workout)
+        GlobalScope.launch {
+            workoutViewModel.saveWorkout(workout)
+            workoutViewModel.getWorkout()
+        }
+
     }
 
     override fun onDestroy() {

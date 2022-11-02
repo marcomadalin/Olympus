@@ -11,7 +11,7 @@ data class Workout (
     var note : String = "",
     var length  : Duration = Duration.ofSeconds(0),
     var date : LocalDate = LocalDate.parse(""),
-    var exercises: List<Exercise> = emptyList()
+    var exercises: MutableList<Exercise> = mutableListOf()
 )
 fun WorkoutEntity.toDomain() = Workout(
     id,

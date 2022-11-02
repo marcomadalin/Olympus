@@ -25,6 +25,8 @@ class WorkoutReviewFragment : Fragment() {
 
     private val workoutViewModel : WorkoutViewModel by activityViewModels()
 
+    private lateinit var adapter : ExerciseReviewAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,8 +42,10 @@ class WorkoutReviewFragment : Fragment() {
             (activity as MainActivity).showNavigationBar()
             Navigation.findNavController(binding.root).navigate(R.id.history)
         }
+        binding.exerciseRecycler.layoutManager = LinearLayoutManager(this.context)
+        adapter = ExerciseReviewAdapter(workoutViewModel.workoutModel.value!!.exercises)
+        binding.exerciseRecycler.adapter = adapter
         workoutViewModel.workoutModel.observe(viewLifecycleOwner) {updateWorkoutReview(it)}
-        workoutViewModel.getWorkout()
     }
 
     private fun popupMenu() {
@@ -93,8 +97,6 @@ class WorkoutReviewFragment : Fragment() {
                 binding.workoutTime2.text = workout.length.toHours().toString() + " " + binding.workoutTime2.text
             }
             binding.summarytNote.text = workout.note
-            binding.exerciseRecycler.layoutManager = LinearLayoutManager(this.context)
-            binding.exerciseRecycler.adapter = ExerciseReviewAdapter(workout.exercises)
         }
     }
 

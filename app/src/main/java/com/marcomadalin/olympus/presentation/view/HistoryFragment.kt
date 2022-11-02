@@ -27,6 +27,9 @@ class HistoryFragment : Fragment() {
 
     private val workoutViewModel : WorkoutViewModel by activityViewModels()
 
+    private lateinit var adapter : WorkoutSummaryAdapter
+    private var first = true
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentHistoryBinding.inflate(inflater, container, false)
         return binding.root
@@ -42,11 +45,19 @@ class HistoryFragment : Fragment() {
             workoutViewModel.selectedDate.postValue(LocalDate.of(year, month+1, dayOfMonth))
             workoutViewModel.getWorkout()
         }
+        binding.summaryRecycler.layoutManager = LinearLayoutManager(this.context)
+        adapter = WorkoutSummaryAdapter(emptyList())
+        binding.summaryRecycler.adapter = adapter
         workoutViewModel.workoutModel.observe(viewLifecycleOwner) {updateWorkoutSummary(it)}
-        workoutViewModel.getWorkout()
     }
 
     private fun updateWorkoutSummary(workout: Workout?) {
+        if (first) {
+            adapter = WorkoutSummaryAdapter(workoutViewModel.workoutModel.value!!.exercises)
+            binding.summaryRecycler.adapter = adapter
+            first = false
+        }
+
         if (workout == null) {
             binding.workoutSummary.isVisible = false;
             binding.workoutEmpty.isVisible = true;
@@ -63,8 +74,7 @@ class HistoryFragment : Fragment() {
             if (workout.length.toHours().toInt() != 0) {
                 binding.workoutTime.text = workout.length.toHours().toString() + " " + binding.workoutTime.text
             }
-            binding.summaryRecycler.layoutManager = LinearLayoutManager(this.context)
-            binding.summaryRecycler.adapter = WorkoutSummaryAdapter(workout.exercises)
+            adapter.notifyDataSetChanged()
             binding.workoutSummary.isVisible = true;
         }
     }

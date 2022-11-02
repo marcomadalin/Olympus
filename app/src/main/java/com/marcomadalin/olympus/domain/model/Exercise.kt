@@ -11,7 +11,7 @@ data class Exercise(
     var restTime : Duration = Duration.ofSeconds(0),
     var note : String = "",
     var exerciseNumber : Int = 0,
-    var sets: List<Set>
+    var sets: MutableList<Set> = mutableListOf()
 )
 
 fun ExerciseEntity.toDomain() = Exercise(
@@ -20,6 +20,5 @@ fun ExerciseEntity.toDomain() = Exercise(
     exerciseDataId,
     Duration.ofSeconds(restTime),
     note,
-    exerciseNumber,
-    emptyList()
+    exerciseNumber
 )

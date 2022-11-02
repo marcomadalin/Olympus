@@ -16,9 +16,9 @@ class GetWorkoutUseCase @Inject constructor(
         if (result != null) {
             val exercises = workoutRepository.getAllWorkoutExercises(result.id)
             exercises.forEach { exercise ->
-                exercise.sets = exerciseRepository.getAllExerciseSets(exercise.id)
+                exercise.sets = exerciseRepository.getAllExerciseSets(exercise.id).toMutableList()
             }
-            result.exercises = exercises
+            result.exercises = exercises.toMutableList()
         }
         return result
     }
