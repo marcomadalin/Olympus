@@ -44,7 +44,7 @@ class WorkoutEditFragment : Fragment() {
         }
         binding.button2.setOnClickListener { addExercise() }
         binding.editRecycler.layoutManager = LinearLayoutManager(this.context)
-        adapter = ExerciseEditAdapter(workoutViewModel.workoutModel.value!!.exercises, {addSet(it)}, {onItemClick(it)})
+        adapter = ExerciseEditAdapter(workoutViewModel.workoutModel.value!!.exercises, {addSet(it)}, {deleteSet(it)}, {onItemClick(it)})
         binding.editRecycler.adapter = adapter
         updateWorkoutReview( workoutViewModel.workoutModel.value)
     }
@@ -61,6 +61,7 @@ class WorkoutEditFragment : Fragment() {
                 true
             }
             R.id.deleteExercise -> {
+                deleteExercise(data.second)
                 true
             }
             else -> false
@@ -72,7 +73,7 @@ class WorkoutEditFragment : Fragment() {
             binding.summaryTitle2.text = workout.name
             binding.summaryDate2.text = workout.date.dayOfMonth.toString() + " " +
                     workout.date.month.toString().toLowerCase(Locale.ROOT) + " " + workout.date.year
-            binding.summarytNote3.setText(workout.note)
+            binding.summarytNote3.text = workout.note
         }
     }
 
@@ -102,12 +103,12 @@ class WorkoutEditFragment : Fragment() {
         adapter.notifyItemChanged(exercisePosition)
     }
 
-    private fun deleteSet(exercisePosition : Int, setPosition : Int) {
+    private fun deleteSet(data : Pair<Int, Int>) {
         var workout = workoutViewModel.workoutModel.value!!
-        var exercise = workout.exercises[exercisePosition]
-        exercise.sets.removeAt(setPosition)
+        var exercise = workout.exercises[data.first]
+        exercise.sets.removeAt(data.second)
         workoutViewModel.workoutModel.postValue(workout)
-        adapter.notifyItemChanged(exercisePosition)
+        adapter.notifyItemChanged(data.first)
     }
 
 }

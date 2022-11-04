@@ -3,6 +3,7 @@ package com.marcomadalin.olympus.presentation.view
 import android.util.Log
 import android.view.View
 import android.widget.PopupMenu
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.marcomadalin.olympus.R
@@ -13,12 +14,23 @@ class ExerciseEditViewHolder(private val view: View) : RecyclerView.ViewHolder(v
 
     var binding = ExerciseEditItemBinding.bind(view)
 
-    fun render(exercise: Exercise, onClickAdd: (Int) -> Unit, onItemClick: (Pair<Int, Int>) -> Boolean) {
+    fun render(exercise: Exercise, onClickAdd: (Int) -> Unit,
+               deleteSet: (Pair<Int, Int>) -> Unit,
+               onItemClick: (Pair<Int, Int>) -> Boolean) {
         binding.exerciseName4.text = exercise.exerciseDataId.toString()
         binding.exerciseNoteEdit.setText(exercise.note)
         binding.setRecycler2.layoutManager = LinearLayoutManager(view.context)
         binding.setRecycler2.adapter = SetEditAdapter(exercise.sets)
         binding.addSet.setOnClickListener{onClickAdd(adapterPosition)}
+
+        val swipeGesture = object : SwipeGesture(view.context) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                deleteSet(Pair(adapterPosition, viewHolder.adapterPosition))
+            }
+        }
+
+        ItemTouchHelper(swipeGesture).attachToRecyclerView(binding.setRecycler2)
+
         binding.dropdownEdit.setOnClickListener { view ->
             val popupMenu = PopupMenu(view.context, view)
 
