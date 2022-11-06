@@ -80,7 +80,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
+            <EditText
                 android:id="@+id/summarytNote3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -92,6 +92,7 @@
                 android:paddingVertical="5dp"
                 android:text="Workout note"
                 android:textColor="@color/text"
+                android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"

@@ -21,15 +21,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/weightNumber"
+    <TextView
+        android:id="@+id/prevWeight"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="@null"
-        android:ems="10"
-        android:inputType="number"
-        android:minHeight="48dp" />
+        android:text="-"
+        android:textAlignment="center"
+        android:textColor="@color/text" />
 
     <EditText
         android:id="@+id/weightNumber2"
@@ -39,7 +38,9 @@
         android:background="@null"
         android:ems="10"
         android:inputType="number"
-        android:minHeight="48dp" />
+        android:minHeight="48dp"
+        android:textAlignment="center"
+        android:textSize="14sp" />
 
     <EditText
         android:id="@+id/repsNumber"
@@ -49,7 +50,9 @@
         android:background="@null"
         android:ems="10"
         android:inputType="number"
-        android:minHeight="48dp" />
+        android:minHeight="48dp"
+        android:textAlignment="center"
+        android:textSize="14sp" />
 
     <EditText
         android:id="@+id/rirNumber"
@@ -60,7 +63,9 @@
         android:background="@null"
         android:ems="10"
         android:inputType="number"
-        android:minHeight="48dp" />
+        android:minHeight="48dp"
+        android:textAlignment="center"
+        android:textSize="14sp" />
 
     <ImageButton
         android:id="@+id/checkbox"

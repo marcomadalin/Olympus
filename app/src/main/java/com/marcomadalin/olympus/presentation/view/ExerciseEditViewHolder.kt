@@ -10,22 +10,32 @@ import com.marcomadalin.olympus.R
 import com.marcomadalin.olympus.databinding.ExerciseEditItemBinding
 import com.marcomadalin.olympus.domain.model.Exercise
 
+
 class ExerciseEditViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
     var binding = ExerciseEditItemBinding.bind(view)
 
-    fun render(exercise: Exercise, onClickAdd: (Int) -> Unit,
+    fun render(exercise: Exercise,
+               updateNote: (Pair<Int, String>) -> Unit,
+               addSet: (Int) -> Unit,
                deleteSet: (Pair<Int, Int>) -> Unit,
+               toggleSet: (Pair<Int, Int>) -> Unit,
                onItemClick: (Pair<Int, Int>) -> Boolean) {
         binding.exerciseName4.text = exercise.exerciseDataId.toString()
         binding.exerciseNoteEdit.setText(exercise.note)
         binding.setRecycler2.layoutManager = LinearLayoutManager(view.context)
-        binding.setRecycler2.adapter = SetEditAdapter(exercise.sets)
-        binding.addSet.setOnClickListener{onClickAdd(adapterPosition)}
+        binding.setRecycler2.adapter = SetEditAdapter(exercise.sets, {toggleSet(it)}, absoluteAdapterPosition)
+        binding.addSet.setOnClickListener{addSet(absoluteAdapterPosition)}
+        binding.exerciseNoteEdit.onFocusChangeListener =
+            View.OnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
+                updateNote(Pair(absoluteAdapterPosition, binding.exerciseNoteEdit.text.toString()))
+            }
+        }
 
         val swipeGesture = object : SwipeGesture(view.context) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                deleteSet(Pair(adapterPosition, viewHolder.adapterPosition))
+                deleteSet(Pair(absoluteAdapterPosition, viewHolder.absoluteAdapterPosition))
             }
         }
 
@@ -34,7 +44,7 @@ class ExerciseEditViewHolder(private val view: View) : RecyclerView.ViewHolder(v
         binding.dropdownEdit.setOnClickListener { view ->
             val popupMenu = PopupMenu(view.context, view)
 
-            popupMenu.setOnMenuItemClickListener{onItemClick(Pair(it.itemId, adapterPosition))}
+            popupMenu.setOnMenuItemClickListener{onItemClick(Pair(it.itemId, absoluteAdapterPosition))}
             popupMenu.inflate(R.menu.exercise_edit_dropdown)
             try {
                 val fieldMPopup = PopupMenu::class.java.getDeclaredField("mPopup")

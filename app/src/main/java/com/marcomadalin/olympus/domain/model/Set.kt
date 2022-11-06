@@ -13,6 +13,7 @@ data class Set(
     var lastReps : Int = 0,
     var type : SetType = SetType.Warmup,
     var setNumber : Int = 0,
+    var completed : Boolean = false
 )
 fun SetEntity.toDomain() = Set(
     id,
@@ -23,5 +24,6 @@ fun SetEntity.toDomain() = Set(
     lastWeight,
     lastReps,
     SetType.valueOf(type),
-    setNumber
+    setNumber,
+    true
 )

@@ -7,8 +7,10 @@ import com.marcomadalin.olympus.R
 import com.marcomadalin.olympus.domain.model.Exercise
 
 class ExerciseEditAdapter(private val exercises: List<Exercise>,
-                          private val onClickAdd: (Int) -> Unit,
+                          private val updateNote: (Pair<Int, String>) -> Unit,
+                          private val addSet: (Int) -> Unit,
                           private val deleteSet: (Pair<Int, Int>) -> Unit,
+                          private val toggleSet: (Pair<Int, Int>) -> Unit,
                           private val onItemClick: (Pair<Int, Int>) -> Boolean
 ) : RecyclerView.Adapter<ExerciseEditViewHolder>() {
 
@@ -19,7 +21,7 @@ class ExerciseEditAdapter(private val exercises: List<Exercise>,
 
     override fun onBindViewHolder(holder: ExerciseEditViewHolder, position: Int) {
         val item = exercises[position]
-        holder.render(item, onClickAdd, deleteSet, onItemClick)
+        holder.render(item, updateNote, addSet, deleteSet, toggleSet, onItemClick)
     }
 
     override fun getItemCount(): Int = exercises.size

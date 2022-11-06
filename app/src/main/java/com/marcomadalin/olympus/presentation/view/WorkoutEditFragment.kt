@@ -44,7 +44,8 @@ class WorkoutEditFragment : Fragment() {
         }
         binding.button2.setOnClickListener { addExercise() }
         binding.editRecycler.layoutManager = LinearLayoutManager(this.context)
-        adapter = ExerciseEditAdapter(workoutViewModel.workoutModel.value!!.exercises, {addSet(it)}, {deleteSet(it)}, {onItemClick(it)})
+        adapter = ExerciseEditAdapter(workoutViewModel.workoutModel.value!!.exercises,
+            {updateNote(it)}, {addSet(it)}, {deleteSet(it)}, {toggleSet(it)}, {onItemClick(it)})
         binding.editRecycler.adapter = adapter
         updateWorkoutReview( workoutViewModel.workoutModel.value)
     }
@@ -73,14 +74,22 @@ class WorkoutEditFragment : Fragment() {
             binding.summaryTitle2.text = workout.name
             binding.summaryDate2.text = workout.date.dayOfMonth.toString() + " " +
                     workout.date.month.toString().toLowerCase(Locale.ROOT) + " " + workout.date.year
-            binding.summarytNote3.text = workout.note
+            binding.summarytNote3.setText(workout.note)
+            binding.summarytNote3.onFocusChangeListener =
+                View.OnFocusChangeListener { _, hasFocus ->
+                    if (!hasFocus) {
+                        workout.note = binding.summarytNote3.text.toString()
+                        workoutViewModel.workoutModel.postValue(workout)
+                    }
+                }
+
         }
     }
 
     private fun addExercise() {
-        var workout = workoutViewModel.workoutModel.value!!
-        var exercise = Exercise(0, workout.id, 5, Duration.ofSeconds(0), "", workout.exercises.size, mutableListOf())
-        var set = Set(0, exercise.id, 0.0, 0, 0, 0.0, 0, SetType.Normal, exercise.sets.size)
+        val workout = workoutViewModel.workoutModel.value!!
+        val exercise = Exercise(0, workout.id, 5, Duration.ofSeconds(0), "", workout.exercises.size, mutableListOf())
+        val set = Set(0, exercise.id, 0.0, 0, 0, 0.0, 0, SetType.Normal, exercise.sets.size)
         exercise.sets.add(set)
         workout.exercises.add(exercise)
         workoutViewModel.workoutModel.postValue(workout)
@@ -88,25 +97,40 @@ class WorkoutEditFragment : Fragment() {
     }
 
     private fun deleteExercise(exercisePosition : Int) {
-        var workout = workoutViewModel.workoutModel.value!!
+        val workout = workoutViewModel.workoutModel.value!!
         workout.exercises.removeAt(exercisePosition)
         workoutViewModel.workoutModel.postValue(workout)
         adapter.notifyItemChanged(exercisePosition)
     }
 
     private fun addSet(exercisePosition : Int) {
-        var workout = workoutViewModel.workoutModel.value!!
-        var exercise = workout.exercises[exercisePosition]
-        var set = Set(0, exercise.id, 0.0, 0, 0, 0.0, 0, SetType.Normal, exercise.sets.size)
+        val workout = workoutViewModel.workoutModel.value!!
+        val exercise = workout.exercises[exercisePosition]
+        val set = Set(0, exercise.id, 0.0, 0, 0, 0.0, 0, SetType.Normal, exercise.sets.size)
         exercise.sets.add(set)
         workoutViewModel.workoutModel.postValue(workout)
         adapter.notifyItemChanged(exercisePosition)
     }
 
     private fun deleteSet(data : Pair<Int, Int>) {
-        var workout = workoutViewModel.workoutModel.value!!
-        var exercise = workout.exercises[data.first]
+        val workout = workoutViewModel.workoutModel.value!!
+        val exercise = workout.exercises[data.first]
         exercise.sets.removeAt(data.second)
+        workoutViewModel.workoutModel.postValue(workout)
+        adapter.notifyItemChanged(data.first)
+    }
+
+    private fun toggleSet(data : Pair<Int, Int>) {
+        val workout = workoutViewModel.workoutModel.value!!
+        val exercise = workout.exercises[data.first]
+        exercise.sets[data.second].completed = !exercise.sets[data.second].completed
+        workoutViewModel.workoutModel.postValue(workout)
+        adapter.notifyItemChanged(data.first)
+    }
+
+    private fun updateNote(data : Pair<Int, String>) {
+        val workout = workoutViewModel.workoutModel.value!!
+        workout.exercises[data.first].note = data.second
         workoutViewModel.workoutModel.postValue(workout)
         adapter.notifyItemChanged(data.first)
     }
