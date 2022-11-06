@@ -1,10 +1,13 @@
 package com.marcomadalin.olympus.presentation.view
 
+import android.graphics.Color
+import android.text.InputType
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.marcomadalin.olympus.R
 import com.marcomadalin.olympus.databinding.SetEditItemBinding
 import com.marcomadalin.olympus.domain.model.Set
+import com.marcomadalin.olympus.domain.model.enums.SetType
 
 class SetEditViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
@@ -20,7 +23,12 @@ class SetEditViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             toggleSet(Pair(exercisePosition, absoluteAdapterPosition))
         }
 
-        binding.setTypeEdit.text = set.type.toString()
+        binding.setTypeEdit.text = set.type.toString()[0].toString()
+        var color : Int = Color.parseColor(getColor(set.type))
+        binding.setTypeEdit.setTextColor(color)
+        binding.rirNumber.filters = arrayOf(InputFilterMinMax(0, 10))
+        binding.weightNumber2.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
+
 
         if (set.lastReps > 0) {
             binding.prevWeight.text = set.lastWeight.toString() + " x " + set.lastReps
@@ -35,5 +43,14 @@ class SetEditViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private fun changeBackgroundColor() {
         if (absoluteAdapterPosition % 2 == 0) binding.setEditLayout.setBackgroundResource(R.color.layout)
         else binding.setEditLayout.setBackgroundResource(R.color.background)
+    }
+
+    private fun getColor(type : SetType) : String {
+        return when (type) {
+            SetType.Normal -> "#5E5D5D"
+            SetType.Warmup -> "#D86800"
+            SetType.Drop -> "#2196F3"
+            else -> "#7A0098"
+        }
     }
 }
