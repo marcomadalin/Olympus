@@ -47,6 +47,7 @@ class WorkoutEditFragment : Fragment() {
         adapter = ExerciseEditAdapter(workoutViewModel.workoutModel.value!!.exercises,
             {updateNote(it)}, {addSet(it)}, {deleteSet(it)}, {toggleSet(it)}, {onItemClick(it)})
         binding.editRecycler.adapter = adapter
+        binding.editRecycler.isNestedScrollingEnabled = false
         updateWorkoutReview( workoutViewModel.workoutModel.value)
     }
 

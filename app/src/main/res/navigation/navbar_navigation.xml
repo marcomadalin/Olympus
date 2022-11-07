@@ -87,5 +87,29 @@
         <action
             android:id="@+id/action_blankFragment_to_workoutReview"
             app:destination="@id/workoutReview" />
+        <action
+            android:id="@+id/action_workoutEdit_to_workoutReorderFragment"
+            app:destination="@id/workoutReorderFragment" />
+        <action
+            android:id="@+id/action_workoutEdit_to_workoutSuperset"
+            app:destination="@id/workoutSuperset" />
+    </fragment>
+    <fragment
+        android:id="@+id/workoutReorderFragment"
+        android:name="com.marcomadalin.olympus.WorkoutReorderFragment"
+        android:label="fragment_workout_reorder"
+        tools:layout="@layout/fragment_workout_reorder" >
+        <action
+            android:id="@+id/action_workoutReorderFragment_to_workoutEdit"
+            app:destination="@id/workoutEdit" />
+    </fragment>
+    <fragment
+        android:id="@+id/workoutSuperset"
+        android:name="com.marcomadalin.olympus.presentation.view.WorkoutSupersetFragment"
+        android:label="fragment_workout_superset"
+        tools:layout="@layout/fragment_workout_superset" >
+        <action
+            android:id="@+id/action_workoutSuperset_to_workoutEdit"
+            app:destination="@id/workoutEdit" />
     </fragment>
 </navigation>

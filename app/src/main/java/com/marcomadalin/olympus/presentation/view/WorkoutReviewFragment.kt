@@ -39,8 +39,9 @@ class WorkoutReviewFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         popupMenu()
         binding.backButtonSummary.setOnClickListener {
-            (activity as MainActivity).showNavigationBar()
             Navigation.findNavController(binding.root).navigate(R.id.history)
+            (activity as MainActivity).showNavigationBar()
+
         }
         binding.exerciseRecycler.layoutManager = LinearLayoutManager(this.context)
         adapter = ExerciseReviewAdapter(workoutViewModel.workoutModel.value!!.exercises)

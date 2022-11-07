@@ -38,8 +38,8 @@ class HistoryFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         binding.workoutSummary2.setOnClickListener {
-            (activity as MainActivity).hideNavigationBar()
             Navigation.findNavController(binding.root).navigate(R.id.workoutReview)
+            (activity as MainActivity).hideNavigationBar()
         }
         binding.calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
             workoutViewModel.selectedDate.postValue(LocalDate.of(year, month+1, dayOfMonth))
