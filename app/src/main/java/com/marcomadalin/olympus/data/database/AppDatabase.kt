@@ -4,6 +4,7 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.marcomadalin.olympus.data.database.converters.IntSetConverters
+import com.marcomadalin.olympus.data.database.converters.ListSetConverters
 import com.marcomadalin.olympus.data.database.converters.MapConverters
 import com.marcomadalin.olympus.data.database.converters.StringSetConverters
 import com.marcomadalin.olympus.data.database.daos.ExerciseDAO
@@ -24,8 +25,8 @@ import com.marcomadalin.olympus.data.database.entities.UserEntity
 import com.marcomadalin.olympus.data.database.entities.WorkoutEntity
 
 @Database(entities = [ExerciseEntity::class, ExerciseDataEntity::class, MeasureEntity::class, RoutineEntity::class,
-    SetEntity::class, StatisticEntity::class, UserEntity::class, WorkoutEntity::class], version = 25)
-@TypeConverters(MapConverters::class, StringSetConverters::class, IntSetConverters::class)
+    SetEntity::class, StatisticEntity::class, UserEntity::class, WorkoutEntity::class], version = 26)
+@TypeConverters(MapConverters::class, StringSetConverters::class, IntSetConverters::class, ListSetConverters::class)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun exerciseDAO(): ExerciseDAO

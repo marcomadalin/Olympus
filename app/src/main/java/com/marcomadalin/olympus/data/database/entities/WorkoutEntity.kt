@@ -2,6 +2,8 @@ package com.marcomadalin.olympus.data.database.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
+import com.marcomadalin.olympus.data.database.converters.ListSetConverters
 import com.marcomadalin.olympus.domain.model.Workout
 
 @Entity(tableName = "Workouts")
@@ -13,6 +15,8 @@ data class WorkoutEntity (
     var note : String = "",
     var length : Long = 0,
     var date : String = "",
+    @TypeConverters(ListSetConverters::class)
+    var supersets : List<Set<Int>> = emptyList()
 )
 fun Workout.toData() = WorkoutEntity(
     id,
@@ -20,5 +24,6 @@ fun Workout.toData() = WorkoutEntity(
     name,
     note,
     length.seconds,
-    date.toString()
+    date.toString(),
+    supersets
 )

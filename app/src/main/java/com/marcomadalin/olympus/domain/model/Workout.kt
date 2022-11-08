@@ -11,7 +11,8 @@ data class Workout (
     var note : String = "",
     var length  : Duration = Duration.ofSeconds(0),
     var date : LocalDate = LocalDate.parse(""),
-    var exercises: MutableList<Exercise> = mutableListOf()
+    var exercises : MutableList<Exercise> = mutableListOf(),
+    var supersets : MutableList<MutableSet<Int>> = mutableListOf()
 )
 fun WorkoutEntity.toDomain() = Workout(
     id,
@@ -19,5 +20,6 @@ fun WorkoutEntity.toDomain() = Workout(
     name,
     note,
     Duration.ofSeconds(length),
-    LocalDate.parse(date)
+    LocalDate.parse(date),
+    supersets = supersets.map { it.toMutableSet() }.toMutableList()
 )
