@@ -16,12 +16,14 @@ class ExerciseEditAdapter(private val exercises: List<Exercise>,
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExerciseEditViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return ExerciseEditViewHolder(layoutInflater.inflate(R.layout.exercise_edit_item, parent, false))
+        val viewHolder = ExerciseEditViewHolder(layoutInflater.inflate(R.layout.exercise_edit_item, parent, false))
+        viewHolder.deleteSet = deleteSet
+        return viewHolder
     }
 
     override fun onBindViewHolder(holder: ExerciseEditViewHolder, position: Int) {
         val item = exercises[position]
-        holder.render(item, updateNote, addSet, deleteSet, toggleSet, onItemClick)
+        holder.render(item, updateNote, addSet, toggleSet, onItemClick)
     }
 
     override fun getItemCount(): Int = exercises.size

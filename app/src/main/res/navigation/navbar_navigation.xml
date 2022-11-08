@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/navigarion"
+    android:id="@+id/navigation"
     app:startDestination="@id/history">
     <fragment
         android:id="@+id/history"
@@ -96,7 +96,7 @@
     </fragment>
     <fragment
         android:id="@+id/workoutReorderFragment"
-        android:name="com.marcomadalin.olympus.WorkoutReorderFragment"
+        android:name="com.marcomadalin.olympus.presentation.view.WorkoutReorderFragment"
         android:label="fragment_workout_reorder"
         tools:layout="@layout/fragment_workout_reorder" >
         <action

@@ -6,7 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.Navigation
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.marcomadalin.olympus.R
 import com.marcomadalin.olympus.databinding.FragmentWorkoutEditBinding
@@ -29,6 +30,8 @@ class WorkoutEditFragment : Fragment() {
 
     private lateinit var adapter : ExerciseEditAdapter
 
+    private lateinit var navController : NavController
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,9 +42,8 @@ class WorkoutEditFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.backButtonSummary2.setOnClickListener {
-            Navigation.findNavController(binding.root).navigate(R.id.workoutReview)
-        }
+        navController = findNavController()
+        binding.backButtonSummary2.setOnClickListener {navController.popBackStack()}
         binding.button2.setOnClickListener { addExercise() }
         binding.editRecycler.layoutManager = LinearLayoutManager(this.context)
         adapter = ExerciseEditAdapter(workoutViewModel.workoutModel.value!!.exercises,
@@ -54,6 +56,7 @@ class WorkoutEditFragment : Fragment() {
     private fun onItemClick(data : Pair<Int, Int>) : Boolean {
         return when (data.first) {
             R.id.order -> {
+                navController.navigate(R.id.workoutReorderFragment)
                 true
             }
             R.id.superset -> {

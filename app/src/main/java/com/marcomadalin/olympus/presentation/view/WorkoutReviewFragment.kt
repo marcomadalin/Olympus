@@ -8,7 +8,8 @@ import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.Navigation
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.marcomadalin.olympus.R
 import com.marcomadalin.olympus.databinding.FragmentWorkoutReviewBinding
@@ -27,6 +28,8 @@ class WorkoutReviewFragment : Fragment() {
 
     private lateinit var adapter : ExerciseReviewAdapter
 
+    private lateinit var navController : NavController
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -37,11 +40,11 @@ class WorkoutReviewFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        navController = findNavController()
         popupMenu()
         binding.backButtonSummary.setOnClickListener {
-            Navigation.findNavController(binding.root).navigate(R.id.history)
+            navController.popBackStack()
             (activity as MainActivity).showNavigationBar()
-
         }
         binding.exerciseRecycler.layoutManager = LinearLayoutManager(this.context)
         adapter = ExerciseReviewAdapter(workoutViewModel.workoutModel.value!!.exercises)
@@ -60,10 +63,11 @@ class WorkoutReviewFragment : Fragment() {
                         true
                     }
                     R.id.edit -> {
-                        Navigation.findNavController(binding.root).navigate(R.id.workoutEdit)
+                        navController.navigate(R.id.workoutEdit)
                         true
                     }
                     R.id.delete -> {
+                        //TODO DELETE
                         true
                     }
                     else -> false

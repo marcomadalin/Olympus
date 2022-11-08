@@ -9,7 +9,7 @@
         android:id="@+id/view2"
         android:layout_width="80dp"
         android:layout_height="30dp"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="26dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -18,7 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="30dp"
         android:text="Exercise name"
         android:textColor="@color/black"
         app:layout_constraintStart_toEndOf="@+id/imageView5"
@@ -28,7 +28,9 @@
         android:id="@+id/imageView5"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/image_round"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

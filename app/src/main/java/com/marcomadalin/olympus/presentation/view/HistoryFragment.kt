@@ -7,7 +7,8 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.Navigation
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.marcomadalin.olympus.R
 import com.marcomadalin.olympus.databinding.FragmentHistoryBinding
@@ -28,6 +29,9 @@ class HistoryFragment : Fragment() {
     private val workoutViewModel : WorkoutViewModel by activityViewModels()
 
     private lateinit var adapter : WorkoutSummaryAdapter
+
+    private lateinit var navController: NavController
+
     private var first = true
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -37,8 +41,9 @@ class HistoryFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        navController = findNavController()
         binding.workoutSummary2.setOnClickListener {
-            Navigation.findNavController(binding.root).navigate(R.id.workoutReview)
+            navController.navigate(R.id.workoutReview)
             (activity as MainActivity).hideNavigationBar()
         }
         binding.calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
