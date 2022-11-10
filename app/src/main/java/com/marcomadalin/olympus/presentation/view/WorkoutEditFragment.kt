@@ -48,6 +48,7 @@ class WorkoutEditFragment : Fragment() {
         binding.editRecycler.layoutManager = LinearLayoutManager(this.context)
         adapter = ExerciseEditAdapter(workoutViewModel.workoutModel.value!!.exercises,
             {updateNote(it)}, {addSet(it)}, {deleteSet(it)}, {toggleSet(it)}, {onItemClick(it)})
+        adapter.supersets = workoutViewModel.workoutModel.value!!.supersets
         binding.editRecycler.adapter = adapter
         binding.editRecycler.isNestedScrollingEnabled = false
         updateWorkoutReview( workoutViewModel.workoutModel.value)
@@ -60,6 +61,7 @@ class WorkoutEditFragment : Fragment() {
                 true
             }
             R.id.superset -> {
+                navController.navigate(R.id.workoutSupersetFragment)
                 true
             }
             R.id.swap -> {
@@ -75,6 +77,7 @@ class WorkoutEditFragment : Fragment() {
 
     private fun updateWorkoutReview(workout: Workout?) {
         if (workout != null) {
+            adapter.supersets = workoutViewModel.workoutModel.value!!.supersets
             binding.summaryTitle2.text = workout.name
             binding.summaryDate2.text = workout.date.dayOfMonth.toString() + " " +
                     workout.date.month.toString().toLowerCase(Locale.ROOT) + " " + workout.date.year

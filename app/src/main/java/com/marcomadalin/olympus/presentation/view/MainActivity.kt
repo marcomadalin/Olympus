@@ -78,7 +78,7 @@ class MainActivity : AppCompatActivity() {
         val workout = Workout(0, 1, "Legs", "Pretty chill workout",
             Duration.ofSeconds(1780), LocalDate.now(),
             mutableListOf(exercise1, exercise2, exercise3, exercise4, exercise5),
-            mutableListOf(mutableSetOf(1,2), mutableSetOf(3,4,5)))
+            mutableListOf())
         GlobalScope.launch {
             workoutViewModel.saveWorkout(workout)
             workoutViewModel.getWorkout()

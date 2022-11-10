@@ -1,10 +1,12 @@
 package com.marcomadalin.olympus.presentation.view
 
 import android.graphics.Canvas
+import android.graphics.Color
 import android.util.Log
 import android.view.View
 import android.widget.PopupMenu
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -53,11 +55,22 @@ class ExerciseEditViewHolder(private val view: View) : RecyclerView.ViewHolder(v
 
     }
 
-    fun render(exercise: Exercise,
-               updateNote: (Pair<Int, String>) -> Unit,
-               addSet: (Int) -> Unit,
-               toggleSet: (Pair<Int, Int>) -> Unit,
-               onItemClick: (Pair<Int, Int>) -> Boolean) {
+    fun render(
+        exercise: Exercise,
+        updateNote: (Pair<Int, String>) -> Unit,
+        addSet: (Int) -> Unit,
+        toggleSet: (Pair<Int, Int>) -> Unit,
+        onItemClick: (Pair<Int, Int>) -> Boolean,
+        colors: List<String>,
+        supersets: List<Set<Long>>
+    ) {
+        binding.superset.isVisible = false
+        for (i in supersets.indices) {
+            if (supersets[i].contains(exercise.id)) {
+                binding.superset.setBackgroundColor(Color.parseColor(colors[i]))
+                binding.superset.isVisible = true
+            }
+        }
         binding.exerciseName4.text = exercise.exerciseDataId.toString()
         binding.exerciseNoteEdit.setText(exercise.note)
         binding.setRecycler2.layoutManager = LinearLayoutManager(view.context)

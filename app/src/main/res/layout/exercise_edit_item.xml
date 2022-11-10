@@ -28,14 +28,11 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/superset"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="24dp"
-        android:background="@drawable/image_round"
-        android:backgroundTint="@color/black"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="17dp"
         android:visibility="invisible"
-        app:layout_constraintStart_toEndOf="@+id/exerciseName4"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -165,4 +162,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/menu" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

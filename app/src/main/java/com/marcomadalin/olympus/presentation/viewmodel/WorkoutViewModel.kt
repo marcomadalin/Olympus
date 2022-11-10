@@ -3,6 +3,7 @@ package com.marcomadalin.olympus.presentation.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.marcomadalin.olympus.domain.cases.DeleteWorkoutUseCase
 import com.marcomadalin.olympus.domain.cases.DeleteWorkoutsUseCase
 import com.marcomadalin.olympus.domain.cases.GetWorkoutUseCase
 import com.marcomadalin.olympus.domain.cases.SaveWorkoutUseCase
@@ -16,7 +17,8 @@ import javax.inject.Inject
 class WorkoutViewModel @Inject constructor(
     private val getWorkoutUseCase: GetWorkoutUseCase,
     private val saveWorkoutUseCase: SaveWorkoutUseCase,
-    private val deleteWorkoutsUseCase: DeleteWorkoutsUseCase
+    private val deleteWorkoutsUseCase: DeleteWorkoutsUseCase,
+    private val deleteWorkoutUseCase: DeleteWorkoutUseCase
     ) : ViewModel() {
 
     val selectedDate = MutableLiveData(LocalDate.now())
@@ -29,6 +31,13 @@ class WorkoutViewModel @Inject constructor(
 
     fun saveWorkout(workout: Workout) {
         viewModelScope.launch {saveWorkoutUseCase(workout)}
+    }
+
+    fun deleteWorkout(workout: Workout) {
+        viewModelScope.launch {
+            deleteWorkoutUseCase(workout)
+            getWorkout()
+        }
     }
 
     fun deleteWorkouts() {

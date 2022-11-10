@@ -92,7 +92,7 @@
             app:destination="@id/workoutReorderFragment" />
         <action
             android:id="@+id/action_workoutEdit_to_workoutSuperset"
-            app:destination="@id/workoutSuperset" />
+            app:destination="@id/workoutSupersetFragment" />
     </fragment>
     <fragment
         android:id="@+id/workoutReorderFragment"
@@ -104,7 +104,7 @@
             app:destination="@id/workoutEdit" />
     </fragment>
     <fragment
-        android:id="@+id/workoutSuperset"
+        android:id="@+id/workoutSupersetFragment"
         android:name="com.marcomadalin.olympus.presentation.view.WorkoutSupersetFragment"
         android:label="fragment_workout_superset"
         tools:layout="@layout/fragment_workout_superset" >

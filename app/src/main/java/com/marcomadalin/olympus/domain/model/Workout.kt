@@ -12,7 +12,7 @@ data class Workout (
     var length  : Duration = Duration.ofSeconds(0),
     var date : LocalDate = LocalDate.parse(""),
     var exercises : MutableList<Exercise> = mutableListOf(),
-    var supersets : MutableList<MutableSet<Int>> = mutableListOf()
+    var supersets : MutableList<MutableSet<Long>> = mutableListOf()
 )
 fun WorkoutEntity.toDomain() = Workout(
     id,

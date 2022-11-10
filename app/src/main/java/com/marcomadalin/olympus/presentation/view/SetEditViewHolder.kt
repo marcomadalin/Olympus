@@ -41,8 +41,8 @@ class SetEditViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     }
 
     private fun changeBackgroundColor() {
-        if (absoluteAdapterPosition % 2 == 0) binding.setEditLayout.setBackgroundResource(R.color.layout)
-        else binding.setEditLayout.setBackgroundResource(R.color.background)
+        if (absoluteAdapterPosition % 2 == 0) binding.setEditLayout.setBackgroundResource(R.color.background)
+        else binding.setEditLayout.setBackgroundResource(R.color.layout)
     }
 
     private fun getColor(type : SetType) : String {

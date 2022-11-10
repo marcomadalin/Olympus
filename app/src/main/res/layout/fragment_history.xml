@@ -36,7 +36,7 @@
         android:id="@+id/workoutSummary"
         android:layout_width="347dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/workout_layout"
         android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -45,18 +45,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/calendarView"
         app:layout_constraintVertical_bias="0.0">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/workoutSummary2"
-            android:layout_width="347dp"
-            android:layout_height="275dp"
-            android:alpha="0"
-            android:background="@drawable/workout_layout"
-            android:clickable="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/workoutTitle"
@@ -156,11 +144,11 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/summaryRecycler"
             android:layout_width="300dp"
-            android:layout_height="140dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="30dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

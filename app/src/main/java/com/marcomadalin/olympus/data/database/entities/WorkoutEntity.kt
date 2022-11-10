@@ -16,7 +16,7 @@ data class WorkoutEntity (
     var length : Long = 0,
     var date : String = "",
     @TypeConverters(ListSetConverters::class)
-    var supersets : List<Set<Int>> = emptyList()
+    var supersets : List<Set<Long>> = emptyList()
 )
 fun Workout.toData() = WorkoutEntity(
     id,

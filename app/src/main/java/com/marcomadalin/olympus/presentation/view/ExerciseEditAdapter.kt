@@ -14,6 +14,9 @@ class ExerciseEditAdapter(private val exercises: List<Exercise>,
                           private val onItemClick: (Pair<Int, Int>) -> Boolean
 ) : RecyclerView.Adapter<ExerciseEditViewHolder>() {
 
+    private val colors : List<String> = listOf("#40ce68", "#460bbc", "#e447ef", "#46dbd6", "#d13b1d", "#e28258", "9b2047", "#edc255")
+    lateinit var supersets : List<Set<Long>>
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExerciseEditViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val viewHolder = ExerciseEditViewHolder(layoutInflater.inflate(R.layout.exercise_edit_item, parent, false))
@@ -23,7 +26,7 @@ class ExerciseEditAdapter(private val exercises: List<Exercise>,
 
     override fun onBindViewHolder(holder: ExerciseEditViewHolder, position: Int) {
         val item = exercises[position]
-        holder.render(item, updateNote, addSet, toggleSet, onItemClick)
+        holder.render(item, updateNote, addSet, toggleSet, onItemClick, colors, supersets)
     }
 
     override fun getItemCount(): Int = exercises.size

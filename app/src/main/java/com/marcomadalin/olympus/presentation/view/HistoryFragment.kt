@@ -42,7 +42,7 @@ class HistoryFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         navController = findNavController()
-        binding.workoutSummary2.setOnClickListener {
+        binding.workoutSummary.setOnClickListener {
             navController.navigate(R.id.workoutReview)
             (activity as MainActivity).hideNavigationBar()
         }
