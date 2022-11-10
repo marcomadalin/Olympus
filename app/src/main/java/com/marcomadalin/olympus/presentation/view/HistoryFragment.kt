@@ -17,8 +17,7 @@ import com.marcomadalin.olympus.presentation.viewmodel.WorkoutViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
 
-//TODO SHOW SUPERSETS IN SUMMARY
-//TODO TRANSITION IN WORKOUT REVIEW
+//TODO TRANSITION
 
 @AndroidEntryPoint
 class HistoryFragment : Fragment() {
@@ -41,6 +40,7 @@ class HistoryFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        first = true
         navController = findNavController()
         binding.workoutSummary.setOnClickListener {
             navController.navigate(R.id.workoutReview)
@@ -57,8 +57,9 @@ class HistoryFragment : Fragment() {
     }
 
     private fun updateWorkoutSummary(workout: Workout?) {
-        if (first) {
+        if (workout != null && first) {
             adapter = WorkoutSummaryAdapter(workoutViewModel.workoutModel.value!!.exercises)
+            adapter.supersets = workoutViewModel.workoutModel.value!!.supersets
             binding.summaryRecycler.adapter = adapter
             first = false
         }
@@ -68,6 +69,7 @@ class HistoryFragment : Fragment() {
             binding.workoutEmpty.isVisible = true;
         }
         else {
+            adapter.supersets = workoutViewModel.workoutModel.value!!.supersets
             binding.workoutEmpty.isVisible = false;
             binding.workoutTitle.text = workout.name
             var volume = 0.0

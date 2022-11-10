@@ -6,11 +6,21 @@
     android:layout_height="wrap_content"
     android:background="@color/background">
 
+    <View
+        android:id="@+id/superset3"
+        android:layout_width="20dp"
+        android:layout_height="70dp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/setRecycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,18 +31,23 @@
         android:id="@+id/summarytNote2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
         android:background="@drawable/workout_layout"
         android:paddingHorizontal="10dp"
         android:paddingVertical="5dp"
         android:text="Exercise note"
         android:textColor="@color/text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/exerciseName2" />
 
     <TextView
         android:id="@+id/exerciseName2"
         android:layout_width="94dp"
         android:layout_height="21dp"
+        android:layout_marginStart="20dp"
         android:text="Exercise Name"
         android:textColor="@color/black"
         android:textStyle="bold"
@@ -43,7 +58,7 @@
         android:id="@+id/urm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="40dp"
         android:text="1 RM"
         android:textColor="@color/black"
         android:textStyle="bold"

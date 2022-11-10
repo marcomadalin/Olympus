@@ -20,9 +20,7 @@ class WorkoutRepository @Inject constructor(private val workoutDAO: WorkoutDAO) 
     }
 
     suspend fun getWorkout(date: LocalDate) : Workout? {
-        val result =  workoutDAO.getWorkout(date.toString())
-        if (result != null) return result.toDomain()
-        else return null
+        return workoutDAO.getWorkout(date.toString())?.toDomain()
     }
 
     suspend fun getAllWorkoutExercises(id: Long) : List<Exercise> {

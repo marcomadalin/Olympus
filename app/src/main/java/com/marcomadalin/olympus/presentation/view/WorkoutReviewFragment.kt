@@ -18,6 +18,8 @@ import com.marcomadalin.olympus.presentation.viewmodel.WorkoutViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
+//TODO FIND BETTER WAY TO SHOW SUPERSETS
+
 @AndroidEntryPoint
 class WorkoutReviewFragment : Fragment() {
 
@@ -48,6 +50,7 @@ class WorkoutReviewFragment : Fragment() {
         }
         binding.exerciseRecycler.layoutManager = LinearLayoutManager(this.context)
         adapter = ExerciseReviewAdapter(workoutViewModel.workoutModel.value!!.exercises)
+        adapter.supersets = workoutViewModel.workoutModel.value!!.supersets
         binding.exerciseRecycler.adapter = adapter
         workoutViewModel.workoutModel.observe(viewLifecycleOwner) {updateWorkoutReview(it)}
     }
@@ -92,6 +95,7 @@ class WorkoutReviewFragment : Fragment() {
 
     private fun updateWorkoutReview(workout: Workout?) {
         if (workout != null) {
+            adapter.supersets = workoutViewModel.workoutModel.value!!.supersets
             binding.summaryTitle.text = workout.name
             binding.summaryDate.text = workout.date.dayOfMonth.toString() + " " +
                     workout.date.month.toString().toLowerCase(Locale.ROOT) + " " + workout.date.year

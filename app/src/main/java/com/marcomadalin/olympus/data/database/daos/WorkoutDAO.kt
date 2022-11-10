@@ -18,7 +18,7 @@ interface WorkoutDAO {
     suspend fun getWorkout(id: Long) : WorkoutEntity
 
     @Query("SELECT * FROM Workouts WHERE date like :date")
-    suspend fun getWorkout(date: String) : WorkoutEntity
+    suspend fun getWorkout(date: String): WorkoutEntity?
 
     @Query("SELECT * FROM Workouts JOIN Exercises On Workouts.id = Exercises.workoutId " +
             "WHERE Workouts.id = :id ORDER BY Exercises.exerciseNumber")
