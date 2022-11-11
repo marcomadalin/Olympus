@@ -53,13 +53,13 @@ class HistoryFragment : Fragment() {
         binding.summaryRecycler.layoutManager = LinearLayoutManager(this.context)
         adapter = WorkoutSummaryAdapter(emptyList())
         binding.summaryRecycler.adapter = adapter
-        workoutViewModel.workoutModel.observe(viewLifecycleOwner) {updateWorkoutSummary(it)}
+        workoutViewModel.workout.observe(viewLifecycleOwner) {updateWorkoutSummary(it)}
     }
 
     private fun updateWorkoutSummary(workout: Workout?) {
         if (workout != null && first) {
-            adapter = WorkoutSummaryAdapter(workoutViewModel.workoutModel.value!!.exercises)
-            adapter.supersets = workoutViewModel.workoutModel.value!!.supersets
+            adapter = WorkoutSummaryAdapter(workoutViewModel.workout.value!!.exercises)
+            adapter.supersets = workoutViewModel.workout.value!!.supersets
             binding.summaryRecycler.adapter = adapter
             first = false
         }
@@ -69,7 +69,7 @@ class HistoryFragment : Fragment() {
             binding.workoutEmpty.isVisible = true;
         }
         else {
-            adapter.supersets = workoutViewModel.workoutModel.value!!.supersets
+            adapter.supersets = workoutViewModel.workout.value!!.supersets
             binding.workoutEmpty.isVisible = false;
             binding.workoutTitle.text = workout.name
             var volume = 0.0

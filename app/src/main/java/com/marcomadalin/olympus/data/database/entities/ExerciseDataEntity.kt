@@ -22,6 +22,7 @@ data class ExerciseDataEntity(
     var orm: Double = 0.0,
     var bestSetWeight: Double = 0.0,
     var bestSetReps: Int = 0,
+    var default : Boolean = true
 )
 fun ExerciseData.toData() = ExerciseDataEntity(
     id,
@@ -34,5 +35,6 @@ fun ExerciseData.toData() = ExerciseDataEntity(
     maxWeight,
     orm,
     bestSetWeight,
-    bestSetReps
+    bestSetReps,
+    default
 )

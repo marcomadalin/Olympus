@@ -36,10 +36,10 @@ class WorkoutReorderFragment : Fragment() {
         override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
             val startPosition = viewHolder.absoluteAdapterPosition
             val endPosition = target.absoluteAdapterPosition
-            val workout = workoutViewModel.workoutModel.value!!
+            val workout = workoutViewModel.workout.value!!
             Collections.swap(workout.exercises, startPosition, endPosition)
             recyclerView.adapter?.notifyItemMoved(startPosition, endPosition)
-            workoutViewModel.workoutModel.postValue(workout)
+            workoutViewModel.workout.postValue(workout)
             return true
         }
 
@@ -56,11 +56,11 @@ class WorkoutReorderFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         navController = findNavController()
         binding.reorderrecycler.layoutManager = LinearLayoutManager(this.context)
-        adapter = ExerciseReorderAdapter(workoutViewModel.workoutModel.value!!.exercises)
+        adapter = ExerciseReorderAdapter(workoutViewModel.workout.value!!.exercises)
         binding.reorderrecycler.adapter = adapter
         ItemTouchHelper(simpleCallback).attachToRecyclerView(binding.reorderrecycler)
         binding.reorderrecycler.addItemDecoration(DividerItemDecoration(binding.reorderrecycler.context, DividerItemDecoration.VERTICAL))
-        binding.summaryTitle3.text = workoutViewModel.workoutModel.value!!.name
+        binding.summaryTitle3.text = workoutViewModel.workout.value!!.name
         binding.backButtonSummary3.setOnClickListener{ navController.popBackStack() }
     }
 

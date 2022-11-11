@@ -11,7 +11,7 @@ class SaveWorkoutUseCase @Inject constructor(
     private val exerciseRepository: ExerciseRepository,
     private val setRepository: SetRepository){
 
-    suspend operator fun invoke(workout: Workout) : Workout{
+    suspend operator fun invoke(workout: Workout){
         workout.id = workoutRepository.saveWorkout(workout)
         workout.exercises.forEach {exercise ->
             exercise.workoutId = workout.id
@@ -21,7 +21,6 @@ class SaveWorkoutUseCase @Inject constructor(
                 set.id = setRepository.saveSet(set)
             }
         }
-        return workout
     }
 
 }

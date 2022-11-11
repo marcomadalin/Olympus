@@ -12,8 +12,8 @@ class ExerciseDataRepository @Inject constructor(private val exerciseDataDAO: Ex
 
     //TODO query to check if routine has exercise in case we delete one ExerciseData so we can propagate deletes without problems
 
-    suspend fun getAllExercisesData() : List<ExerciseData> {
-        return exerciseDataDAO.getAllExercisesData().map { it.toDomain() }
+    suspend fun getAllExercisesData() : List<ExerciseData?> {
+        return exerciseDataDAO.getAllExercisesData().map { it?.toDomain() }
     }
 
     suspend fun getExercisesData(id: Long) : ExerciseData {

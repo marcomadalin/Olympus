@@ -49,10 +49,10 @@ class WorkoutReviewFragment : Fragment() {
             (activity as MainActivity).showNavigationBar()
         }
         binding.exerciseRecycler.layoutManager = LinearLayoutManager(this.context)
-        adapter = ExerciseReviewAdapter(workoutViewModel.workoutModel.value!!.exercises)
-        adapter.supersets = workoutViewModel.workoutModel.value!!.supersets
+        adapter = ExerciseReviewAdapter(workoutViewModel.workout.value!!.exercises)
+        adapter.supersets = workoutViewModel.workout.value!!.supersets
         binding.exerciseRecycler.adapter = adapter
-        workoutViewModel.workoutModel.observe(viewLifecycleOwner) {updateWorkoutReview(it)}
+        workoutViewModel.workout.observe(viewLifecycleOwner) {updateWorkoutReview(it)}
     }
 
     private fun popupMenu() {
@@ -70,7 +70,7 @@ class WorkoutReviewFragment : Fragment() {
                         true
                     }
                     R.id.delete -> {
-                        workoutViewModel.deleteWorkout(workoutViewModel.workoutModel.value!!)
+                        workoutViewModel.deleteWorkout(workoutViewModel.workout.value!!)
                         navController.navigate(R.id.history)
                         (activity as MainActivity).showNavigationBar()
                         //TODO FIX BUG DELETE
@@ -95,7 +95,7 @@ class WorkoutReviewFragment : Fragment() {
 
     private fun updateWorkoutReview(workout: Workout?) {
         if (workout != null) {
-            adapter.supersets = workoutViewModel.workoutModel.value!!.supersets
+            adapter.supersets = workoutViewModel.workout.value!!.supersets
             binding.summaryTitle.text = workout.name
             binding.summaryDate.text = workout.date.dayOfMonth.toString() + " " +
                     workout.date.month.toString().toLowerCase(Locale.ROOT) + " " + workout.date.year
