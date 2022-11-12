@@ -7,7 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.marcomadalin.olympus.databinding.FragmentExerciseBinding
+import com.marcomadalin.olympus.domain.model.ExerciseData
 import com.marcomadalin.olympus.presentation.viewmodel.ExerciseDataViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -17,9 +20,9 @@ class ExerciseFragment : Fragment() {
     private var _binding : FragmentExerciseBinding? = null
     private val binding get() = _binding!!
 
-    private val workoutViewModel : ExerciseDataViewModel by activityViewModels()
+    private val exerciseDataViewModel : ExerciseDataViewModel by activityViewModels()
 
-   // private lateinit var adapter : ExercisesAdapter
+    private lateinit var adapter : ExerciseDataAdapter
 
     private lateinit var navController: NavController
 
@@ -35,7 +38,21 @@ class ExerciseFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        (activity as MainActivity).showNavigationBar()
+        navController = findNavController()
+        binding.exerciseRecyler.layoutManager = LinearLayoutManager(this.context)
+        adapter = ExerciseDataAdapter(mutableListOf())
+        binding.exerciseRecyler.adapter = adapter
+        exerciseDataViewModel.exercises.observe(viewLifecycleOwner) {updateExercises(it)}
+        exerciseDataViewModel.getExercisesData()
     }
 
+    private fun updateExercises(exercises: MutableList<ExerciseData>?) {
+        if (exercises != null && first) {
+            adapter = ExerciseDataAdapter(exerciseDataViewModel.exercises.value!!)
+            binding.exerciseRecyler.adapter = adapter
+            first = false
+        }
+    }
 
 }

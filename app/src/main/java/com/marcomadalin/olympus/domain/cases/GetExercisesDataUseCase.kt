@@ -8,8 +8,8 @@ class GetExercisesDataUseCase @Inject constructor(
     private val exerciseDataRepository: ExerciseDataRepository
 ){
 
-    suspend operator fun invoke() : MutableList<ExerciseData?> {
-        return exerciseDataRepository.getAllExercisesData().toMutableList()
+    suspend operator fun invoke() : MutableList<ExerciseData>? {
+        return exerciseDataRepository.getAllExercisesData()?.toMutableList()
     }
 
 }

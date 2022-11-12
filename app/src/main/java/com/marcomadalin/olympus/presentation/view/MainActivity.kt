@@ -10,10 +10,15 @@ import androidx.navigation.Navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.marcomadalin.olympus.databinding.ActivityMainBinding
 import com.marcomadalin.olympus.domain.model.Exercise
+import com.marcomadalin.olympus.domain.model.ExerciseData
 import com.marcomadalin.olympus.domain.model.Set
 import com.marcomadalin.olympus.domain.model.User
 import com.marcomadalin.olympus.domain.model.Workout
+import com.marcomadalin.olympus.domain.model.enums.Equipment
+import com.marcomadalin.olympus.domain.model.enums.ExerciseType
+import com.marcomadalin.olympus.domain.model.enums.Muscle
 import com.marcomadalin.olympus.domain.model.enums.SetType
+import com.marcomadalin.olympus.presentation.viewmodel.ExerciseDataViewModel
 import com.marcomadalin.olympus.presentation.viewmodel.UserViewModel
 import com.marcomadalin.olympus.presentation.viewmodel.WorkoutViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,13 +28,16 @@ import kotlinx.coroutines.launch
 import java.time.Duration
 import java.time.LocalDate
 
+
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
     private val userViewModel: UserViewModel by viewModels()
+
     private val workoutViewModel: WorkoutViewModel by viewModels()
+    private val exerciseDataViewModel: ExerciseDataViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,17 +87,25 @@ class MainActivity : AppCompatActivity() {
             Duration.ofSeconds(1780), LocalDate.now(),
             mutableListOf(exercise1, exercise2, exercise3, exercise4, exercise5),
             mutableListOf())
+
+        val e1 = ExerciseData(0, 1, "Deadlift", ExerciseType.WeightReps, true, Equipment.Barbell, Muscle.Hamstrings, emptySet(), 220.0, 230.75, 220.0, 3, true)
+        val e2 = ExerciseData(0, 1, "Squat", ExerciseType.WeightReps, true, Equipment.Barbell, Muscle.Hamstrings, emptySet(), 190.0, 200.00, 190.0, 3, true)
+        val e3 = ExerciseData(0, 1, "Bench Press", ExerciseType.WeightReps, true, Equipment.Barbell, Muscle.Hamstrings, emptySet(), 120.0, 130.75, 120.0, 3, true)
+        val e4 = ExerciseData(0, 1, "Lat Pulldown", ExerciseType.WeightReps, false, Equipment.Machine, Muscle.Lats, emptySet(), 82.5, 100.25, 82.5, 10, true)
+        val e5 = ExerciseData(0, 1, "Barbell Row", ExerciseType.WeightReps, false, Equipment.Barbell, Muscle.UpperBack, emptySet(), 120.0, 150.75, 120.0, 10, true)
+
+        val exercises : List<ExerciseData> = listOf(e1, e2 , e3, e4, e5)
         GlobalScope.launch {
             workoutViewModel.saveWorkout(workout)
-            workoutViewModel.getWorkout()
+            exerciseDataViewModel.saveAllExercisesData(exercises)
         }
-
     }
 
     override fun onStop() {
         super.onStop()
         userViewModel.deleteUsers()
         workoutViewModel.deleteWorkouts()
+        exerciseDataViewModel.deleteAllExercisesData()
     }
 
     fun hideNavigationBar() {

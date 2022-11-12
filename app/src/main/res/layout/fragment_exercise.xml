@@ -1,21 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="fill_parent"
     android:background="@color/background"
     tools:context=".presentation.view.ExerciseFragment">
 
-    <TextView
-        android:id="@+id/exericseText"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/filter"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/exercise_fragment"
-        android:textAlignment="center"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:isScrollContainer="false"
+        android:layout_marginBottom="20dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/searchbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/workout_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/addSet4">
+
+            <EditText
+                android:id="@+id/exerciseNoteEdit2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/workout_layout"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="5dp"
+                android:text="Workout note"
+                android:textColor="@color/text"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/imageView10" />
+
+            <ImageView
+                android:id="@+id/imageView10"
+                android:layout_width="30dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="5dp"
+                android:background="@null"
+                android:src="@drawable/search"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Button
+            android:id="@+id/addSet3"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/button_layout"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="10dp"
+            android:text="Muscle Group"
+            android:textAllCaps="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/searchbar" />
+
+        <Button
+            android:id="@+id/addSet4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_layout"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="10dp"
+            android:text="Create Exercise"
+            android:textAllCaps="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="25dp" />
+
+        <Button
+            android:id="@+id/addSet2"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="31dp"
+            android:background="@drawable/button_layout"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="10dp"
+            android:text="Equipment"
+            android:textAllCaps="false"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/searchbar" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/dropShadow5"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:layout_below="@id/filter"
+            android:background="@drawable/shadow_reverse"
+            android:isScrollContainer="false" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/exerciseRecyler"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/filter"
+        android:layout_marginBottom="56dp">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+</RelativeLayout>

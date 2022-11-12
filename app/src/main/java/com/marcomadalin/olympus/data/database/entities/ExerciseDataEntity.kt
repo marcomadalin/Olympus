@@ -12,6 +12,7 @@ data class ExerciseDataEntity(
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0,
     var userId: Long = 0,
+    var name : String = "",
     var type: String = "",
     var favourite: Boolean = false,
     var equipment: String = "",
@@ -27,11 +28,12 @@ data class ExerciseDataEntity(
 fun ExerciseData.toData() = ExerciseDataEntity(
     id,
     userId,
+    name,
     type.toString(),
     favourite,
     equipment.toString(),
     primaryMuscle.toString(),
-    secondaryMuscles.map{ it -> it.toString()}.toSet(),
+    secondaryMuscles.map{ it.toString()}.toSet(),
     maxWeight,
     orm,
     bestSetWeight,

@@ -7,6 +7,7 @@ import com.marcomadalin.olympus.domain.cases.DeleteExerciseDataUseCase
 import com.marcomadalin.olympus.domain.cases.DeleteExercisesDataUseCase
 import com.marcomadalin.olympus.domain.cases.GetExercisesDataUseCase
 import com.marcomadalin.olympus.domain.cases.SaveExerciseDataUseCase
+import com.marcomadalin.olympus.domain.cases.SaveExercisesDataUseCase
 import com.marcomadalin.olympus.domain.model.ExerciseData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -16,11 +17,12 @@ import javax.inject.Inject
 class ExerciseDataViewModel @Inject constructor(
     private val getExercisesUseCase: GetExercisesDataUseCase,
     private val saveExerciseDataUseCase: SaveExerciseDataUseCase,
+    private val saveExercisesDataUseCase: SaveExercisesDataUseCase,
     private val deleteExercisesDataCase: DeleteExercisesDataUseCase,
     private val deleteExerciseDataUseCase: DeleteExerciseDataUseCase
     ) : ViewModel() {
 
-    val exercises = MutableLiveData<MutableList<ExerciseData?>?>()
+    val exercises = MutableLiveData<MutableList<ExerciseData>?>()
 
     fun getExercisesData() {
         viewModelScope.launch {exercises.postValue(getExercisesUseCase())}
@@ -30,13 +32,17 @@ class ExerciseDataViewModel @Inject constructor(
         viewModelScope.launch {saveExerciseDataUseCase(exerciseData)}
     }
 
+    fun saveAllExercisesData(exercisesData: List<ExerciseData>) {
+        viewModelScope.launch {saveExercisesDataUseCase(exercisesData)}
+    }
+
     fun deleteExerciseData(exerciseData: ExerciseData) {
         viewModelScope.launch {
             deleteExerciseDataUseCase(exerciseData)
         }
     }
 
-    fun deleteExercisesData() {
+    fun deleteAllExercisesData() {
         viewModelScope.launch {deleteExercisesDataCase()}
     }
 }

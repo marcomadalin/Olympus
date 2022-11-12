@@ -40,6 +40,7 @@ class HistoryFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        (activity as MainActivity).showNavigationBar()
         first = true
         navController = findNavController()
         binding.workoutSummary.setOnClickListener {
@@ -54,6 +55,7 @@ class HistoryFragment : Fragment() {
         adapter = WorkoutSummaryAdapter(emptyList())
         binding.summaryRecycler.adapter = adapter
         workoutViewModel.workout.observe(viewLifecycleOwner) {updateWorkoutSummary(it)}
+        workoutViewModel.getWorkout()
     }
 
     private fun updateWorkoutSummary(workout: Workout?) {

@@ -9,6 +9,7 @@ import kotlin.collections.Set
 data class ExerciseData(
     var id: Long = 0,
     var userId: Long = 0,
+    var name : String = "",
     var type: ExerciseType = ExerciseType.WeightReps,
     var favourite: Boolean = false,
     var equipment: Equipment = Equipment.None,
@@ -23,11 +24,12 @@ data class ExerciseData(
 fun ExerciseDataEntity.toDomain() = ExerciseData(
     id,
     userId,
+    name,
     ExerciseType.valueOf(type),
     favourite,
     Equipment.valueOf(equipment),
     Muscle.valueOf(primaryMuscle),
-    secondaryMuscles.map { it -> Muscle.valueOf(it) }.toSet(),
+    secondaryMuscles.map { Muscle.valueOf(it) }.toSet(),
     maxWeight,
     orm,
     bestSetWeight,
