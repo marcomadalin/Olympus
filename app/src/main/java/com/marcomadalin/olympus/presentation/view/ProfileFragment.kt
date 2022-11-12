@@ -43,4 +43,9 @@ class ProfileFragment : Fragment() {
         }
 
     }
+
+    override fun onStart() {
+        super.onStart()
+        (activity as MainActivity).showNavigationBar()
+    }
 }
