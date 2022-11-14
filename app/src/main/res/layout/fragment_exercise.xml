@@ -70,14 +70,6 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <View
-            android:id="@+id/dropShadow5"
-            android:layout_width="match_parent"
-            android:layout_height="10dp"
-            android:layout_below="@id/filter"
-            android:background="@drawable/shadow_reverse"
-            android:isScrollContainer="false" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/exerciseRecyler"
         android:layout_width="match_parent"
@@ -86,5 +78,14 @@
         android:layout_marginBottom="56dp">
 
     </androidx.recyclerview.widget.RecyclerView>
+
+    <View
+        android:id="@+id/dropShadow5"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_below="@id/filter"
+        android:background="@drawable/shadow_reverse"
+        android:isScrollContainer="false"
+        android:visibility="visible" />
 
 </RelativeLayout>
