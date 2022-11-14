@@ -17,51 +17,23 @@
         android:isScrollContainer="false"
         android:layout_marginBottom="20dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/searchbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+        <SearchView
+            android:id="@+id/search"
+            android:layout_width="fill_parent"
+            android:layout_height="30dp"
+            android:layout_marginStart="40dp"
             android:background="@drawable/workout_layout"
+            app:iconifiedByDefault="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/addSet4">
-
-            <EditText
-                android:id="@+id/exerciseNoteEdit2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/workout_layout"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="5dp"
-                android:text="Workout note"
-                android:textColor="@color/text"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/imageView10" />
-
-            <ImageView
-                android:id="@+id/imageView10"
-                android:layout_width="30dp"
-                android:layout_height="25dp"
-                android:layout_marginStart="5dp"
-                android:background="@null"
-                android:src="@drawable/search"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintTop_toTopOf="parent"
+            app:queryHint="Search exercise..." />
 
         <Button
             android:id="@+id/addSet3"
             android:layout_width="170dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
             android:background="@drawable/button_layout"
             android:minWidth="0dp"
             android:minHeight="0dp"
@@ -70,29 +42,13 @@
             android:text="Muscle Group"
             android:textAllCaps="false"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/searchbar" />
-
-        <Button
-            android:id="@+id/addSet4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/button_layout"
-            android:minWidth="0dp"
-            android:minHeight="0dp"
-            android:paddingHorizontal="10dp"
-            android:paddingVertical="10dp"
-            android:text="Create Exercise"
-            android:textAllCaps="false"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="25dp" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <Button
             android:id="@+id/addSet2"
             android:layout_width="170dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="31dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/button_layout"
             android:minWidth="0dp"
             android:minHeight="0dp"
@@ -101,7 +57,17 @@
             android:text="Equipment"
             android:textAllCaps="false"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/searchbar" />
+            app:layout_constraintTop_toBottomOf="@+id/search" />
+
+        <ImageButton
+            android:id="@+id/createExercise"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/button_layout"
+            android:src="@drawable/ic_baseline_add_24"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
         <View

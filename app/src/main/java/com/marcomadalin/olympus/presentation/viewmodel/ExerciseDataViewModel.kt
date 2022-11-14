@@ -24,6 +24,8 @@ class ExerciseDataViewModel @Inject constructor(
 
     val exercises = MutableLiveData<MutableList<ExerciseData>?>()
 
+    val selectedExercise = MutableLiveData<Long>()
+
     fun getExercisesData() {
         viewModelScope.launch {exercises.postValue(getExercisesUseCase())}
     }

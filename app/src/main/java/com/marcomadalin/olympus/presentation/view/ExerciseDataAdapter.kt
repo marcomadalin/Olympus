@@ -6,7 +6,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.marcomadalin.olympus.R
 import com.marcomadalin.olympus.domain.model.ExerciseData
 
-class ExerciseDataAdapter(private val exercises: MutableList<ExerciseData>) : RecyclerView.Adapter<ExerciseDataViewHolder>() {
+class ExerciseDataAdapter(var exercises: MutableList<ExerciseData>,
+                          private val selectExercise : (Long) -> Unit)
+    : RecyclerView.Adapter<ExerciseDataViewHolder>() {
+
+    var lastFavorite: Int = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExerciseDataViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -15,7 +19,7 @@ class ExerciseDataAdapter(private val exercises: MutableList<ExerciseData>) : Re
 
     override fun onBindViewHolder(holder: ExerciseDataViewHolder, position: Int) {
         val item = exercises[position]
-        holder.render(item)
+        holder.render(item, lastFavorite, selectExercise)
     }
 
     override fun getItemCount(): Int = exercises.size

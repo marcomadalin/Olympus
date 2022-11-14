@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
@@ -41,18 +42,53 @@ class ExerciseFragment : Fragment() {
         (activity as MainActivity).showNavigationBar()
         navController = findNavController()
         binding.exerciseRecyler.layoutManager = LinearLayoutManager(this.context)
-        adapter = ExerciseDataAdapter(mutableListOf())
+        adapter = ExerciseDataAdapter(mutableListOf(), {selectExercise(it)})
         binding.exerciseRecyler.adapter = adapter
         exerciseDataViewModel.exercises.observe(viewLifecycleOwner) {updateExercises(it)}
         exerciseDataViewModel.getExercisesData()
+        binding.search.clearFocus()
+        binding.search.setOnClickListener { binding.search.isIconified = false }
+        binding.search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                val filteredExercises: MutableList<ExerciseData> = mutableListOf()
+                if (newText.isEmpty()) adapter.exercises =
+                    exerciseDataViewModel.exercises.value!!
+                else {
+                    for (exercise in exerciseDataViewModel.exercises.value!!) {
+                        if (exercise.name.lowercase()
+                                .contains(newText.lowercase())
+                        ) filteredExercises.add(exercise)
+                    }
+                    adapter.exercises = filteredExercises
+                }
+                updateFirstFavorite()
+                adapter.notifyDataSetChanged()
+                return true
+            }
+        })
+    }
+
+    private fun selectExercise(exerciseId : Long) {
+        exerciseDataViewModel.selectedExercise.postValue(exerciseId)
     }
 
     private fun updateExercises(exercises: MutableList<ExerciseData>?) {
         if (exercises != null && first) {
-            adapter = ExerciseDataAdapter(exerciseDataViewModel.exercises.value!!)
+            adapter = ExerciseDataAdapter(exerciseDataViewModel.exercises.value!!, {selectExercise(it)})
             binding.exerciseRecyler.adapter = adapter
+            updateFirstFavorite()
             first = false
         }
+    }
+
+    private fun updateFirstFavorite()  {
+        val index = adapter.exercises.indexOfFirst { !it.favourite }
+        if (index == 0 && !adapter.exercises[0].favourite) adapter.lastFavorite = -1
+        else adapter.lastFavorite = index
     }
 
 }

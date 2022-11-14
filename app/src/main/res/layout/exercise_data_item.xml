@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/reorderlayout"
+    android:id="@+id/exerciseLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -34,12 +34,24 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="7dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/image_round"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/separatorView"
         app:srcCompat="@drawable/barbell" />
+
+    <View
+        android:id="@+id/separatorView"
+        android:layout_width="fill_parent"
+        android:layout_height="3dp"
+        android:background="@drawable/button_layout"
+        android:visibility="gone"
+        android:visible="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

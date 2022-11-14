@@ -11,7 +11,7 @@ import com.marcomadalin.olympus.data.database.entities.ExerciseEntity
 
 @Dao
 interface ExerciseDataDAO {
-    @Query("SELECT * FROM ExercisesData ORDER BY favourite, name")
+    @Query("SELECT * FROM ExercisesData ORDER BY favourite DESC, name ASC")
     suspend fun getAllExercisesData() : List<ExerciseDataEntity>?
 
     @Query("SELECT * FROM ExercisesData WHERE id = :id")
