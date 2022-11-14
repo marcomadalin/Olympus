@@ -9,7 +9,7 @@ import java.time.Duration
 data class Statistic(
     var id : Long = 0,
     var userId : Long = 0,
-    var timeframe : StatisticTimeframe = StatisticTimeframe.month,
+    var timeframe : StatisticTimeframe = StatisticTimeframe.Month,
     var totalWorkouts : Int = 0,
     var totalRestDays : Int = 0,
     var totalVolume : Double = 0.0,

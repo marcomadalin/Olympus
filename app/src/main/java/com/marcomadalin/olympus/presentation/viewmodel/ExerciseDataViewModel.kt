@@ -9,6 +9,8 @@ import com.marcomadalin.olympus.domain.cases.GetExercisesDataUseCase
 import com.marcomadalin.olympus.domain.cases.SaveExerciseDataUseCase
 import com.marcomadalin.olympus.domain.cases.SaveExercisesDataUseCase
 import com.marcomadalin.olympus.domain.model.ExerciseData
+import com.marcomadalin.olympus.domain.model.enums.Equipment
+import com.marcomadalin.olympus.domain.model.enums.Muscle
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,8 +28,16 @@ class ExerciseDataViewModel @Inject constructor(
 
     val selectedExercise = MutableLiveData<Long>()
 
+    val equipmentFilters = MutableLiveData<List<String>>()
+    val muscleFilters = MutableLiveData<List<String>>()
+
     fun getExercisesData() {
         viewModelScope.launch {exercises.postValue(getExercisesUseCase())}
+    }
+
+    fun getFilters() {
+        equipmentFilters.postValue(Equipment.values().toList().map { it.toString().replace("_"," ") })
+        muscleFilters.postValue(Muscle.values().toList().map { it.toString().replace("_"," ") })
     }
 
     fun saveExerciseData(exerciseData: ExerciseData) {

@@ -5,9 +5,8 @@ enum class Equipment {
     Barbell,
     Dumbbell,
     Kettlebell,
-    WeightDistance,
     Machine,
-    ResistanceBand,
-    WeightBelt,
+    Band,
+    Weight_Belt,
     Other,
 }

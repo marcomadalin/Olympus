@@ -77,7 +77,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="30dp"
                 android:layout_marginEnd="20dp"
-                android:background="@drawable/workout_layout"
+                android:background="@drawable/layout"
                 android:paddingHorizontal="10dp"
                 android:paddingVertical="5dp"
                 android:text="Workout note"

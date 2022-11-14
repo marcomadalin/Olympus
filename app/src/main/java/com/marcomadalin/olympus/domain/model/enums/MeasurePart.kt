@@ -2,22 +2,22 @@ package com.marcomadalin.olympus.domain.model.enums
 
 enum class MeasurePart {
     Weight,
-    BodyFat,
+    Body_Fat,
     Waist,
     Neck,
     Shoulder,
     Chest,
-    LeftBicep,
-    RightBicep,
-    LeftForearm,
-    RightForearm,
-    LeftTriceps,
-    RightTriceps,
+    Left_Bicep,
+    Right_Bicep,
+    Left_Forearm,
+    Right_Forearm,
+    Left_Triceps,
+    Right_Triceps,
     Back,
     Abs,
     Glutes,
-    LeftTight,
-    RightTight,
-    LeftCalf,
-    RightCalf
+    Left_Tight,
+    Right_Tight,
+    Left_Calf,
+    Righ_tCalf
 }
