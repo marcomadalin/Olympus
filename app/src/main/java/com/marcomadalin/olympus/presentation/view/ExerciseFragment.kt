@@ -36,6 +36,9 @@ class ExerciseFragment : Fragment() {
 
     private lateinit var startingParams : ViewGroup.LayoutParams
 
+    private var searchText = ""
+    private var textFilteredList : List<ExerciseData> = listOf()
+
     private var first = true
 
     override fun onCreateView(
@@ -48,20 +51,14 @@ class ExerciseFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        searchText = exerciseDataViewModel.searchFilter.value!!
         (activity as MainActivity).showNavigationBar()
         navController = findNavController()
-
-        binding.dropShadow6.visibility = View.GONE
-        binding.exerciseRecyler.layoutManager = LinearLayoutManager(this.context)
-        exerciseAdapter = ExerciseDataAdapter(mutableListOf(), {selectExercise(it)})
-        binding.exerciseRecyler.adapter = exerciseAdapter
-        exerciseDataViewModel.exercises.observe(viewLifecycleOwner) {updateExercises(it)}
-        exerciseDataViewModel.getExercisesData()
-        startingParams = binding.exerciseRecyler.layoutParams
 
         binding.filterRecycler.visibility = View.GONE
         binding.filterRecycler.layoutManager = GridLayoutManager(this.context, 3)
         filterAdapter = ExerciseFilterAdapter(emptyList(), {selectFilter(it)})
+        filterAdapter.selectedFilters = exerciseDataViewModel.selectedFilters.value!!.toMutableSet()
         binding.filterRecycler.adapter = filterAdapter
         exerciseDataViewModel.getFilters()
 
@@ -69,8 +66,7 @@ class ExerciseFragment : Fragment() {
             renderFilterRecycler(true)
             if (filterShown) {
                 filterAdapter = ExerciseFilterAdapter(exerciseDataViewModel.equipmentFilters.value!!, {selectFilter(it)})
-                binding.filterRecycler.adapter = filterAdapter
-                filterAdapter.notifyDataSetChanged()
+                updateFilterRecycler()
                 onEquipment = true
             }
         }
@@ -79,8 +75,7 @@ class ExerciseFragment : Fragment() {
             renderFilterRecycler(false)
             if (filterShown) {
                 filterAdapter = ExerciseFilterAdapter(exerciseDataViewModel.muscleFilters.value!!, {selectFilter(it)})
-                binding.filterRecycler.adapter = filterAdapter
-                filterAdapter.notifyDataSetChanged()
+                updateFilterRecycler()
                 onEquipment = false
             }
         }
@@ -93,22 +88,44 @@ class ExerciseFragment : Fragment() {
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
-                val filteredExercises: MutableList<ExerciseData> = mutableListOf()
-                if (newText.isEmpty()) exerciseAdapter.exercises =
-                    exerciseDataViewModel.exercises.value!!
-                else {
-                    for (exercise in exerciseDataViewModel.exercises.value!!) {
-                        if (exercise.name.lowercase()
-                                .contains(newText.lowercase())
-                        ) filteredExercises.add(exercise)
-                    }
-                    exerciseAdapter.exercises = filteredExercises
-                }
+                searchText = newText
+                filterListWithText()
+                filterListWithButtons()
                 updateFirstFavorite()
                 exerciseAdapter.notifyDataSetChanged()
                 return true
             }
         })
+
+        binding.dropShadow6.visibility = View.GONE
+        binding.exerciseRecyler.layoutManager = LinearLayoutManager(this.context)
+        exerciseAdapter = ExerciseDataAdapter(mutableListOf(), {selectExercise(it)})
+        binding.exerciseRecyler.adapter = exerciseAdapter
+        exerciseDataViewModel.exercises.observe(viewLifecycleOwner) {updateExercises(it)}
+        exerciseDataViewModel.getExercisesData()
+        startingParams = binding.exerciseRecyler.layoutParams
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        exerciseDataViewModel.searchFilter.postValue(searchText)
+    }
+
+    private fun updateFilterRecycler() {
+        filterAdapter.selectedFilters = exerciseDataViewModel.selectedFilters.value!!.toMutableSet()
+        binding.filterRecycler.adapter = filterAdapter
+        filterAdapter.notifyDataSetChanged()
+    }
+
+    private fun filterListWithText() {
+        val filteredExercises: MutableList<ExerciseData> = mutableListOf()
+        if (searchText.isEmpty()) textFilteredList = exerciseDataViewModel.exercises.value!!
+        else  {
+            for (exercise in exerciseDataViewModel.exercises.value!!) {
+                if (exercise.name.lowercase().contains(searchText.lowercase())) filteredExercises.add(exercise)
+            }
+            textFilteredList = filteredExercises
+        }
     }
 
     private fun renderFilterRecycler(equipmentClicked : Boolean) {
@@ -136,15 +153,43 @@ class ExerciseFragment : Fragment() {
         exerciseDataViewModel.selectedExercise.postValue(exerciseId)
     }
 
-    private fun selectFilter(filter : String) {
+    private fun selectFilter(data : Pair<String,Int>) {
+        if (filterAdapter.selectedFilters.contains(data.first)) filterAdapter.selectedFilters.remove(data.first)
+        else filterAdapter.selectedFilters.add(data.first)
+        exerciseDataViewModel.selectedFilters.postValue(filterAdapter.selectedFilters)
+        filterListWithText()
+        filterListWithButtons()
+        updateFirstFavorite()
+        filterAdapter.notifyItemChanged(data.second)
+        exerciseAdapter.notifyDataSetChanged()
+    }
 
+    private fun filterListWithButtons() {
+        val filteredExercises: MutableList<ExerciseData> = mutableListOf()
+        if (filterAdapter.selectedFilters.isEmpty()) exerciseAdapter.exercises = textFilteredList.toMutableList()
+        else {
+            val allEquipment = filterAdapter.selectedFilters.none{it in exerciseDataViewModel.equipmentFilters.value!!}
+            var allMuscles = false
+
+            if (!allEquipment) allMuscles = filterAdapter.selectedFilters.none{it in exerciseDataViewModel.muscleFilters.value!!}
+
+            for (exercise in textFilteredList) {
+                val equipment = exercise.equipment.toString().replace("_", " ")
+                val muscle = exercise.primaryMuscle.toString().replace("_", " ")
+                if ((allEquipment || equipment in filterAdapter.selectedFilters) && (allMuscles || muscle in filterAdapter.selectedFilters)) filteredExercises.add(exercise)
+            }
+            exerciseAdapter.exercises = filteredExercises
+        }
     }
 
     private fun updateExercises(exercises: MutableList<ExerciseData>?) {
         if (exercises != null && first) {
             exerciseAdapter = ExerciseDataAdapter(exerciseDataViewModel.exercises.value!!, {selectExercise(it)})
             binding.exerciseRecyler.adapter = exerciseAdapter
+            filterListWithText()
+            filterListWithButtons()
             updateFirstFavorite()
+            exerciseAdapter.notifyDataSetChanged()
             first = false
         }
     }

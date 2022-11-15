@@ -6,8 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.marcomadalin.olympus.R
 
 class ExerciseFilterAdapter(var filters: List<String>,
-                            private val selectFilter : (String) -> Unit)
+                            private val selectFilter : (Pair<String,Int>) -> Unit)
     : RecyclerView.Adapter<ExerciseFilterViewHolder>() {
+
+    var selectedFilters : MutableSet<String> = mutableSetOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExerciseFilterViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -16,7 +18,7 @@ class ExerciseFilterAdapter(var filters: List<String>,
 
     override fun onBindViewHolder(holder: ExerciseFilterViewHolder, position: Int) {
         val item = filters[position]
-        holder.render(item, selectFilter)
+        holder.render(item, selectFilter, selectedFilters)
     }
 
     override fun getItemCount(): Int = filters.size

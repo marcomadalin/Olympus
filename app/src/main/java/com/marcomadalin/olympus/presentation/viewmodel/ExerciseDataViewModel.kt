@@ -31,6 +31,10 @@ class ExerciseDataViewModel @Inject constructor(
     val equipmentFilters = MutableLiveData<List<String>>()
     val muscleFilters = MutableLiveData<List<String>>()
 
+    val selectedFilters = MutableLiveData<Set<String>>(setOf())
+
+    val searchFilter = MutableLiveData("")
+
     fun getExercisesData() {
         viewModelScope.launch {exercises.postValue(getExercisesUseCase())}
     }
