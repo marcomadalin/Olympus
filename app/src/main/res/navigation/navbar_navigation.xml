@@ -36,6 +36,12 @@
         <action
             android:id="@+id/action_exercise_to_profile"
             app:destination="@id/profile" />
+        <action
+            android:id="@+id/action_exercise_to_createExericeFragment"
+            app:destination="@id/createExericeFragment" />
+        <action
+            android:id="@+id/action_exercise_to_exerciseReviewFragment"
+            app:destination="@id/exerciseReviewFragment" />
     </fragment>
     <fragment
         android:id="@+id/workout"
@@ -111,5 +117,23 @@
         <action
             android:id="@+id/action_workoutSuperset_to_workoutEdit"
             app:destination="@id/workoutEdit" />
+    </fragment>
+    <fragment
+        android:id="@+id/createExericeFragment"
+        android:name="com.marcomadalin.olympus.presentation.view.CreateExerciseFragment"
+        android:label="fragment_create_exerice"
+        tools:layout="@layout/fragment_create_exercise" >
+        <action
+            android:id="@+id/action_createExericeFragment_to_exercise"
+            app:destination="@id/exercise" />
+    </fragment>
+    <fragment
+        android:id="@+id/exerciseReviewFragment"
+        android:name="com.marcomadalin.olympus.presentation.view.ExerciseReviewFragment"
+        android:label="fragment_exercise_review"
+        tools:layout="@layout/fragment_exercise_review" >
+        <action
+            android:id="@+id/action_exerciseReviewFragment_to_exercise"
+            app:destination="@id/exercise" />
     </fragment>
 </navigation>

@@ -12,6 +12,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.marcomadalin.olympus.R
 import com.marcomadalin.olympus.databinding.FragmentExerciseBinding
 import com.marcomadalin.olympus.domain.model.ExerciseData
 import com.marcomadalin.olympus.presentation.viewmodel.ExerciseDataViewModel
@@ -55,6 +56,11 @@ class ExerciseFragment : Fragment() {
         (activity as MainActivity).showNavigationBar()
         navController = findNavController()
 
+        binding.create.setOnClickListener {
+            navController.navigate(R.id.createExericeFragment)
+            (activity as MainActivity).hideNavigationBar()
+        }
+
         binding.filterRecycler.visibility = View.GONE
         binding.filterRecycler.layoutManager = GridLayoutManager(this.context, 3)
         filterAdapter = ExerciseFilterAdapter(emptyList(), {selectFilter(it)})
@@ -93,6 +99,7 @@ class ExerciseFragment : Fragment() {
                 filterListWithButtons()
                 updateFirstFavorite()
                 exerciseAdapter.notifyDataSetChanged()
+                updateTextView()
                 return true
             }
         })
@@ -162,6 +169,7 @@ class ExerciseFragment : Fragment() {
         updateFirstFavorite()
         filterAdapter.notifyItemChanged(data.second)
         exerciseAdapter.notifyDataSetChanged()
+        updateTextView()
     }
 
     private fun filterListWithButtons() {
@@ -190,6 +198,7 @@ class ExerciseFragment : Fragment() {
             filterListWithButtons()
             updateFirstFavorite()
             exerciseAdapter.notifyDataSetChanged()
+            updateTextView()
             first = false
         }
     }
@@ -198,6 +207,11 @@ class ExerciseFragment : Fragment() {
         val index = exerciseAdapter.exercises.indexOfFirst { !it.favourite }
         if (index == 0 && !exerciseAdapter.exercises[0].favourite) exerciseAdapter.lastFavorite = -1
         else exerciseAdapter.lastFavorite = index
+    }
+
+    private fun updateTextView() {
+        if (exerciseAdapter.exercises.isEmpty()) binding.noExercise.visibility = View.VISIBLE
+        else binding.noExercise.visibility = View.GONE
     }
 
 }

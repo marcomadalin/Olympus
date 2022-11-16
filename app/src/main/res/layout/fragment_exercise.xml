@@ -88,6 +88,21 @@
 
     </androidx.recyclerview.widget.RecyclerView>
 
+    <TextView
+        android:id="@+id/noExercise"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/filterRecycler"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="75dp"
+        android:layout_marginEnd="0dp"
+        android:text="@string/no_exercise_found"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:visibility="gone" />
+
     <View
         android:id="@+id/dropShadow5"
         android:layout_width="match_parent"
