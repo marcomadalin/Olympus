@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import com.marcomadalin.olympus.databinding.FragmentExerciseReviewBinding
 import com.marcomadalin.olympus.presentation.viewmodel.ExerciseDataViewModel
 
@@ -29,6 +30,8 @@ class ExerciseReviewFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+
+        navController = findNavController()
 
         binding.backButtonReview.setOnClickListener{
             (activity as MainActivity).showNavigationBar()
