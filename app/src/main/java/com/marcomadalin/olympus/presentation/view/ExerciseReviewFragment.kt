@@ -30,5 +30,10 @@ class ExerciseReviewFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
+        binding.backButtonReview.setOnClickListener{
+            (activity as MainActivity).showNavigationBar()
+            navController.popBackStack()
+        }
+
     }
 }

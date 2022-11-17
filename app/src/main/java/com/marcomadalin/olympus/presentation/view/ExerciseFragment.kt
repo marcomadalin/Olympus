@@ -159,6 +159,8 @@ class ExerciseFragment : Fragment() {
 
     private fun selectExercise(exerciseId : Long) {
         exerciseDataViewModel.selectedExercise.postValue(exerciseId)
+        navController.navigate(R.id.exerciseReviewFragment)
+        (activity as MainActivity).hideNavigationBar()
     }
 
     private fun selectFilter(data : Pair<String,Int>) {
