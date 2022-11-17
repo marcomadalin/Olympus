@@ -10,7 +10,7 @@ data class ExerciseData(
     var id: Long = 0,
     var userId: Long = 0,
     var name : String = "",
-    var type: ExerciseType = ExerciseType.WeightReps,
+    var type: ExerciseType = ExerciseType.Weight_Reps,
     var favourite: Boolean = false,
     var equipment: Equipment = Equipment.None,
     var primaryMuscle: Muscle = Muscle.Abs,

@@ -13,7 +13,7 @@ class ExerciseDataViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     fun render(exerciseData: ExerciseData, lastFavorite: Int, selectExercise: (Long) -> Unit) {
         binding.exerciseName5.text = exerciseData.name
-        binding.exerciseMuscle.text = exerciseData.primaryMuscle.toString()
+        binding.exerciseMuscle.text = exerciseData.primaryMuscle.toString().replace("_", " ")
 
         if (lastFavorite == -1) binding.separatorView.visibility = View.INVISIBLE
         else if (absoluteAdapterPosition == lastFavorite) binding.separatorView.visibility = View.VISIBLE

@@ -13,4 +13,14 @@
     <style name="CalendarWeeks" parent="TextAppearance.MaterialComponents.Caption">
         <item name="android:textColor">@color/white</item>
     </style>
+
+    <style name="MyRadioButton" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/layout</item>
+        <item name="colorControlActivated">@color/buttons</item>
+    </style>
+
+    <style name="MyDialog" parent="Theme.MaterialComponents.Light.Dialog.Alert">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
 </resources>

@@ -10,6 +10,7 @@ import com.marcomadalin.olympus.domain.cases.SaveExerciseDataUseCase
 import com.marcomadalin.olympus.domain.cases.SaveExercisesDataUseCase
 import com.marcomadalin.olympus.domain.model.ExerciseData
 import com.marcomadalin.olympus.domain.model.enums.Equipment
+import com.marcomadalin.olympus.domain.model.enums.ExerciseType
 import com.marcomadalin.olympus.domain.model.enums.Muscle
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -29,11 +30,16 @@ class ExerciseDataViewModel @Inject constructor(
     val selectedExercise = MutableLiveData<Long>()
 
     val equipmentFilters = MutableLiveData<List<String>>()
+
     val muscleFilters = MutableLiveData<List<String>>()
+
+    val exerciseTypes = MutableLiveData<List<String>>()
 
     val selectedFilters = MutableLiveData<Set<String>>(setOf())
 
     val searchFilter = MutableLiveData("")
+
+    val newExercise = MutableLiveData<ExerciseData>()
 
     fun getExercisesData() {
         viewModelScope.launch {exercises.postValue(getExercisesUseCase())}
@@ -42,6 +48,7 @@ class ExerciseDataViewModel @Inject constructor(
     fun getFilters() {
         equipmentFilters.postValue(Equipment.values().toList().map { it.toString().replace("_"," ") })
         muscleFilters.postValue(Muscle.values().toList().map { it.toString().replace("_"," ") })
+        exerciseTypes.postValue(ExerciseType.values().toList().map { it.toString().replace("_"," ") })
     }
 
     fun saveExerciseData(exerciseData: ExerciseData) {
@@ -60,5 +67,13 @@ class ExerciseDataViewModel @Inject constructor(
 
     fun deleteAllExercisesData() {
         viewModelScope.launch {deleteExercisesDataCase()}
+    }
+
+    fun saveNewExercise() {
+        viewModelScope.launch {
+            saveExerciseDataUseCase(newExercise.value!!)
+            newExercise.postValue(ExerciseData())
+            exercises.postValue(getExercisesUseCase())
+        }
     }
 }

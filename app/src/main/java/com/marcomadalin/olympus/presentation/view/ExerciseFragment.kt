@@ -52,6 +52,7 @@ class ExerciseFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        first = true
         searchText = exerciseDataViewModel.searchFilter.value!!
         (activity as MainActivity).showNavigationBar()
         navController = findNavController()

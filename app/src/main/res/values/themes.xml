@@ -14,6 +14,12 @@
         <!-- Customize your theme here. -->
         <item name="popupMenuBackground">@drawable/menu_background</item>
         <item name="android:popupMenuStyle">@style/popupBGStyle</item>
+        <item name="android:alertDialogStyle">@style/RoundedCornersDialog</item>
+    </style>
+
+    <style name="RoundedCornersDialog" parent="@style/Theme.MaterialComponents.Dialog">
+        <item name="dialogCornerRadius">20dp</item>
+        <item name="backgroundColor">@color/layout</item>
     </style>
 
     <style name="popupBGStyle" parent="Widget.MaterialComponents.PopupMenu">

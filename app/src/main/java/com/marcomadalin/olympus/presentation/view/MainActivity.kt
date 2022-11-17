@@ -88,11 +88,11 @@ class MainActivity : AppCompatActivity() {
             mutableListOf(exercise1, exercise2, exercise3, exercise4, exercise5),
             mutableListOf())
 
-        val e1 = ExerciseData(0, 1, "Deadlift", ExerciseType.WeightReps, true, Equipment.Barbell, Muscle.Hamstrings, emptySet(), 220.0, 230.75, 220.0, 3, true)
-        val e2 = ExerciseData(0, 1, "Squat", ExerciseType.WeightReps, true, Equipment.Barbell, Muscle.Hamstrings, emptySet(), 190.0, 200.00, 190.0, 3, true)
-        val e3 = ExerciseData(0, 1, "Bench Press", ExerciseType.WeightReps, true, Equipment.Barbell, Muscle.Hamstrings, emptySet(), 120.0, 130.75, 120.0, 3, true)
-        val e4 = ExerciseData(0, 1, "Lat Pulldown", ExerciseType.WeightReps, false, Equipment.Machine, Muscle.Lats, emptySet(), 82.5, 100.25, 82.5, 10, true)
-        val e5 = ExerciseData(0, 1, "Barbell Row", ExerciseType.WeightReps, false, Equipment.Barbell, Muscle.Upper_Back, emptySet(), 120.0, 150.75, 120.0, 10, true)
+        val e1 = ExerciseData(0, 1, "Deadlift", ExerciseType.Weight_Reps, true, Equipment.Barbell, Muscle.Hamstrings, emptySet(), 220.0, 230.75, 220.0, 3, true)
+        val e2 = ExerciseData(0, 1, "Squat", ExerciseType.Weight_Reps, true, Equipment.Barbell, Muscle.Hamstrings, emptySet(), 190.0, 200.00, 190.0, 3, true)
+        val e3 = ExerciseData(0, 1, "Bench Press", ExerciseType.Weight_Reps, true, Equipment.Barbell, Muscle.Hamstrings, emptySet(), 120.0, 130.75, 120.0, 3, true)
+        val e4 = ExerciseData(0, 1, "Lat Pulldown", ExerciseType.Weight_Reps, false, Equipment.Machine, Muscle.Lats, emptySet(), 82.5, 100.25, 82.5, 10, true)
+        val e5 = ExerciseData(0, 1, "Barbell Row", ExerciseType.Weight_Reps, false, Equipment.Barbell, Muscle.Upper_Back, emptySet(), 120.0, 150.75, 120.0, 10, true)
 
         val exercises : List<ExerciseData> = listOf(e1, e2 , e3, e4, e5)
         GlobalScope.launch {

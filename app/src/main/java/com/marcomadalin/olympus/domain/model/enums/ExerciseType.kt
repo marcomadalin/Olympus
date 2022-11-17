@@ -1,10 +1,10 @@
 package com.marcomadalin.olympus.domain.model.enums
 
 enum class ExerciseType {
-    WeightReps,
-    BodyWeightReps,
+    Weight_Reps,
+    Bodyweight_Reps,
     Duration,
-    DistanceDuration,
-    WeightDistance,
+    Distance_Duration,
+    Weight_Distance,
     Other
 }
