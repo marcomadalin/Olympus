@@ -27,7 +27,7 @@ class ExerciseDataViewModel @Inject constructor(
 
     val exercises = MutableLiveData<MutableList<ExerciseData>?>()
 
-    val selectedExercise = MutableLiveData<Long>()
+    val selectedExercise = MutableLiveData<ExerciseData>()
 
     val equipmentFilters = MutableLiveData<List<String>>()
 

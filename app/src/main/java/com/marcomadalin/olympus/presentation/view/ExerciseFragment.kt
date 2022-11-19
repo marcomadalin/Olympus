@@ -157,8 +157,8 @@ class ExerciseFragment : Fragment() {
         }
     }
 
-    private fun selectExercise(exerciseId : Long) {
-        exerciseDataViewModel.selectedExercise.postValue(exerciseId)
+    private fun selectExercise(exercise : ExerciseData) {
+        exerciseDataViewModel.selectedExercise.postValue(exercise)
         navController.navigate(R.id.exerciseReviewFragment)
         (activity as MainActivity).hideNavigationBar()
     }

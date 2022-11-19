@@ -8,7 +8,7 @@
     android:focusableInTouchMode="true"
     android:clickable="true"
     android:focusable="true"
-    tools:context=".presentation.view.CreateExerciseFragment">
+    tools:context=".presentation.view.ExerciseCreateFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/headerCreate"

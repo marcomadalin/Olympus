@@ -7,7 +7,7 @@ import com.marcomadalin.olympus.R
 import com.marcomadalin.olympus.domain.model.ExerciseData
 
 class ExerciseDataAdapter(var exercises: MutableList<ExerciseData>,
-                          private val selectExercise : (Long) -> Unit)
+                          private val selectExercise : (ExerciseData) -> Unit)
     : RecyclerView.Adapter<ExerciseDataViewHolder>() {
 
     var lastFavorite: Int = 0

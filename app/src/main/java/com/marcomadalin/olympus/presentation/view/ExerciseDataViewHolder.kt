@@ -11,7 +11,7 @@ class ExerciseDataViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     var binding = ExerciseDataItemBinding.bind(view)
 
-    fun render(exerciseData: ExerciseData, lastFavorite: Int, selectExercise: (Long) -> Unit) {
+    fun render(exerciseData: ExerciseData, lastFavorite: Int, selectExercise: (ExerciseData) -> Unit) {
         binding.exerciseName5.text = exerciseData.name
         binding.exerciseMuscle.text = exerciseData.primaryMuscle.toString().replace("_", " ")
 
@@ -22,6 +22,6 @@ class ExerciseDataViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         if (absoluteAdapterPosition % 2 == 0) binding.exerciseLayout.setBackgroundResource(R.color.background)
         else binding.exerciseLayout.setBackgroundResource(R.color.layout)
 
-        binding.exerciseLayout.setOnClickListener{selectExercise(exerciseData.id)}
+        binding.exerciseLayout.setOnClickListener{selectExercise(exerciseData)}
     }
 }

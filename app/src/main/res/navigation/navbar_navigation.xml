@@ -120,7 +120,7 @@
     </fragment>
     <fragment
         android:id="@+id/createExericeFragment"
-        android:name="com.marcomadalin.olympus.presentation.view.CreateExerciseFragment"
+        android:name="com.marcomadalin.olympus.presentation.view.ExerciseCreateFragment"
         android:label="fragment_create_exerice"
         tools:layout="@layout/fragment_create_exercise" >
         <action

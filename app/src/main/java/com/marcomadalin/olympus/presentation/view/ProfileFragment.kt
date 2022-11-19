@@ -10,8 +10,6 @@ import com.marcomadalin.olympus.databinding.FragmentProfileBinding
 import com.marcomadalin.olympus.presentation.viewmodel.UserViewModel
 import com.marcomadalin.olympus.presentation.viewmodel.WorkoutViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.lang.String
-import java.util.*
 
 @AndroidEntryPoint
 class ProfileFragment : Fragment() {
@@ -31,21 +29,8 @@ class ProfileFragment : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binding.button.setOnClickListener { userViewModel.getUser() }
-        binding.button.setOnClickListener {
-            userViewModel.deleteUsers()
-            workoutViewModel.deleteWorkouts()
-        }
-        userViewModel.userModel.observe(viewLifecycleOwner) {
-            binding.profileText.text = String.format(Locale.ENGLISH,"%d: " + it.name, it.id)
-        }
-
-    }
 
     override fun onStart() {
         super.onStart()
-        (activity as MainActivity).showNavigationBar()
     }
 }

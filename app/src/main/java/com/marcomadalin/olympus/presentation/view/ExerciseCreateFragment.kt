@@ -23,7 +23,7 @@ import com.marcomadalin.olympus.domain.model.enums.Muscle
 import com.marcomadalin.olympus.presentation.viewmodel.ExerciseDataViewModel
 
 
-class CreateExerciseFragment : Fragment() {
+class ExerciseCreateFragment : Fragment() {
 
     //TODO STORE IMAGE
 
