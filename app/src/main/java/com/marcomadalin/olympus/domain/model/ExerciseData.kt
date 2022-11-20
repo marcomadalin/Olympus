@@ -6,6 +6,8 @@ import com.marcomadalin.olympus.domain.model.enums.ExerciseType
 import com.marcomadalin.olympus.domain.model.enums.Muscle
 import kotlin.collections.Set
 
+//TODO remove secondary muscles
+
 data class ExerciseData(
     var id: Long = 0,
     var userId: Long = 0,

@@ -5,6 +5,7 @@ import com.marcomadalin.olympus.domain.model.enums.Muscle
 import com.marcomadalin.olympus.domain.model.enums.StatisticTimeframe
 import java.time.Duration
 
+//TODO simplify and delete attributes
 
 data class Statistic(
     var id : Long = 0,

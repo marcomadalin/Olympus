@@ -2,6 +2,8 @@ package com.marcomadalin.olympus.domain.model
 
 import com.marcomadalin.olympus.data.database.entities.RoutineEntity
 
+//TODO delete
+
 open class Routine (
     open var id : Long = 0,
     open var userId : Long = 0,
