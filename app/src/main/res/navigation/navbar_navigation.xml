@@ -72,6 +72,9 @@
         <action
             android:id="@+id/action_profile_to_workout3"
             app:destination="@id/workout" />
+        <action
+            android:id="@+id/action_profile_to_measureFragment"
+            app:destination="@id/measureFragment" />
     </fragment>
     <fragment
         android:id="@+id/workoutReview"
@@ -135,5 +138,14 @@
         <action
             android:id="@+id/action_exerciseReviewFragment_to_exercise"
             app:destination="@id/exercise" />
+    </fragment>
+    <fragment
+        android:id="@+id/measureFragment"
+        android:name="com.marcomadalin.olympus.presentation.view.MeasureFragment"
+        android:label="fragment_measure"
+        tools:layout="@layout/fragment_measure" >
+        <action
+            android:id="@+id/action_measureFragment_to_profile"
+            app:destination="@id/profile" />
     </fragment>
 </navigation>

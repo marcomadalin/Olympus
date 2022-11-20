@@ -54,14 +54,14 @@ class HistoryFragment : Fragment() {
         binding.summaryRecycler.layoutManager = LinearLayoutManager(this.context)
         adapter = WorkoutSummaryAdapter(emptyList())
         binding.summaryRecycler.adapter = adapter
-        workoutViewModel.workout.observe(viewLifecycleOwner) {updateWorkoutSummary(it)}
+        workoutViewModel.selectedWorkout.observe(viewLifecycleOwner) {updateWorkoutSummary(it)}
         workoutViewModel.getWorkout()
     }
 
     private fun updateWorkoutSummary(workout: Workout?) {
         if (workout != null && first) {
-            adapter = WorkoutSummaryAdapter(workoutViewModel.workout.value!!.exercises)
-            adapter.supersets = workoutViewModel.workout.value!!.supersets
+            adapter = WorkoutSummaryAdapter(workoutViewModel.selectedWorkout.value!!.exercises)
+            adapter.supersets = workoutViewModel.selectedWorkout.value!!.supersets
             binding.summaryRecycler.adapter = adapter
             first = false
         }
@@ -71,7 +71,7 @@ class HistoryFragment : Fragment() {
             binding.workoutEmpty.isVisible = true;
         }
         else {
-            adapter.supersets = workoutViewModel.workout.value!!.supersets
+            adapter.supersets = workoutViewModel.selectedWorkout.value!!.supersets
             binding.workoutEmpty.isVisible = false;
             binding.workoutTitle.text = workout.name
             var volume = 0.0
@@ -81,7 +81,7 @@ class HistoryFragment : Fragment() {
             binding.workoutVolume.text = "$volume kg"
             binding.workoutTime.text = ((workout.length.seconds%3600)/60).toString() + " min"
             if (workout.length.toHours().toInt() != 0) {
-                binding.workoutTime.text = workout.length.toHours().toString() + " " + binding.workoutTime.text
+                binding.workoutTime.text = workout.length.toHours().toString() + " h " + binding.workoutTime.text
             }
             adapter.notifyDataSetChanged()
             binding.workoutSummary.isVisible = true;

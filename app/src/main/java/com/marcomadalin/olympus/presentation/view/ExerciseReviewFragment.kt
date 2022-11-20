@@ -12,7 +12,9 @@ import androidx.navigation.fragment.findNavController
 import com.marcomadalin.olympus.R
 import com.marcomadalin.olympus.databinding.FragmentExerciseReviewBinding
 import com.marcomadalin.olympus.presentation.viewmodel.ExerciseDataViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ExerciseReviewFragment : Fragment() {
 
     //TODO Add plots

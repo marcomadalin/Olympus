@@ -13,8 +13,8 @@ interface StatisticDAO {
     @Query("SELECT * FROM Statistics")
     suspend fun getAllStatistics() : List<StatisticEntity>
 
-    @Query("SELECT * FROM Statistics WHERE id = :id")
-    suspend fun getStatistic(id: Long) : StatisticEntity
+    @Query("SELECT * FROM Statistics")
+    suspend fun getStatistic() : StatisticEntity
 
     @Query("DELETE FROM Statistics WHERE userId = :id")
     suspend fun deleteAllUserStatistics(id : Long)

@@ -17,8 +17,8 @@ interface UserDAO {
     @Query("SELECT * FROM Users")
     suspend fun getAllUsers() : List<UserEntity>
 
-    @Query("SELECT * FROM Users WHERE id = :id")
-    suspend fun getUser(id :Long) : UserEntity
+    @Query("SELECT * FROM Users")
+    suspend fun getUser() : UserEntity
 
     @Query("SELECT * FROM Users JOIN Routines On Users.id = Routines.userId WHERE Users.id = :id")
     suspend fun getAllUserRoutines(id :Long) : List<RoutineEntity>

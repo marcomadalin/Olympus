@@ -41,15 +41,15 @@ class WorkoutSupersetFragment : Fragment() {
         binding.imageButton3.isEnabled = false
         navController = findNavController()
         binding.supersetRecycler.layoutManager = LinearLayoutManager(this.context)
-        adapter = ExerciseSupersetAdapter(workoutViewModel.workout.value!!.exercises, {selectSet(it)})
-        adapter.supersets = workoutViewModel.workout.value!!.supersets
+        adapter = ExerciseSupersetAdapter(workoutViewModel.selectedWorkout.value!!.exercises, {selectSet(it)})
+        adapter.supersets = workoutViewModel.selectedWorkout.value!!.supersets
         binding.supersetRecycler.adapter = adapter
         binding.supersetRecycler.addItemDecoration(DividerItemDecoration(binding.supersetRecycler.context, DividerItemDecoration.VERTICAL))
-        binding.summaryTitle4.text = workoutViewModel.workout.value!!.name
+        binding.summaryTitle4.text = workoutViewModel.selectedWorkout.value!!.name
         binding.backButtonSummary4.setOnClickListener{ navController.popBackStack() }
         binding.imageButton3.setOnClickListener{
             if (binding.imageButton3.isEnabled) {
-                val workout = workoutViewModel.workout.value!!
+                val workout = workoutViewModel.selectedWorkout.value!!
                 if (superset.isNotEmpty()) {
                     val newSupersets : MutableList<MutableSet<Long>> = removeSingleSupersets(workout, superset)
                     newSupersets.add(superset)
@@ -64,8 +64,8 @@ class WorkoutSupersetFragment : Fragment() {
                 }
                 binding.imageButton3.setBackgroundResource(R.drawable.lock_disable)
                 binding.imageButton3.isEnabled = false
-                workoutViewModel.workout.postValue(workout)
-                adapter.supersets = workoutViewModel.workout.value!!.supersets
+                workoutViewModel.selectedWorkout.postValue(workout)
+                adapter.supersets = workoutViewModel.selectedWorkout.value!!.supersets
                 adapter.selected = false
                 adapter.added = false
                 adapter.notifyDataSetChanged()
@@ -91,8 +91,8 @@ class WorkoutSupersetFragment : Fragment() {
     }
 
     private fun selectSet(exercisePos : Int) {
-        val supersets = workoutViewModel.workout.value!!.supersets
-        val exerciseId = workoutViewModel.workout.value!!.exercises[exercisePos].id
+        val supersets = workoutViewModel.selectedWorkout.value!!.supersets
+        val exerciseId = workoutViewModel.selectedWorkout.value!!.exercises[exercisePos].id
 
         if (superset.isEmpty() && checkSameSuperset(exerciseId, removedExercises, supersets, false)) {
             if (removedExercises.contains(exerciseId)) {

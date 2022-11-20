@@ -17,9 +17,6 @@ import com.marcomadalin.olympus.presentation.viewmodel.WorkoutViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
-
-
-
 @AndroidEntryPoint
 class WorkoutReorderFragment : Fragment() {
 
@@ -36,10 +33,10 @@ class WorkoutReorderFragment : Fragment() {
         override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
             val startPosition = viewHolder.absoluteAdapterPosition
             val endPosition = target.absoluteAdapterPosition
-            val workout = workoutViewModel.workout.value!!
+            val workout = workoutViewModel.selectedWorkout.value!!
             Collections.swap(workout.exercises, startPosition, endPosition)
             recyclerView.adapter?.notifyItemMoved(startPosition, endPosition)
-            workoutViewModel.workout.postValue(workout)
+            workoutViewModel.selectedWorkout.postValue(workout)
             return true
         }
 
@@ -56,11 +53,11 @@ class WorkoutReorderFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         navController = findNavController()
         binding.reorderrecycler.layoutManager = LinearLayoutManager(this.context)
-        adapter = ExerciseReorderAdapter(workoutViewModel.workout.value!!.exercises)
+        adapter = ExerciseReorderAdapter(workoutViewModel.selectedWorkout.value!!.exercises)
         binding.reorderrecycler.adapter = adapter
         ItemTouchHelper(simpleCallback).attachToRecyclerView(binding.reorderrecycler)
         binding.reorderrecycler.addItemDecoration(DividerItemDecoration(binding.reorderrecycler.context, DividerItemDecoration.VERTICAL))
-        binding.summaryTitle3.text = workoutViewModel.workout.value!!.name
+        binding.summaryTitle3.text = workoutViewModel.selectedWorkout.value!!.name
         binding.backButtonSummary3.setOnClickListener{ navController.popBackStack() }
     }
 

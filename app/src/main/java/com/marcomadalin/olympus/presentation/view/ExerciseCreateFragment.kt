@@ -21,8 +21,9 @@ import com.marcomadalin.olympus.domain.model.enums.Equipment
 import com.marcomadalin.olympus.domain.model.enums.ExerciseType
 import com.marcomadalin.olympus.domain.model.enums.Muscle
 import com.marcomadalin.olympus.presentation.viewmodel.ExerciseDataViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class ExerciseCreateFragment : Fragment() {
 
     //TODO STORE IMAGE

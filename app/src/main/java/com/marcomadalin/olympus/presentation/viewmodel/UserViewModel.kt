@@ -3,9 +3,9 @@ package com.marcomadalin.olympus.presentation.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.marcomadalin.olympus.domain.cases.DeleteUsersUseCase
 import com.marcomadalin.olympus.domain.cases.GetUserUseCase
 import com.marcomadalin.olympus.domain.cases.SaveUserUseCase
-import com.marcomadalin.olympus.domain.cases.DeleteUsersUseCase
 import com.marcomadalin.olympus.domain.model.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -18,7 +18,7 @@ class UserViewModel @Inject constructor(
     private val deleteUsersUseCase: DeleteUsersUseCase
 ) : ViewModel() {
 
-    val userModel = MutableLiveData<User>()
+    val user = MutableLiveData<User>()
 
     fun saveUser(user: User) {
         viewModelScope.launch { saveUserUseCase.invoke(user) }
@@ -27,7 +27,7 @@ class UserViewModel @Inject constructor(
     fun getUser() {
         viewModelScope.launch {
             val result = getUsersUseCase()
-            userModel.postValue(result)
+            user.postValue(result)
         }
     }
 

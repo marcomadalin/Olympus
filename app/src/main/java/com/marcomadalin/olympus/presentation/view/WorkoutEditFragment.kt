@@ -46,12 +46,12 @@ class WorkoutEditFragment : Fragment() {
         binding.backButtonSummary2.setOnClickListener {navController.popBackStack()}
         binding.button2.setOnClickListener { addExercise() }
         binding.editRecycler.layoutManager = LinearLayoutManager(this.context)
-        adapter = ExerciseEditAdapter(workoutViewModel.workout.value!!.exercises,
+        adapter = ExerciseEditAdapter(workoutViewModel.selectedWorkout.value!!.exercises,
             {updateNote(it)}, {addSet(it)}, {deleteSet(it)}, {toggleSet(it)}, {onItemClick(it)})
-        adapter.supersets = workoutViewModel.workout.value!!.supersets
+        adapter.supersets = workoutViewModel.selectedWorkout.value!!.supersets
         binding.editRecycler.adapter = adapter
         binding.editRecycler.isNestedScrollingEnabled = false
-        updateWorkoutReview( workoutViewModel.workout.value)
+        updateWorkoutReview( workoutViewModel.selectedWorkout.value)
     }
 
     private fun onItemClick(data : Pair<Int, Int>) : Boolean {
@@ -77,7 +77,7 @@ class WorkoutEditFragment : Fragment() {
 
     private fun updateWorkoutReview(workout: Workout?) {
         if (workout != null) {
-            adapter.supersets = workoutViewModel.workout.value!!.supersets
+            adapter.supersets = workoutViewModel.selectedWorkout.value!!.supersets
             binding.summaryTitle2.text = workout.name
             binding.summaryDate2.text = workout.date.dayOfMonth.toString() + " " +
                     workout.date.month.toString().toLowerCase(Locale.ROOT) + " " + workout.date.year
@@ -86,7 +86,7 @@ class WorkoutEditFragment : Fragment() {
                 View.OnFocusChangeListener { _, hasFocus ->
                     if (!hasFocus) {
                         workout.note = binding.summarytNote3.text.toString()
-                        workoutViewModel.workout.postValue(workout)
+                        workoutViewModel.selectedWorkout.postValue(workout)
                     }
                 }
 
@@ -94,51 +94,51 @@ class WorkoutEditFragment : Fragment() {
     }
 
     private fun addExercise() {
-        val workout = workoutViewModel.workout.value!!
+        val workout = workoutViewModel.selectedWorkout.value!!
         val exercise = Exercise(0, workout.id, 5, Duration.ofSeconds(0), "", workout.exercises.size, mutableListOf())
         val set = Set(0, exercise.id, 0.0, 0, 0, 0.0, 0, SetType.Normal, exercise.sets.size)
         exercise.sets.add(set)
         workout.exercises.add(exercise)
-        workoutViewModel.workout.postValue(workout)
+        workoutViewModel.selectedWorkout.postValue(workout)
         adapter.notifyItemChanged(workout.exercises.size-1)
     }
 
     private fun deleteExercise(exercisePosition : Int) {
-        val workout = workoutViewModel.workout.value!!
+        val workout = workoutViewModel.selectedWorkout.value!!
         workout.exercises.removeAt(exercisePosition)
-        workoutViewModel.workout.postValue(workout)
+        workoutViewModel.selectedWorkout.postValue(workout)
         adapter.notifyItemChanged(exercisePosition)
     }
 
     private fun addSet(exercisePosition : Int) {
-        val workout = workoutViewModel.workout.value!!
+        val workout = workoutViewModel.selectedWorkout.value!!
         val exercise = workout.exercises[exercisePosition]
         val set = Set(0, exercise.id, 0.0, 0, 0, 0.0, 0, SetType.Normal, exercise.sets.size)
         exercise.sets.add(set)
-        workoutViewModel.workout.postValue(workout)
+        workoutViewModel.selectedWorkout.postValue(workout)
         adapter.notifyItemChanged(exercisePosition)
     }
 
     private fun deleteSet(data : Pair<Int, Int>) {
-        val workout = workoutViewModel.workout.value!!
+        val workout = workoutViewModel.selectedWorkout.value!!
         val exercise = workout.exercises[data.first]
         exercise.sets.removeAt(data.second)
-        workoutViewModel.workout.postValue(workout)
+        workoutViewModel.selectedWorkout.postValue(workout)
         adapter.notifyItemChanged(data.first)
     }
 
     private fun toggleSet(data : Pair<Int, Int>) {
-        val workout = workoutViewModel.workout.value!!
+        val workout = workoutViewModel.selectedWorkout.value!!
         val exercise = workout.exercises[data.first]
         exercise.sets[data.second].completed = !exercise.sets[data.second].completed
-        workoutViewModel.workout.postValue(workout)
+        workoutViewModel.selectedWorkout.postValue(workout)
         adapter.notifyItemChanged(data.first)
     }
 
     private fun updateNote(data : Pair<Int, String>) {
-        val workout = workoutViewModel.workout.value!!
+        val workout = workoutViewModel.selectedWorkout.value!!
         workout.exercises[data.first].note = data.second
-        workoutViewModel.workout.postValue(workout)
+        workoutViewModel.selectedWorkout.postValue(workout)
         adapter.notifyItemChanged(data.first)
     }
 

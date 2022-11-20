@@ -49,10 +49,10 @@ class WorkoutReviewFragment : Fragment() {
             (activity as MainActivity).showNavigationBar()
         }
         binding.exerciseRecycler.layoutManager = LinearLayoutManager(this.context)
-        adapter = ExerciseReviewAdapter(workoutViewModel.workout.value!!.exercises)
-        adapter.supersets = workoutViewModel.workout.value!!.supersets
+        adapter = ExerciseReviewAdapter(workoutViewModel.selectedWorkout.value!!.exercises)
+        adapter.supersets = workoutViewModel.selectedWorkout.value!!.supersets
         binding.exerciseRecycler.adapter = adapter
-        workoutViewModel.workout.observe(viewLifecycleOwner) {updateWorkoutReview(it)}
+        workoutViewModel.selectedWorkout.observe(viewLifecycleOwner) {updateWorkoutReview(it)}
     }
 
     private fun popupMenu() {
@@ -70,7 +70,7 @@ class WorkoutReviewFragment : Fragment() {
                         true
                     }
                     R.id.delete -> {
-                        workoutViewModel.deleteWorkout(workoutViewModel.workout.value!!)
+                        workoutViewModel.deleteWorkout(workoutViewModel.selectedWorkout.value!!)
                         navController.navigate(R.id.history)
                         (activity as MainActivity).showNavigationBar()
                         //TODO FIX BUG DELETE
@@ -95,7 +95,7 @@ class WorkoutReviewFragment : Fragment() {
 
     private fun updateWorkoutReview(workout: Workout?) {
         if (workout != null) {
-            adapter.supersets = workoutViewModel.workout.value!!.supersets
+            adapter.supersets = workoutViewModel.selectedWorkout.value!!.supersets
             binding.summaryTitle.text = workout.name
             binding.summaryDate.text = workout.date.dayOfMonth.toString() + " " +
                     workout.date.month.toString().toLowerCase(Locale.ROOT) + " " + workout.date.year
@@ -106,7 +106,7 @@ class WorkoutReviewFragment : Fragment() {
             binding.workoutVolume2.text = "$volume kg"
             binding.workoutTime2.text = ((workout.length.seconds%3600)/60).toString() + " min"
             if (workout.length.toHours().toInt() != 0) {
-                binding.workoutTime2.text = workout.length.toHours().toString() + " " + binding.workoutTime2.text
+                binding.workoutTime2.text = workout.length.toHours().toString() + " h " + binding.workoutTime2.text
             }
             binding.summarytNote.text = workout.note
         }
