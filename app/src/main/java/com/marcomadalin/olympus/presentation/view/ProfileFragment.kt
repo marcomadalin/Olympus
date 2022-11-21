@@ -52,7 +52,7 @@ class ProfileFragment : Fragment() {
         }
 
         binding.username.text = userViewModel.user.value!!.name
-        binding.numWorkouts.text = workoutViewModel.workouts.value!!.size.toString()
+        binding.numWorkouts.text = workoutViewModel.workouts.value!!.size.toString() + " workouts"
 
         binding.durationButtonStat.setOnClickListener{}
         binding.volumeButtonStat.setOnClickListener{}
