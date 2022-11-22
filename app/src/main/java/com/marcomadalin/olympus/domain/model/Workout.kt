@@ -5,15 +5,16 @@ import java.time.Duration
 import java.time.LocalDate
 
 data class Workout (
-    var id : Long = 0,
-    var userId : Long = 0,
-    var name : String = "",
-    var note : String = "",
-    var length  : Duration = Duration.ofSeconds(0),
+    override var id : Long = 0,
+    override var userId : Long = 0,
+    override var name : String = "",
+    override var note : String = "",
+    var length : Duration = Duration.ofSeconds(0),
     var date : LocalDate = LocalDate.parse(""),
-    var exercises : MutableList<Exercise> = mutableListOf(),
-    var supersets : MutableList<MutableSet<Long>> = mutableListOf()
-)
+    override var exercises : MutableList<Exercise> = mutableListOf(),
+    override var supersets : MutableList<MutableSet<Long>> = mutableListOf(),
+    var routineId : Long = -1
+) : Routine()
 fun WorkoutEntity.toDomain() = Workout(
     id,
     userId,
@@ -21,5 +22,6 @@ fun WorkoutEntity.toDomain() = Workout(
     note,
     Duration.ofSeconds(length),
     LocalDate.parse(date),
-    supersets = supersets.map { it.toMutableSet() }.toMutableList()
+    supersets = supersets.map { it.toMutableSet() }.toMutableList(),
+    routineId = routineId
 )

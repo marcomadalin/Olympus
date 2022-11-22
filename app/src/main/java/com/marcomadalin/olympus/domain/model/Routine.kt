@@ -2,17 +2,18 @@ package com.marcomadalin.olympus.domain.model
 
 import com.marcomadalin.olympus.data.database.entities.RoutineEntity
 
-//TODO delete
-
 open class Routine (
     open var id : Long = 0,
     open var userId : Long = 0,
     open var name : String = "",
     open var note : String = "",
+    open var exercises : MutableList<Exercise> = mutableListOf(),
+    open var supersets : MutableList<MutableSet<Long>> = mutableListOf()
 )
 fun RoutineEntity.toDomain() = Routine(
     id,
     userId,
     name,
-    note
+    note,
+    supersets = supersets.map { it.toMutableSet() }.toMutableList()
 )

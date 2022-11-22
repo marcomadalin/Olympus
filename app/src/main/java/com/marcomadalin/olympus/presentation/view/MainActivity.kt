@@ -94,7 +94,7 @@ class MainActivity : AppCompatActivity() {
         val workout = Workout(0, 1, "Legs", "Pretty chill workout",
             Duration.ofSeconds(1780), LocalDate.now(),
             mutableListOf(exercise1, exercise2, exercise3, exercise4, exercise5),
-            mutableListOf())
+            mutableListOf(), -1)
 
         val e1 = ExerciseData(0, 1, "Deadlift", ExerciseType.Weight_Reps, true, Equipment.Barbell, Muscle.Hamstrings, emptySet(), 220.0, 230.75, 220.0, 3, true)
         val e2 = ExerciseData(0, 1, "Squat", ExerciseType.Weight_Reps, true, Equipment.Barbell, Muscle.Hamstrings, emptySet(), 190.0, 200.00, 190.0, 3, true)

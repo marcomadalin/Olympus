@@ -62,7 +62,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun updateStats(statistic: Statistic) {
-        var numWorkouts = workoutViewModel.workouts.value!!.size
+        val numWorkouts = workoutViewModel.workouts.value!!.size
 
         binding.totalVolumeStat.text = statistic.totalVolume.toString() + " Kg"
         binding.totalRepStat.text = statistic.totalReps.toString()

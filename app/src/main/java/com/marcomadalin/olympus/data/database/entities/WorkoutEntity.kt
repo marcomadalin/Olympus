@@ -9,15 +9,16 @@ import com.marcomadalin.olympus.domain.model.Workout
 @Entity(tableName = "Workouts")
 data class WorkoutEntity (
     @PrimaryKey(autoGenerate = true)
-    var id : Long = 0,
-    var userId : Long = 0,
-    var name : String = "",
-    var note : String = "",
+    override var id : Long = 0,
+    override var userId : Long = 0,
+    override var name : String = "",
+    override var note : String = "",
     var length : Long = 0,
     var date : String = "",
     @TypeConverters(ListSetConverters::class)
-    var supersets : List<Set<Long>> = emptyList()
-)
+    override var supersets : List<Set<Long>> = emptyList(),
+    var routineId : Long = -1
+) : RoutineEntity()
 fun Workout.toData() = WorkoutEntity(
     id,
     userId,
@@ -25,5 +26,6 @@ fun Workout.toData() = WorkoutEntity(
     note,
     length.seconds,
     date.toString(),
-    supersets
+    supersets,
+    routineId
 )
