@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.marcomadalin.olympus.R
 import com.marcomadalin.olympus.databinding.FragmentHistoryBinding
 import com.marcomadalin.olympus.domain.model.Workout
+import com.marcomadalin.olympus.presentation.view.recyclers.WorkoutSummaryAdapter
 import com.marcomadalin.olympus.presentation.viewmodel.WorkoutViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate

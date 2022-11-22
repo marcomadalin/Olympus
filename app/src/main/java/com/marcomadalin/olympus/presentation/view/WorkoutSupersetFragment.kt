@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.marcomadalin.olympus.R
 import com.marcomadalin.olympus.databinding.FragmentWorkoutSupersetBinding
 import com.marcomadalin.olympus.domain.model.Workout
+import com.marcomadalin.olympus.presentation.view.recyclers.ExerciseSupersetAdapter
 import com.marcomadalin.olympus.presentation.viewmodel.WorkoutViewModel
 import dagger.hilt.android.AndroidEntryPoint
 

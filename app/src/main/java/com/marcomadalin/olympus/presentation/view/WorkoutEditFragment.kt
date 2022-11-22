@@ -15,6 +15,7 @@ import com.marcomadalin.olympus.domain.model.Exercise
 import com.marcomadalin.olympus.domain.model.Set
 import com.marcomadalin.olympus.domain.model.Workout
 import com.marcomadalin.olympus.domain.model.enums.SetType
+import com.marcomadalin.olympus.presentation.view.recyclers.ExerciseEditAdapter
 import com.marcomadalin.olympus.presentation.viewmodel.WorkoutViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.Duration

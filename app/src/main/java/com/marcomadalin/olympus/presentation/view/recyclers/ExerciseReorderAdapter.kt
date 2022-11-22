@@ -1,4 +1,4 @@
-package com.marcomadalin.olympus.presentation.view
+package com.marcomadalin.olympus.presentation.view.recyclers
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

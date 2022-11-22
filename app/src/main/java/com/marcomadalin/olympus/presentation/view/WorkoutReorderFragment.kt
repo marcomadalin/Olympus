@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.marcomadalin.olympus.databinding.FragmentWorkoutReorderBinding
+import com.marcomadalin.olympus.presentation.view.recyclers.ExerciseReorderAdapter
 import com.marcomadalin.olympus.presentation.viewmodel.WorkoutViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*

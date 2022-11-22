@@ -1,4 +1,4 @@
-package com.marcomadalin.olympus.presentation.view
+package com.marcomadalin.olympus.presentation.view.util
 
 import android.text.InputFilter
 import android.text.Spanned
@@ -24,7 +24,7 @@ class InputFilterMinMax constructor(min: Int, max: Int) : InputFilter {
         try {
             val input = (dest.toString() + source.toString()).toInt()
             if (isInRange(min, max, input)) return null
-        } catch (nfe: NumberFormatException) {
+        } catch (_: NumberFormatException) {
         }
         return ""
     }

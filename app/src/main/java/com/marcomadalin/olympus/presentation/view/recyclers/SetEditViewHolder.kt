@@ -1,4 +1,4 @@
-package com.marcomadalin.olympus.presentation.view
+package com.marcomadalin.olympus.presentation.view.recyclers
 
 import android.graphics.Color
 import android.text.InputType
@@ -8,6 +8,7 @@ import com.marcomadalin.olympus.R
 import com.marcomadalin.olympus.databinding.SetEditItemBinding
 import com.marcomadalin.olympus.domain.model.Set
 import com.marcomadalin.olympus.domain.model.enums.SetType
+import com.marcomadalin.olympus.presentation.view.util.InputFilterMinMax
 
 class SetEditViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 

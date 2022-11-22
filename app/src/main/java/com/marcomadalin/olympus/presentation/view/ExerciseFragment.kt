@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.marcomadalin.olympus.R
 import com.marcomadalin.olympus.databinding.FragmentExerciseBinding
 import com.marcomadalin.olympus.domain.model.ExerciseData
+import com.marcomadalin.olympus.presentation.view.recyclers.ExerciseDataAdapter
+import com.marcomadalin.olympus.presentation.view.recyclers.ExerciseFilterAdapter
 import com.marcomadalin.olympus.presentation.viewmodel.ExerciseDataViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
