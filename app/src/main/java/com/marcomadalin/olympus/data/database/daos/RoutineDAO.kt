@@ -17,7 +17,7 @@ interface RoutineDAO {
     @Query("SELECT * FROM Routines WHERE id = :id")
     suspend fun getRoutine(id: Long) : RoutineEntity
 
-    @Query("SELECT * FROM Routines JOIN Exercises On Routines.id = Exercises.workoutId " +
+    @Query("SELECT * FROM Routines JOIN Exercises On Routines.id = Exercises.routineId " +
             "WHERE Routines.id = :id")
     suspend fun getAllRoutineExercises(id: Long) : List<ExerciseEntity>
 
@@ -28,7 +28,7 @@ interface RoutineDAO {
     suspend fun insertAllRoutines(routine : List<RoutineEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertRoutine(routine : RoutineEntity)
+    suspend fun insertRoutine(routine : RoutineEntity): Long
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateRoutine(routine: RoutineEntity)

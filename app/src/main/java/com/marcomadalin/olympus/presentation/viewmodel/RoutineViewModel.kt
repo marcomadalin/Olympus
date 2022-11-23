@@ -3,23 +3,42 @@ package com.marcomadalin.olympus.presentation.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.marcomadalin.olympus.domain.cases.DeleteRoutineUseCase
+import com.marcomadalin.olympus.domain.cases.DeleteRoutinesUseCase
 import com.marcomadalin.olympus.domain.cases.GetRoutinesUseCase
+import com.marcomadalin.olympus.domain.cases.SaveRoutineUseCase
 import com.marcomadalin.olympus.domain.model.Routine
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class RoutineViewModel @Inject constructor(private val getRoutinesUseCase: GetRoutinesUseCase) : ViewModel() {
+class RoutineViewModel @Inject constructor(
+    private val getRoutinesUseCase: GetRoutinesUseCase,
+    private val saveRoutineUseCase: SaveRoutineUseCase,
+    private val deleteRoutineUseCase: DeleteRoutineUseCase,
+    private val deleteRoutinesUseCase: DeleteRoutinesUseCase
+    ) : ViewModel() {
 
-    private val routinesModel = MutableLiveData<List<Routine>>()
+    val searchText = MutableLiveData<String>("")
+    val routines = MutableLiveData<List<Routine>?>()
 
-    fun onCreate() {
-        viewModelScope.launch {
-            val result = getRoutinesUseCase()
+    val selectedRoutine = MutableLiveData<Routine?>()
 
-            if (result.isNotEmpty()) routinesModel.postValue(result)
-        }
+    fun getRoutines() {
+        viewModelScope.launch {routines.postValue(getRoutinesUseCase())}
+    }
+
+    fun saveRoutine(routine: Routine) {
+        viewModelScope.launch {saveRoutineUseCase(routine)}
+    }
+
+    fun deleteRoutine(routine: Routine) {
+        viewModelScope.launch { deleteRoutineUseCase(routine) }
+    }
+
+    fun deleteAllRoutines() {
+        viewModelScope.launch { deleteAllRoutines() }
     }
 
 }

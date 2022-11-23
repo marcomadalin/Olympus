@@ -5,6 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
     android:background="@color/background"
+    android:focusableInTouchMode="true"
+    android:clickable="true"
+    android:focusable="true"
     tools:context=".presentation.view.ExerciseFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout

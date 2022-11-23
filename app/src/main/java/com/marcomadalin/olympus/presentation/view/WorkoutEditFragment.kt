@@ -81,7 +81,7 @@ class WorkoutEditFragment : Fragment() {
             adapter.supersets = workoutViewModel.selectedWorkout.value!!.supersets
             binding.summaryTitle2.text = workout.name
             binding.summaryDate2.text = workout.date.dayOfMonth.toString() + " " +
-                    workout.date.month.toString().toLowerCase(Locale.ROOT) + " " + workout.date.year
+                    workout.date.month.toString().lowercase(Locale.ROOT) + " " + workout.date.year
             binding.summarytNote3.setText(workout.note)
             binding.summarytNote3.onFocusChangeListener =
                 View.OnFocusChangeListener { _, hasFocus ->
@@ -96,7 +96,7 @@ class WorkoutEditFragment : Fragment() {
 
     private fun addExercise() {
         val workout = workoutViewModel.selectedWorkout.value!!
-        val exercise = Exercise(0, workout.id, 5, Duration.ofSeconds(0), "", workout.exercises.size, mutableListOf())
+        val exercise = Exercise(0, workout.id, 5, 1, Duration.ofSeconds(0), "", workout.exercises.size, mutableListOf())
         val set = Set(0, exercise.id, 0.0, 0, 0, 0.0, 0, SetType.Normal, exercise.sets.size)
         exercise.sets.add(set)
         workout.exercises.add(exercise)

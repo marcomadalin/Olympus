@@ -10,6 +10,7 @@ data class ExerciseEntity(
     @PrimaryKey(autoGenerate = true)
     var id : Long = 0,
     var workoutId : Long = 0,
+    var routineId : Long = 0,
     var exerciseDataId : Long = 0,
     var restTime : Long = 0,
     var note : String = "",
@@ -18,6 +19,7 @@ data class ExerciseEntity(
 fun Exercise.toData() = ExerciseEntity(
     id,
     workoutId,
+    routineId,
     exerciseDataId,
     restTime.seconds,
     note,

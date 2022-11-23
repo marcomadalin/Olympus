@@ -7,7 +7,7 @@
         android:title="@string/history" />
     <item
         android:id="@+id/workout"
-        android:icon="@drawable/ic_baseline_add_24"
+        android:icon="@drawable/notes"
         android:title="@string/workout" />
     <item
         android:id="@+id/exercise"

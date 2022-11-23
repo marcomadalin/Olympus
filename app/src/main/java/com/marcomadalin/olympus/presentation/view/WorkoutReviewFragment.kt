@@ -99,7 +99,7 @@ class WorkoutReviewFragment : Fragment() {
             adapter.supersets = workoutViewModel.selectedWorkout.value!!.supersets
             binding.summaryTitle.text = workout.name
             binding.summaryDate.text = workout.date.dayOfMonth.toString() + " " +
-                    workout.date.month.toString().toLowerCase(Locale.ROOT) + " " + workout.date.year
+                    workout.date.month.toString().lowercase(Locale.ROOT) + " " + workout.date.year
             var volume = 0.0
             workout.exercises.forEach{
                     it -> it.sets.forEach{volume += it.weight}

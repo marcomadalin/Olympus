@@ -30,8 +30,8 @@ class RoutineRepository @Inject constructor(private val routineDAO: RoutineDAO) 
         routineDAO.insertAllRoutines(routines.map { it.toData() })
     }
 
-    suspend fun saveRoutine(routine : Routine) {
-        routineDAO.insertRoutine(routine.toData())
+    suspend fun saveRoutine(routine : Routine) : Long {
+        return routineDAO.insertRoutine(routine.toData())
     }
 
     suspend fun updateRoutine(routine: Routine) {
