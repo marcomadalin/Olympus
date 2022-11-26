@@ -44,6 +44,7 @@ class WorkoutFragment : Fragment() {
         navController = findNavController()
 
         binding.createRoutine.setOnClickListener {  }
+        binding.startEmpty.setOnClickListener {  }
 
         binding.routineRecycler.layoutManager = LinearLayoutManager(this.context)
         adapter = RoutineAdapter()

@@ -51,8 +51,7 @@ class ExerciseCreateFragment : Fragment() {
 
         navController = findNavController()
 
-        exerciseDataViewModel.newExercise.postValue(ExerciseData())
-        exerciseDataViewModel.newExercise.value!!.default = false
+        exerciseDataViewModel.newExercise.postValue(ExerciseData(default=false))
 
         binding.backButtonSummary5.setOnClickListener{
             navController.popBackStack()

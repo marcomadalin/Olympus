@@ -66,6 +66,7 @@ class WorkoutEditFragment : Fragment() {
                 true
             }
             R.id.swap -> {
+                navController.navigate(R.id.selectExerciseFragment)
                 true
             }
             R.id.deleteExercise -> {

@@ -8,20 +8,50 @@
     android:focusableInTouchMode="true"
     android:clickable="true"
     android:focusable="true"
-    tools:context=".presentation.view.ExerciseFragment">
+    tools:context="presentation.view.SelectExerciseFragment">
+
+    <TextView
+        android:id="@+id/summaryTitle7"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_toEndOf="@+id/backButtonSummary6"
+        android:gravity="center"
+        android:text="Exercises"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/backButtonSummary4"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/backButtonSummary6"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/back_arrow"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/filter"
+        android:id="@+id/filter2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/backButtonSummary6"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginRight="20dp"
-        android:isScrollContainer="false"
-        android:layout_marginBottom="20dp">
+        android:layout_marginBottom="20dp"
+        android:isScrollContainer="false">
 
         <SearchView
-            android:id="@+id/search"
+            android:id="@+id/search2"
             android:layout_width="fill_parent"
             android:layout_height="30dp"
             android:layout_marginStart="40dp"
@@ -34,7 +64,7 @@
             app:queryHint="Search exercise..." />
 
         <Button
-            android:id="@+id/muscle"
+            android:id="@+id/muscle2"
             android:layout_width="170dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -46,11 +76,11 @@
             android:text="Muscle Group"
             android:textAllCaps="false"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/equipment"
-            app:layout_constraintTop_toBottomOf="@+id/search" />
+            app:layout_constraintStart_toEndOf="@+id/equipment2"
+            app:layout_constraintTop_toBottomOf="@+id/search2" />
 
         <Button
-            android:id="@+id/equipment"
+            android:id="@+id/equipment2"
             android:layout_width="170dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -61,12 +91,12 @@
             android:paddingVertical="10dp"
             android:text="Equipment"
             android:textAllCaps="false"
-            app:layout_constraintEnd_toStartOf="@+id/muscle"
+            app:layout_constraintEnd_toStartOf="@+id/muscle2"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/search" />
+            app:layout_constraintTop_toBottomOf="@+id/search2" />
 
         <ImageButton
-            android:id="@+id/create"
+            android:id="@+id/create2"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:background="@drawable/button_layout"
@@ -77,20 +107,19 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/filterRecycler"
+        android:id="@+id/filterRecycler2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/filter"
+        android:layout_below="@id/filter2"
         android:layout_alignParentStart="true"
         android:background="@color/layout" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/exerciseRecyler"
+        android:id="@+id/exerciseRecyler2"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@id/filter"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="56dp">
+        android:layout_below="@id/filter2"
+        android:layout_alignParentStart="true">
 
     </androidx.recyclerview.widget.RecyclerView>
 
@@ -98,7 +127,7 @@
         android:id="@+id/noExercise"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/filterRecycler"
+        android:layout_below="@id/filterRecycler2"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="0dp"
@@ -113,7 +142,7 @@
         android:id="@+id/dropShadow5"
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:layout_below="@id/filter"
+        android:layout_below="@id/filter2"
         android:background="@drawable/shadow_reverse"
         android:isScrollContainer="false"
         android:visibility="visible" />
@@ -122,9 +151,19 @@
         android:id="@+id/dropShadow6"
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:layout_above="@id/exerciseRecyler"
+        android:layout_above="@id/exerciseRecyler2"
         android:background="@drawable/shadow"
         android:isScrollContainer="false"
         android:visibility="visible" />
+
+    <ImageButton
+        android:id="@+id/complete"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/tick_grey" />
 
 </RelativeLayout>

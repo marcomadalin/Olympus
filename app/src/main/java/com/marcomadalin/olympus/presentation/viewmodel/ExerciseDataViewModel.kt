@@ -25,21 +25,34 @@ class ExerciseDataViewModel @Inject constructor(
     private val deleteExerciseDataUseCase: DeleteExerciseDataUseCase
     ) : ViewModel() {
 
-    val exercises = MutableLiveData<MutableList<ExerciseData>?>()
-
-    val selectedExercise = MutableLiveData<ExerciseData>()
-
+    //Misc
     val equipmentFilters = MutableLiveData<List<String>>()
 
     val muscleFilters = MutableLiveData<List<String>>()
 
     val exerciseTypes = MutableLiveData<List<String>>()
 
+    //Exercise fragment
+    val exercises = MutableLiveData<MutableList<ExerciseData>?>()
+
+    val selectedExercise = MutableLiveData<ExerciseData>()
+
     val selectedFilters = MutableLiveData<Set<String>>(setOf())
 
     val searchFilter = MutableLiveData("")
 
+    //Create exercise fragment
+
     val newExercise = MutableLiveData<ExerciseData>()
+
+    //Select exercise fragment
+    val selectMultiple = MutableLiveData(false)
+
+    val selectedExercises = MutableLiveData<MutableSet<Long>>(mutableSetOf())
+
+    val selectedFilters2 = MutableLiveData<Set<String>>(setOf())
+
+    val selectOne = MutableLiveData(false)
 
     fun getExercisesData() {
         viewModelScope.launch {exercises.postValue(getExercisesUseCase())}
