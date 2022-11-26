@@ -17,6 +17,7 @@ import com.marcomadalin.olympus.presentation.view.recyclers.WorkoutSummaryAdapte
 import com.marcomadalin.olympus.presentation.viewmodel.WorkoutViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
+import java.util.*
 
 //TODO TRANSITION
 
@@ -32,7 +33,7 @@ class HistoryFragment : Fragment() {
 
     private lateinit var navController: NavController
 
-    private var first = true
+    private var initAdapter = true
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentHistoryBinding.inflate(inflater, container, false)
@@ -42,14 +43,28 @@ class HistoryFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         (activity as MainActivity).showNavigationBar()
-        first = true
+        initAdapter = true
         navController = findNavController()
         binding.workoutSummary.setOnClickListener {
             navController.navigate(R.id.workoutReview)
             (activity as MainActivity).hideNavigationBar()
         }
+        val date = LocalDate.now()
+
+        val day = date.dayOfMonth
+        val month = date.monthValue-1
+        val year = date.year
+
+        val calendar: Calendar = Calendar.getInstance()
+        calendar.set(Calendar.YEAR, year)
+        calendar.set(Calendar.MONTH, month)
+        calendar.set(Calendar.DAY_OF_MONTH, day)
+
+        val milliTime: Long = calendar.getTimeInMillis()
+        binding.calendarView.setDate(milliTime, true, true)
+
         binding.calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
-            workoutViewModel.selectedDate.postValue(LocalDate.of(year, month+1, dayOfMonth))
+            workoutViewModel.selectedDate.value = LocalDate.of(year, month+1, dayOfMonth)
             workoutViewModel.getWorkout()
         }
         binding.summaryRecycler.layoutManager = LinearLayoutManager(this.context)
@@ -60,14 +75,20 @@ class HistoryFragment : Fragment() {
     }
 
     private fun updateWorkoutSummary(workout: Workout?) {
-        if (workout != null && first) {
+        if (workout != null && initAdapter) {
             adapter = WorkoutSummaryAdapter(workoutViewModel.selectedWorkout.value!!.exercises)
             adapter.supersets = workoutViewModel.selectedWorkout.value!!.supersets
             binding.summaryRecycler.adapter = adapter
-            first = false
+            initAdapter = false
         }
 
         if (workout == null) {
+            adapter = WorkoutSummaryAdapter(emptyList())
+            adapter.supersets = emptyList()
+            binding.summaryRecycler.adapter = adapter
+            initAdapter = true
+            adapter.notifyDataSetChanged()
+
             binding.workoutSummary.isVisible = false;
             binding.workoutEmpty.isVisible = true;
         }
