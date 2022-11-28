@@ -188,16 +188,20 @@ class WorkoutEditFragment : Fragment() {
         val exercise = workout.exercises[data.first]
         exerciseViewModel.deleteSet(exercise.sets[data.second])
         exercise.sets.removeAt(data.second)
-        workoutViewModel.selectedWorkout.postValue(workout)
-        adapter.exercises = workout.exercises
-        workoutViewModel.saveWorkout(workout)
-        adapter.notifyItemChanged(data.first)
+        if (exercise.sets.isEmpty()) deleteExercise(data.first)
+        else {
+            workoutViewModel.selectedWorkout.postValue(workout)
+            adapter.exercises = workout.exercises
+            workoutViewModel.saveWorkout(workout)
+            adapter.notifyItemChanged(data.first)
+        }
     }
 
     private fun toggleSet(data : Pair<Int, Int>) {
         val workout = workoutViewModel.selectedWorkout.value!!
         val exercise = workout.exercises[data.first]
         exercise.sets[data.second].completed = !exercise.sets[data.second].completed
+        adapter.exercises = workout.exercises
         workoutViewModel.selectedWorkout.postValue(workout)
         adapter.notifyItemChanged(data.first)
     }
