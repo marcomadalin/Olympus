@@ -17,7 +17,7 @@ import com.marcomadalin.olympus.databinding.FragmentExerciseBinding
 import com.marcomadalin.olympus.domain.model.ExerciseData
 import com.marcomadalin.olympus.presentation.view.recyclers.ExerciseDataAdapter
 import com.marcomadalin.olympus.presentation.view.recyclers.ExerciseFilterAdapter
-import com.marcomadalin.olympus.presentation.viewmodel.ExerciseDataViewModel
+import com.marcomadalin.olympus.presentation.viewmodel.ExerciseViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -27,7 +27,7 @@ class ExerciseFragment : Fragment() {
     private var _binding : FragmentExerciseBinding? = null
     private val binding get() = _binding!!
 
-    private val exerciseDataViewModel : ExerciseDataViewModel by activityViewModels()
+    private val exerciseDataViewModel : ExerciseViewModel by activityViewModels()
 
     private lateinit var exerciseAdapter : ExerciseDataAdapter
     private lateinit var filterAdapter: ExerciseFilterAdapter

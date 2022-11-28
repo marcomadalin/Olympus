@@ -18,17 +18,17 @@ class UserViewModel @Inject constructor(
     private val deleteUsersUseCase: DeleteUsersUseCase
 ) : ViewModel() {
 
-    val user = MutableLiveData<User>()
+    val selectedUser = MutableLiveData<User>()
 
     fun saveUser(user: User) {
-        viewModelScope.launch { saveUserUseCase.invoke(user) }
+        viewModelScope.launch {
+            saveUserUseCase(user)
+            selectedUser.postValue(getUsersUseCase()!!)
+        }
     }
 
     fun getUser() {
-        viewModelScope.launch {
-            val result = getUsersUseCase()
-            user.postValue(result)
-        }
+        viewModelScope.launch { selectedUser.postValue(getUsersUseCase()!!)}
     }
 
     fun deleteUsers() {

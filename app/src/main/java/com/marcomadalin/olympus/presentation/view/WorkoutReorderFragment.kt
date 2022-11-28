@@ -30,11 +30,16 @@ class WorkoutReorderFragment : Fragment() {
 
     private lateinit var navController: NavController
 
+    private var changesDone = false
+
     private val simpleCallback = object : ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP or ItemTouchHelper.DOWN or ItemTouchHelper.START or ItemTouchHelper.END, 0) {
         override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
+            changesDone = true
             val startPosition = viewHolder.absoluteAdapterPosition
             val endPosition = target.absoluteAdapterPosition
             val workout = workoutViewModel.selectedWorkout.value!!
+            workout.exercises[startPosition].exerciseNumber = endPosition
+            workout.exercises[endPosition].exerciseNumber = startPosition
             Collections.swap(workout.exercises, startPosition, endPosition)
             recyclerView.adapter?.notifyItemMoved(startPosition, endPosition)
             workoutViewModel.selectedWorkout.postValue(workout)
@@ -50,8 +55,10 @@ class WorkoutReorderFragment : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onStart() {
+        super.onStart()
+
+        changesDone = false
         navController = findNavController()
         binding.reorderrecycler.layoutManager = LinearLayoutManager(this.context)
         adapter = ExerciseReorderAdapter(workoutViewModel.selectedWorkout.value!!.exercises)
@@ -60,6 +67,11 @@ class WorkoutReorderFragment : Fragment() {
         binding.reorderrecycler.addItemDecoration(DividerItemDecoration(binding.reorderrecycler.context, DividerItemDecoration.VERTICAL))
         binding.summaryTitle3.text = workoutViewModel.selectedWorkout.value!!.name
         binding.backButtonSummary3.setOnClickListener{ navController.popBackStack() }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (changesDone) workoutViewModel.saveWorkout(workoutViewModel.selectedWorkout.value!!)
     }
 
 }

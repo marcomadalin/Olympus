@@ -6,8 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.marcomadalin.olympus.R
 import com.marcomadalin.olympus.domain.model.Exercise
 
-class ExerciseEditAdapter(private val exercises: List<Exercise>,
-                          private val updateNote: (Pair<Int, String>) -> Unit,
+class ExerciseEditAdapter(private val updateNote: (Pair<Int, String>) -> Unit,
                           private val addSet: (Int) -> Unit,
                           private val deleteSet: (Pair<Int, Int>) -> Unit,
                           private val toggleSet: (Pair<Int, Int>) -> Unit,
@@ -15,6 +14,7 @@ class ExerciseEditAdapter(private val exercises: List<Exercise>,
 ) : RecyclerView.Adapter<ExerciseEditViewHolder>() {
 
     private val colors : List<String> = listOf("#40ce68", "#460bbc", "#e447ef", "#46dbd6", "#d13b1d", "#e28258", "9b2047", "#edc255")
+    var exercises: List<Exercise> = listOf()
     lateinit var supersets : List<Set<Long>>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExerciseEditViewHolder {

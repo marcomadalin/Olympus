@@ -8,7 +8,7 @@
     android:focusableInTouchMode="true"
     android:clickable="true"
     android:focusable="true"
-    tools:context="presentation.view.SelectExerciseFragment">
+    tools:context="presentation.view.ExerciseSelectFragment">
 
     <TextView
         android:id="@+id/summaryTitle7"
@@ -24,7 +24,6 @@
         android:textSize="25sp"
         android:textStyle="normal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/backButtonSummary4"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView

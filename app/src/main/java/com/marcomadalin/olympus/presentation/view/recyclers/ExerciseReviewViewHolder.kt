@@ -20,7 +20,7 @@ class ExerciseReviewViewHolder(private val view: View) : RecyclerView.ViewHolder
                 binding.superset3.isVisible = true
             }
         }
-        binding.exerciseName2.text = exercise.exerciseDataId.toString()
+        binding.exerciseName2.text = exercise.name
         binding.summarytNote2.text = exercise.note
         binding.setRecycler.layoutManager = LinearLayoutManager(view.context)
         binding.setRecycler.adapter = SetReviewAdapter(exercise.sets)

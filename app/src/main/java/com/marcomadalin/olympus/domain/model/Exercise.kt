@@ -6,6 +6,7 @@ import java.time.Duration
 
 data class Exercise(
     var id : Long = 0,
+    var name : String = "",
     var workoutId : Long = 0,
     var routineId : Long = 0,
     var exerciseDataId : Long = 0,
@@ -17,6 +18,7 @@ data class Exercise(
 
 fun ExerciseEntity.toDomain() = Exercise(
     id,
+    "",
     workoutId,
     routineId,
     exerciseDataId,

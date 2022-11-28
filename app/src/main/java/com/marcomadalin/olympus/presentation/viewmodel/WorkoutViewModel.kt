@@ -38,17 +38,22 @@ class WorkoutViewModel @Inject constructor(
     }
 
     fun saveWorkout(workout: Workout) {
-        viewModelScope.launch {saveWorkoutUseCase(workout)}
+        viewModelScope.launch {
+            saveWorkoutUseCase(workout)
+            selectedWorkout.postValue(getWorkoutUseCase(selectedDate.value!!))
+        }
     }
 
     fun deleteWorkout(workout: Workout) {
         viewModelScope.launch {
             deleteWorkoutUseCase(workout)
-            getWorkout()
+            selectedWorkout.postValue(getWorkoutUseCase(selectedDate.value!!))
         }
     }
 
     fun deleteWorkouts() {
-        viewModelScope.launch {deleteWorkoutsUseCase()}
+        viewModelScope.launch {
+            deleteWorkoutsUseCase()
+        }
     }
 }

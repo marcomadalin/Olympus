@@ -11,6 +11,6 @@ class ExerciseReorderViewHolder(private val view: View) : RecyclerView.ViewHolde
     var binding = ExerciseReorderItemBinding.bind(view)
 
     fun render(exercise: Exercise) {
-        binding.exerciseName5.text = exercise.exerciseDataId.toString()
+        binding.exerciseName5.text = exercise.name
     }
 }

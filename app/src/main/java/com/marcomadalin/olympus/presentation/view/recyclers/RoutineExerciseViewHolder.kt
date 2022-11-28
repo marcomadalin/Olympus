@@ -21,6 +21,6 @@ class RoutineExerciseViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                 binding.superset2.left = 10
             }
         }
-        binding.textExerciseRoutine.text = exercise.sets.size.toString() + " x " + exercise.exerciseDataId
+        binding.textExerciseRoutine.text = exercise.sets.size.toString() + " x " + exercise.name
     }
 }

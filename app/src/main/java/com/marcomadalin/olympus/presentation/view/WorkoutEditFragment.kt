@@ -16,6 +16,7 @@ import com.marcomadalin.olympus.domain.model.Set
 import com.marcomadalin.olympus.domain.model.Workout
 import com.marcomadalin.olympus.domain.model.enums.SetType
 import com.marcomadalin.olympus.presentation.view.recyclers.ExerciseEditAdapter
+import com.marcomadalin.olympus.presentation.viewmodel.ExerciseViewModel
 import com.marcomadalin.olympus.presentation.viewmodel.WorkoutViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.Duration
@@ -29,6 +30,8 @@ class WorkoutEditFragment : Fragment() {
 
     private val workoutViewModel : WorkoutViewModel by activityViewModels()
 
+    private val exerciseViewModel : ExerciseViewModel by activityViewModels()
+
     private lateinit var adapter : ExerciseEditAdapter
 
     private lateinit var navController : NavController
@@ -41,18 +44,56 @@ class WorkoutEditFragment : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onStart() {
+        super.onStart()
+
         navController = findNavController()
+
+        if (exerciseViewModel.selectedExercises.value!!.isNotEmpty()) {
+            val workout = workoutViewModel.selectedWorkout.value!!
+            exerciseViewModel.selectedExercises.value!!.forEach { selectedExercise ->
+                val exercise = Exercise(
+                    0,
+                    selectedExercise.value,
+                    workout.id,
+                    0,
+                    selectedExercise.key,
+                    Duration.ofSeconds(0),
+                    "",
+                    workout.exercises.size,
+                    mutableListOf()
+                )
+                val set = Set(0, exercise.id, 0.0, 0, 0, 0.0, 0, SetType.Normal, exercise.sets.size, true)
+                exercise.sets.add(set)
+
+                if (exerciseViewModel.selectOne.value!!) {
+                    val position = exerciseViewModel.swappedExercisePosition.value!!
+                    exerciseViewModel.deleteExercise(workout.exercises[position])
+                    exercise.exerciseNumber = position
+                    workout.exercises[position] = exercise
+                }
+                else workout.exercises.add(exercise)
+            }
+            workoutViewModel.saveWorkout(workout)
+            exerciseViewModel.selectedExercises.value = mutableMapOf()
+        }
+
         binding.backButtonSummary2.setOnClickListener {navController.popBackStack()}
         binding.button2.setOnClickListener { addExercise() }
+
         binding.editRecycler.layoutManager = LinearLayoutManager(this.context)
-        adapter = ExerciseEditAdapter(workoutViewModel.selectedWorkout.value!!.exercises,
-            {updateNote(it)}, {addSet(it)}, {deleteSet(it)}, {toggleSet(it)}, {onItemClick(it)})
+        adapter = ExerciseEditAdapter({updateNote(it)}, {addSet(it)}, {deleteSet(it)}, {toggleSet(it)}, {onItemClick(it)})
+        adapter.exercises = workoutViewModel.selectedWorkout.value!!.exercises
         adapter.supersets = workoutViewModel.selectedWorkout.value!!.supersets
+
         binding.editRecycler.adapter = adapter
         binding.editRecycler.isNestedScrollingEnabled = false
         updateWorkoutReview( workoutViewModel.selectedWorkout.value)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        workoutViewModel.saveWorkout(workoutViewModel.selectedWorkout.value!!)
     }
 
     private fun onItemClick(data : Pair<Int, Int>) : Boolean {
@@ -66,6 +107,17 @@ class WorkoutEditFragment : Fragment() {
                 true
             }
             R.id.swap -> {
+                val workout = workoutViewModel.selectedWorkout.value!!
+                for ((index, superset) in workout.supersets.withIndex()) {
+                    if (superset.contains(workout.exercises[data.second].id)) {
+                        superset.remove(workout.exercises[data.second].id)
+                        if (superset.size == 1) workout.supersets.removeAt(index)
+                        break
+                    }
+                }
+                workoutViewModel.saveWorkout(workout)
+                exerciseViewModel.selectOne.value = true
+                exerciseViewModel.swappedExercisePosition.value = data.second
                 navController.navigate(R.id.selectExerciseFragment)
                 true
             }
@@ -96,36 +148,49 @@ class WorkoutEditFragment : Fragment() {
     }
 
     private fun addExercise() {
-        val workout = workoutViewModel.selectedWorkout.value!!
-        val exercise = Exercise(0, workout.id, 5, 1, Duration.ofSeconds(0), "", workout.exercises.size, mutableListOf())
-        val set = Set(0, exercise.id, 0.0, 0, 0, 0.0, 0, SetType.Normal, exercise.sets.size)
-        exercise.sets.add(set)
-        workout.exercises.add(exercise)
-        workoutViewModel.selectedWorkout.postValue(workout)
-        adapter.notifyItemChanged(workout.exercises.size-1)
+        exerciseViewModel.selectOne.value = false
+        navController.navigate(R.id.selectExerciseFragment)
     }
 
     private fun deleteExercise(exercisePosition : Int) {
         val workout = workoutViewModel.selectedWorkout.value!!
+        exerciseViewModel.deleteExercise( workout.exercises[exercisePosition])
+        for (i in exercisePosition until workout.exercises.size) --workout.exercises[i].exerciseNumber
+
+        for ((index, superset) in workout.supersets.withIndex()) {
+            if (superset.contains(workout.exercises[exercisePosition].id)) {
+                superset.remove(workout.exercises[exercisePosition].id)
+                if (superset.size == 1) workout.supersets.removeAt(index)
+                break
+            }
+        }
+        adapter.supersets = workout.supersets
         workout.exercises.removeAt(exercisePosition)
+        adapter.exercises = workout.exercises
         workoutViewModel.selectedWorkout.postValue(workout)
-        adapter.notifyItemChanged(exercisePosition)
+        workoutViewModel.saveWorkout(workoutViewModel.selectedWorkout.value!!)
+        adapter.notifyDataSetChanged()
     }
 
     private fun addSet(exercisePosition : Int) {
         val workout = workoutViewModel.selectedWorkout.value!!
         val exercise = workout.exercises[exercisePosition]
-        val set = Set(0, exercise.id, 0.0, 0, 0, 0.0, 0, SetType.Normal, exercise.sets.size)
+        val set = Set(0, exercise.id, 0.0, 0, 0, 0.0, 0, SetType.Normal, exercise.sets.size, true)
         exercise.sets.add(set)
         workoutViewModel.selectedWorkout.postValue(workout)
+        adapter.exercises = workout.exercises
+        workoutViewModel.saveWorkout(workout)
         adapter.notifyItemChanged(exercisePosition)
     }
 
     private fun deleteSet(data : Pair<Int, Int>) {
         val workout = workoutViewModel.selectedWorkout.value!!
         val exercise = workout.exercises[data.first]
+        exerciseViewModel.deleteSet(exercise.sets[data.second])
         exercise.sets.removeAt(data.second)
         workoutViewModel.selectedWorkout.postValue(workout)
+        adapter.exercises = workout.exercises
+        workoutViewModel.saveWorkout(workout)
         adapter.notifyItemChanged(data.first)
     }
 

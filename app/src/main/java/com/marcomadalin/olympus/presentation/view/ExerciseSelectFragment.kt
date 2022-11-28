@@ -18,17 +18,17 @@ import com.marcomadalin.olympus.databinding.FragmentSelectExerciseBinding
 import com.marcomadalin.olympus.domain.model.ExerciseData
 import com.marcomadalin.olympus.presentation.view.recyclers.ExerciseDataSelectAdapter
 import com.marcomadalin.olympus.presentation.view.recyclers.ExerciseFilterAdapter
-import com.marcomadalin.olympus.presentation.viewmodel.ExerciseDataViewModel
+import com.marcomadalin.olympus.presentation.viewmodel.ExerciseViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class SelectExerciseFragment : Fragment() {
+class ExerciseSelectFragment : Fragment() {
 
     private var _binding : FragmentSelectExerciseBinding? = null
     private val binding get() = _binding!!
 
-    private val exerciseDataViewModel : ExerciseDataViewModel by activityViewModels()
+    private val exerciseViewModel : ExerciseViewModel by activityViewModels()
 
     private lateinit var exerciseAdapter : ExerciseDataSelectAdapter
     private lateinit var filterAdapter: ExerciseFilterAdapter
@@ -63,7 +63,10 @@ class SelectExerciseFragment : Fragment() {
         (activity as MainActivity).hideNavigationBar()
         navController = findNavController()
 
-        binding.backButtonSummary6.setOnClickListener{navController.popBackStack()}
+        binding.backButtonSummary6.setOnClickListener {
+            exerciseViewModel.selectedExercises.value = mutableMapOf()
+            navController.popBackStack()
+        }
 
         binding.complete.setBackgroundResource(R.drawable.tick_grey)
         binding.complete.isEnabled = false
@@ -71,20 +74,20 @@ class SelectExerciseFragment : Fragment() {
 
         binding.create2.setOnClickListener { navController.navigate(R.id.createExericeFragment)}
 
-        exerciseDataViewModel.selectedFilters2.postValue(emptySet())
+        exerciseViewModel.selectedFilters2.postValue(emptySet())
         binding.filterRecycler2.visibility = View.GONE
         binding.filterRecycler2.layoutManager = GridLayoutManager(this.context, 3)
         filterAdapter = ExerciseFilterAdapter(emptyList(), {selectFilter(it)})
-        filterAdapter.selectedFilters = exerciseDataViewModel.selectedFilters2.value!!.toMutableSet()
+        filterAdapter.selectedFilters = exerciseViewModel.selectedFilters2.value!!.toMutableSet()
         binding.filterRecycler2.adapter = filterAdapter
         binding.exerciseRecyler2.addItemDecoration(DividerItemDecoration(binding.exerciseRecyler2.context, DividerItemDecoration.VERTICAL))
 
-        exerciseDataViewModel.getFilters()
+        exerciseViewModel.getFilters()
 
         binding.equipment2.setOnClickListener{
             renderFilterRecycler(true)
             if (filterShown) {
-                filterAdapter = ExerciseFilterAdapter(exerciseDataViewModel.equipmentFilters.value!!, {selectFilter(it)})
+                filterAdapter = ExerciseFilterAdapter(exerciseViewModel.equipmentFilters.value!!, {selectFilter(it)})
                 updateFilterRecycler()
                 onEquipment = true
             }
@@ -93,7 +96,7 @@ class SelectExerciseFragment : Fragment() {
         binding.muscle2.setOnClickListener{
             renderFilterRecycler(false)
             if (filterShown) {
-                filterAdapter = ExerciseFilterAdapter(exerciseDataViewModel.muscleFilters.value!!, {selectFilter(it)})
+                filterAdapter = ExerciseFilterAdapter(exerciseViewModel.muscleFilters.value!!, {selectFilter(it)})
                 updateFilterRecycler()
                 onEquipment = false
             }
@@ -121,22 +124,22 @@ class SelectExerciseFragment : Fragment() {
         binding.exerciseRecyler2.layoutManager = LinearLayoutManager(this.context)
         exerciseAdapter = ExerciseDataSelectAdapter(mutableListOf(), {selectExercise(it)})
         binding.exerciseRecyler2.adapter = exerciseAdapter
-        exerciseDataViewModel.exercises.observe(viewLifecycleOwner) {updateExercises(it)}
-        exerciseDataViewModel.getExercisesData()
+        exerciseViewModel.exercises.observe(viewLifecycleOwner) {updateExercises(it)}
+        exerciseViewModel.getExercisesData()
         startingParams = binding.exerciseRecyler2.layoutParams
     }
 
     private fun updateFilterRecycler() {
-        filterAdapter.selectedFilters = exerciseDataViewModel.selectedFilters2.value!!.toMutableSet()
+        filterAdapter.selectedFilters = exerciseViewModel.selectedFilters2.value!!.toMutableSet()
         binding.filterRecycler2.adapter = filterAdapter
         filterAdapter.notifyDataSetChanged()
     }
 
     private fun filterListWithText() {
         val filteredExercises: MutableList<ExerciseData> = mutableListOf()
-        if (searchText.isEmpty()) textFilteredList = exerciseDataViewModel.exercises.value!!
+        if (searchText.isEmpty()) textFilteredList = exerciseViewModel.exercises.value!!
         else  {
-            for (exercise in exerciseDataViewModel.exercises.value!!) {
+            for (exercise in exerciseViewModel.exercises.value!!) {
                 if (exercise.name.lowercase().contains(searchText.lowercase())) filteredExercises.add(exercise)
             }
             textFilteredList = filteredExercises
@@ -164,21 +167,22 @@ class SelectExerciseFragment : Fragment() {
     }
 
     private fun selectExercise(exercise : ExerciseData) {
-        if (exerciseDataViewModel.selectOne.value!!) {
-            if (exerciseDataViewModel.selectedExercises.value!!.contains(exercise.id)) {
-                exerciseDataViewModel.selectedExercises.postValue(mutableSetOf())
+        if (exerciseViewModel.selectOne.value!!) {
+            if (exerciseViewModel.selectedExercises.value!!.contains(exercise.id)) {
+                exerciseViewModel.selectedExercises.postValue(mutableMapOf())
                 exerciseAdapter.selectedExercises = mutableSetOf()
             }
             else {
-                exerciseDataViewModel.selectedExercises.postValue(mutableSetOf(exercise.id))
+                exerciseViewModel.selectedExercises.postValue(mutableMapOf(Pair(exercise.id, exercise.name)))
                 exerciseAdapter.selectedExercises = mutableSetOf(exercise.id)
             }
         }
         else {
-            if (exerciseDataViewModel.selectedExercises.value!!.add(exercise.id)) {
+            if (!exerciseViewModel.selectedExercises.value!!.contains(exercise.id)) {
+                exerciseViewModel.selectedExercises.value!!.put(exercise.id, exercise.name)
                 exerciseAdapter.selectedExercises.add(exercise.id)
             } else {
-                exerciseDataViewModel.selectedExercises.value!!.remove(exercise.id)
+                exerciseViewModel.selectedExercises.value!!.remove(exercise.id)
                 exerciseAdapter.selectedExercises.remove(exercise.id)
             }
         }
@@ -199,7 +203,7 @@ class SelectExerciseFragment : Fragment() {
     private fun selectFilter(data : Pair<String,Int>) {
         if (filterAdapter.selectedFilters.contains(data.first)) filterAdapter.selectedFilters.remove(data.first)
         else filterAdapter.selectedFilters.add(data.first)
-        exerciseDataViewModel.selectedFilters2.postValue(filterAdapter.selectedFilters)
+        exerciseViewModel.selectedFilters2.postValue(filterAdapter.selectedFilters)
         filterListWithText()
         filterListWithButtons()
         updateFirstFavorite()
@@ -212,10 +216,10 @@ class SelectExerciseFragment : Fragment() {
         val filteredExercises: MutableList<ExerciseData> = mutableListOf()
         if (filterAdapter.selectedFilters.isEmpty()) exerciseAdapter.exercises = textFilteredList.toMutableList()
         else {
-            val allEquipment = filterAdapter.selectedFilters.none{it in exerciseDataViewModel.equipmentFilters.value!!}
+            val allEquipment = filterAdapter.selectedFilters.none{it in exerciseViewModel.equipmentFilters.value!!}
             var allMuscles = false
 
-            if (!allEquipment) allMuscles = filterAdapter.selectedFilters.none{it in exerciseDataViewModel.muscleFilters.value!!}
+            if (!allEquipment) allMuscles = filterAdapter.selectedFilters.none{it in exerciseViewModel.muscleFilters.value!!}
 
             for (exercise in textFilteredList) {
                 val equipment = exercise.equipment.toString().replace("_", " ")
@@ -228,7 +232,7 @@ class SelectExerciseFragment : Fragment() {
 
     private fun updateExercises(exercises: MutableList<ExerciseData>?) {
         if (exercises != null && first) {
-            exerciseAdapter = ExerciseDataSelectAdapter(exerciseDataViewModel.exercises.value!!, {selectExercise(it)})
+            exerciseAdapter = ExerciseDataSelectAdapter(exerciseViewModel.exercises.value!!, {selectExercise(it)})
             binding.exerciseRecyler2.adapter = exerciseAdapter
             filterListWithText()
             filterListWithButtons()

@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import com.marcomadalin.olympus.R
 import com.marcomadalin.olympus.databinding.FragmentProfileBinding
 import com.marcomadalin.olympus.domain.model.Statistic
 import com.marcomadalin.olympus.presentation.viewmodel.StatisticViewModel
@@ -46,12 +45,7 @@ class ProfileFragment : Fragment() {
 
         navController = findNavController()
 
-        binding.measureButton.setOnClickListener{
-            navController.navigate(R.id.measureFragment)
-            (activity as MainActivity).hideNavigationBar()
-        }
-
-        binding.username.text = userViewModel.user.value!!.name
+        binding.username.text = userViewModel.selectedUser.value!!.name
         binding.numWorkouts.text = workoutViewModel.workouts.value!!.size.toString() + " workouts"
 
         binding.durationButtonStat.setOnClickListener{}

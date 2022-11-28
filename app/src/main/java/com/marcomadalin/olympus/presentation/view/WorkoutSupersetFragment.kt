@@ -32,13 +32,16 @@ class WorkoutSupersetFragment : Fragment() {
     private var superset : MutableSet<Long> = mutableSetOf()
     private var removedExercises : MutableSet<Long> = mutableSetOf()
 
+    private var changesDone = false
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentWorkoutSupersetBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onStart() {
+        super.onStart()
+        changesDone = false
         binding.imageButton3.isEnabled = false
         navController = findNavController()
         binding.supersetRecycler.layoutManager = LinearLayoutManager(this.context)
@@ -50,6 +53,7 @@ class WorkoutSupersetFragment : Fragment() {
         binding.backButtonSummary4.setOnClickListener{ navController.popBackStack() }
         binding.imageButton3.setOnClickListener{
             if (binding.imageButton3.isEnabled) {
+                changesDone = true
                 val workout = workoutViewModel.selectedWorkout.value!!
                 if (superset.isNotEmpty()) {
                     val newSupersets : MutableList<MutableSet<Long>> = removeSingleSupersets(workout, superset)
@@ -72,6 +76,11 @@ class WorkoutSupersetFragment : Fragment() {
                 adapter.notifyDataSetChanged()
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (changesDone) workoutViewModel.saveWorkout(workoutViewModel.selectedWorkout.value!!)
     }
 
     private fun removeSingleSupersets(workout : Workout, exercises : MutableSet<Long> ) : MutableList<MutableSet<Long>> {

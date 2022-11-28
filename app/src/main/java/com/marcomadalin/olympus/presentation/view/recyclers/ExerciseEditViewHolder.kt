@@ -71,7 +71,7 @@ class ExerciseEditViewHolder(private val view: View) : RecyclerView.ViewHolder(v
                 binding.superset.isVisible = true
             }
         }
-        binding.exerciseName4.text = exercise.exerciseDataId.toString()
+        binding.exerciseName4.text = exercise.name
         binding.exerciseNoteEdit.setText(exercise.note)
         binding.setRecycler2.layoutManager = LinearLayoutManager(view.context)
         binding.setRecycler2.adapter = SetEditAdapter(exercise.sets, {toggleSet(it)}, absoluteAdapterPosition)

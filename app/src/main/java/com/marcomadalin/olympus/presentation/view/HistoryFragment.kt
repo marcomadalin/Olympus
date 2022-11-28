@@ -17,7 +17,6 @@ import com.marcomadalin.olympus.presentation.view.recyclers.WorkoutSummaryAdapte
 import com.marcomadalin.olympus.presentation.viewmodel.WorkoutViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
-import java.util.*
 
 //TODO TRANSITION
 
@@ -49,20 +48,6 @@ class HistoryFragment : Fragment() {
             navController.navigate(R.id.workoutReview)
             (activity as MainActivity).hideNavigationBar()
         }
-        val date = LocalDate.now()
-
-        val day = date.dayOfMonth
-        val month = date.monthValue-1
-        val year = date.year
-
-        val calendar: Calendar = Calendar.getInstance()
-        calendar.set(Calendar.YEAR, year)
-        calendar.set(Calendar.MONTH, month)
-        calendar.set(Calendar.DAY_OF_MONTH, day)
-
-        val milliTime: Long = calendar.getTimeInMillis()
-        binding.calendarView.setDate(milliTime, true, true)
-
         binding.calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
             workoutViewModel.selectedDate.value = LocalDate.of(year, month+1, dayOfMonth)
             workoutViewModel.getWorkout()
@@ -71,7 +56,6 @@ class HistoryFragment : Fragment() {
         adapter = WorkoutSummaryAdapter(emptyList())
         binding.summaryRecycler.adapter = adapter
         workoutViewModel.selectedWorkout.observe(viewLifecycleOwner) {updateWorkoutSummary(it)}
-        workoutViewModel.getWorkout()
     }
 
     private fun updateWorkoutSummary(workout: Workout?) {

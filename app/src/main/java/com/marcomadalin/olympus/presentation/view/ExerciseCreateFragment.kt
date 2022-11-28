@@ -20,7 +20,7 @@ import com.marcomadalin.olympus.domain.model.ExerciseData
 import com.marcomadalin.olympus.domain.model.enums.Equipment
 import com.marcomadalin.olympus.domain.model.enums.ExerciseType
 import com.marcomadalin.olympus.domain.model.enums.Muscle
-import com.marcomadalin.olympus.presentation.viewmodel.ExerciseDataViewModel
+import com.marcomadalin.olympus.presentation.viewmodel.ExerciseViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -31,7 +31,7 @@ class ExerciseCreateFragment : Fragment() {
     private var _binding : FragmentCreateExerciseBinding? = null
     private val binding get() = _binding!!
 
-    private val exerciseDataViewModel : ExerciseDataViewModel by activityViewModels()
+    private val exerciseDataViewModel : ExerciseViewModel by activityViewModels()
 
     private lateinit var navController: NavController
 

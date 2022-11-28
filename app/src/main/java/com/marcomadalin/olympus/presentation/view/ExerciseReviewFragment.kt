@@ -11,7 +11,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.marcomadalin.olympus.R
 import com.marcomadalin.olympus.databinding.FragmentExerciseReviewBinding
-import com.marcomadalin.olympus.presentation.viewmodel.ExerciseDataViewModel
+import com.marcomadalin.olympus.presentation.viewmodel.ExerciseViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -24,7 +24,7 @@ class ExerciseReviewFragment : Fragment() {
     private var _binding : FragmentExerciseReviewBinding? = null
     private val binding get() = _binding!!
 
-    private val exerciseDataViewModel : ExerciseDataViewModel by activityViewModels()
+    private val exerciseDataViewModel : ExerciseViewModel by activityViewModels()
 
     private lateinit var navController: NavController
 

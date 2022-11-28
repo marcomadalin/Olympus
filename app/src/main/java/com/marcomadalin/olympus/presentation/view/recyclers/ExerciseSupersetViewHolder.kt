@@ -26,7 +26,7 @@ class ExerciseSupersetViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         }
         binding.supersetLayout.bringToFront()
         changeBackground()
-        binding.exerciseName.text = exercise.exerciseDataId.toString()
+        binding.exerciseName.text = exercise.name
         binding.supersetLayout.setOnClickListener{selectExercise(absoluteAdapterPosition)}
         if (selected) {
             if (added) binding.supersetLayout.setBackgroundResource(R.color.buttons)

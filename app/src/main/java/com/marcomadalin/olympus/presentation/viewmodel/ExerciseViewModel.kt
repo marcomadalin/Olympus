@@ -4,10 +4,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.marcomadalin.olympus.domain.cases.DeleteExerciseDataUseCase
+import com.marcomadalin.olympus.domain.cases.DeleteExerciseUseCase
 import com.marcomadalin.olympus.domain.cases.DeleteExercisesDataUseCase
+import com.marcomadalin.olympus.domain.cases.DeleteSetUseCase
 import com.marcomadalin.olympus.domain.cases.GetExercisesDataUseCase
 import com.marcomadalin.olympus.domain.cases.SaveExerciseDataUseCase
 import com.marcomadalin.olympus.domain.cases.SaveExercisesDataUseCase
+import com.marcomadalin.olympus.domain.model.Exercise
 import com.marcomadalin.olympus.domain.model.ExerciseData
 import com.marcomadalin.olympus.domain.model.enums.Equipment
 import com.marcomadalin.olympus.domain.model.enums.ExerciseType
@@ -17,12 +20,14 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ExerciseDataViewModel @Inject constructor(
-    private val getExercisesUseCase: GetExercisesDataUseCase,
+class ExerciseViewModel @Inject constructor(
+    private val getExercisesDataUseCase: GetExercisesDataUseCase,
     private val saveExerciseDataUseCase: SaveExerciseDataUseCase,
     private val saveExercisesDataUseCase: SaveExercisesDataUseCase,
     private val deleteExercisesDataCase: DeleteExercisesDataUseCase,
-    private val deleteExerciseDataUseCase: DeleteExerciseDataUseCase
+    private val deleteExerciseDataUseCase: DeleteExerciseDataUseCase,
+    private val deleteExerciseUseCase: DeleteExerciseUseCase,
+    private val deleteSetUseCase: DeleteSetUseCase,
     ) : ViewModel() {
 
     //Misc
@@ -41,21 +46,22 @@ class ExerciseDataViewModel @Inject constructor(
 
     val searchFilter = MutableLiveData("")
 
+    val swappedExercisePosition = MutableLiveData<Int>()
+
     //Create exercise fragment
 
     val newExercise = MutableLiveData<ExerciseData>()
 
     //Select exercise fragment
-    val selectMultiple = MutableLiveData(false)
 
-    val selectedExercises = MutableLiveData<MutableSet<Long>>(mutableSetOf())
+    val selectedExercises = MutableLiveData<MutableMap<Long,String>>(mutableMapOf())
 
     val selectedFilters2 = MutableLiveData<Set<String>>(setOf())
 
     val selectOne = MutableLiveData(false)
 
     fun getExercisesData() {
-        viewModelScope.launch {exercises.postValue(getExercisesUseCase())}
+        viewModelScope.launch {exercises.postValue(getExercisesDataUseCase())}
     }
 
     fun getFilters() {
@@ -72,10 +78,12 @@ class ExerciseDataViewModel @Inject constructor(
         viewModelScope.launch {saveExercisesDataUseCase(exercisesData)}
     }
 
-    fun deleteExerciseData(exerciseData: ExerciseData) {
-        viewModelScope.launch {
-            deleteExerciseDataUseCase(exerciseData)
-        }
+    fun deleteExercise(exercise: Exercise) {
+        viewModelScope.launch { deleteExerciseUseCase(exercise) }
+    }
+
+    fun deleteSet(set: com.marcomadalin.olympus.domain.model.Set) {
+        viewModelScope.launch { deleteSetUseCase(set) }
     }
 
     fun deleteAllExercisesData() {
@@ -86,7 +94,7 @@ class ExerciseDataViewModel @Inject constructor(
         viewModelScope.launch {
             saveExerciseDataUseCase(newExercise.value!!)
             newExercise.postValue(ExerciseData())
-            exercises.postValue(getExercisesUseCase())
+            exercises.postValue(getExercisesDataUseCase())
         }
     }
 }

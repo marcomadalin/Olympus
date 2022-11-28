@@ -20,7 +20,7 @@ class RoutineViewModel @Inject constructor(
     private val deleteRoutinesUseCase: DeleteRoutinesUseCase
     ) : ViewModel() {
 
-    val searchText = MutableLiveData<String>("")
+    val searchText = MutableLiveData("")
     val routines = MutableLiveData<List<Routine>?>()
 
     val selectedRoutine = MutableLiveData<Routine?>()
@@ -30,7 +30,10 @@ class RoutineViewModel @Inject constructor(
     }
 
     fun saveRoutine(routine: Routine) {
-        viewModelScope.launch {saveRoutineUseCase(routine)}
+        viewModelScope.launch {
+            saveRoutineUseCase(routine)
+            routines.postValue(getRoutinesUseCase())
+        }
     }
 
     fun deleteRoutine(routine: Routine) {
