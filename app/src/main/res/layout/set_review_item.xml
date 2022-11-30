@@ -21,9 +21,10 @@
 
     <TextView
         android:id="@+id/setType"
-        android:layout_width="wrap_content"
+        android:layout_width="40dp"
         android:layout_height="wrap_content"
-        android:text="1"
+        android:gravity="center"
+        android:text="1 - W"
         android:textColor="@color/text"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"

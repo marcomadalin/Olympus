@@ -15,7 +15,7 @@ import com.marcomadalin.olympus.domain.model.Exercise
 import com.marcomadalin.olympus.domain.model.Set
 import com.marcomadalin.olympus.domain.model.Workout
 import com.marcomadalin.olympus.domain.model.enums.SetType
-import com.marcomadalin.olympus.presentation.view.recyclers.ExerciseEditAdapter
+import com.marcomadalin.olympus.presentation.view.recyclers.ExerciseEditCompletedAdapter
 import com.marcomadalin.olympus.presentation.viewmodel.ExerciseViewModel
 import com.marcomadalin.olympus.presentation.viewmodel.WorkoutViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,7 +32,7 @@ class WorkoutEditFragment : Fragment() {
 
     private val exerciseViewModel : ExerciseViewModel by activityViewModels()
 
-    private lateinit var adapter : ExerciseEditAdapter
+    private lateinit var adapter : ExerciseEditCompletedAdapter
 
     private lateinit var navController : NavController
 
@@ -82,7 +82,7 @@ class WorkoutEditFragment : Fragment() {
         binding.button2.setOnClickListener { addExercise() }
 
         binding.editRecycler.layoutManager = LinearLayoutManager(this.context)
-        adapter = ExerciseEditAdapter({updateNote(it)}, {addSet(it)}, {deleteSet(it)}, {toggleSet(it)}, {onItemClick(it)})
+        adapter = ExerciseEditCompletedAdapter({updateNote(it)}, {addSet(it)}, {deleteSet(it)}, {onItemClick(it)}, ::onSetTypeItemClick )
         adapter.exercises = workoutViewModel.selectedWorkout.value!!.exercises
         adapter.supersets = workoutViewModel.selectedWorkout.value!!.supersets
 
@@ -127,6 +127,33 @@ class WorkoutEditFragment : Fragment() {
             }
             else -> false
         }
+    }
+
+    private fun onSetTypeItemClick(exercisePos : Int, setPos : Int, menuItemId : Int) : Boolean {
+        val workout = workoutViewModel.selectedWorkout.value!!
+        val exercise = workout.exercises[exercisePos]
+        val set = exercise.sets[setPos]
+
+        when (menuItemId) {
+            R.id.normalSet -> {
+                set.type = SetType.Normal
+            }
+            R.id.warmupSet -> {
+                set.type = SetType.Warmup
+            }
+            R.id.dropSet -> {
+                set.type = SetType.Drop
+            }
+            R.id.failureSet -> {
+                set.type = SetType.Failure
+            }
+            else -> return false
+        }
+
+        workoutViewModel.saveWorkout(workout)
+        adapter.exercises = workout.exercises
+        adapter.notifyItemChanged(exercisePos)
+        return true
     }
 
     private fun updateWorkoutReview(workout: Workout?) {

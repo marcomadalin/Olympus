@@ -54,7 +54,7 @@
             android:layout_width="fill_parent"
             android:layout_height="30dp"
             android:layout_marginStart="40dp"
-            android:background="@drawable/layout"
+            android:background="@drawable/layout_gray"
             app:iconifiedByDefault="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"

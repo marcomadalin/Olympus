@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/normalSet"
+        android:icon="@drawable/n"
+        android:title="Normal set">
+    </item>
+    <item
+        android:id="@+id/warmupSet"
+        android:icon="@drawable/w"
+        android:title="Warmup set" />
+    <item
+        android:id="@+id/dropSet"
+        android:icon="@drawable/d"
+        android:title="Drop set" />
+    <item
+        android:id="@+id/failureSet"
+        android:icon="@drawable/f"
+        android:title="Failure set" />
+
+</menu>

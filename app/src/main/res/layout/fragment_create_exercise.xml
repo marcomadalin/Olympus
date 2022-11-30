@@ -83,7 +83,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="40dp"
-        android:background="@drawable/layout"
+        android:background="@drawable/layout_gray"
         android:minWidth="150dp"
         android:paddingHorizontal="10dp"
         android:paddingVertical="5dp"

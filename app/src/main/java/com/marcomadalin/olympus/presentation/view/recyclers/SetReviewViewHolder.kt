@@ -13,12 +13,12 @@ class SetReviewViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     var binding = SetReviewItemBinding.bind(view)
 
     fun render(set : Set) {
-        val setType = set.type.toString()[0].toString()
-        binding.setType.text = if (setType == "N") (set.setNumber+1).toString() else setType
+        binding.setType.text = (1 + set.setNumber).toString() + " - " + set.type.toString()[0].toString()
         binding.setName.text = set.weight.toString() + " kg x " + set.reps.toString()
         binding.rir.text = set.rir.toString()
         binding.urm.text = (((set.weight / ( 1.0278 - 0.0278 * set.reps)) * 100.0).roundToInt() / 100.0).toString() + " kg"
-        var color : Int = Color.parseColor(getColor(set.type))
+
+        val color : Int = Color.parseColor(getColor(set.type))
         binding.setType.setTextColor(color)
 
     }

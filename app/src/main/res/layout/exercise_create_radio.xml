@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/layout2"
+    android:background="@drawable/layout_marble"
     android:isScrollContainer="true">
 
     <TextView

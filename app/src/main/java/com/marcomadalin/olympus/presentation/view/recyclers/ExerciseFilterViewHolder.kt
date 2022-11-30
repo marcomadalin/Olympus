@@ -17,7 +17,7 @@ class ExerciseFilterViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     ) {
         binding.textView4.text = filter
         binding.itemFilter.setOnClickListener{selectFilter(Pair(filter, absoluteAdapterPosition))}
-        if (selectedFilters.contains(filter)) binding.textView4.setBackgroundResource(R.drawable.layout3)
-        else binding.textView4.setBackgroundResource(R.drawable.layout2)
+        if (selectedFilters.contains(filter)) binding.textView4.setBackgroundResource(R.drawable.layout_gold)
+        else binding.textView4.setBackgroundResource(R.drawable.layout_marble)
     }
 }

@@ -11,14 +11,14 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.marcomadalin.olympus.R
-import com.marcomadalin.olympus.databinding.ExerciseEditItemBinding
+import com.marcomadalin.olympus.databinding.ExerciseEditItemCompletedBinding
 import com.marcomadalin.olympus.domain.model.Exercise
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 
 
-class ExerciseEditViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+class ExerciseEditCompletedViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
-    var binding = ExerciseEditItemBinding.bind(view)
+    var binding = ExerciseEditItemCompletedBinding.bind(view)
 
     lateinit var deleteSet: (Pair<Int, Int>) -> Unit
 
@@ -59,10 +59,10 @@ class ExerciseEditViewHolder(private val view: View) : RecyclerView.ViewHolder(v
         exercise: Exercise,
         updateNote: (Pair<Int, String>) -> Unit,
         addSet: (Int) -> Unit,
-        toggleSet: (Pair<Int, Int>) -> Unit,
         onItemClick: (Pair<Int, Int>) -> Boolean,
+        onSetItemClick: (exercisePos: Int, setPos: Int, menuItemId: Int) -> Boolean,
         colors: List<String>,
-        supersets: List<Set<Long>>
+        supersets: List<Set<Long>>,
     ) {
         binding.superset.isVisible = false
         for (i in supersets.indices) {
@@ -74,7 +74,7 @@ class ExerciseEditViewHolder(private val view: View) : RecyclerView.ViewHolder(v
         binding.exerciseName4.text = exercise.name
         binding.exerciseNoteEdit.setText(exercise.note)
         binding.setRecycler2.layoutManager = LinearLayoutManager(view.context)
-        binding.setRecycler2.adapter = SetEditAdapter(exercise.sets, {toggleSet(it)}, absoluteAdapterPosition)
+        binding.setRecycler2.adapter = SetEditCompleteAdapter(exercise.sets, absoluteAdapterPosition, onSetItemClick)
         ItemTouchHelper(simpleCallback).attachToRecyclerView(binding.setRecycler2)
         binding.addSet.setOnClickListener{addSet(absoluteAdapterPosition)}
         binding.exerciseNoteEdit.onFocusChangeListener =
