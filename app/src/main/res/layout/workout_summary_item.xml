@@ -9,10 +9,11 @@
         android:id="@+id/summarySets"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
         android:text="TextView"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/superset4"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -27,9 +28,11 @@
 
     <View
         android:id="@+id/superset4"
-        android:layout_width="7dp"
+        android:layout_width="5dp"
         android:layout_height="20dp"
-        android:visibility="invisible"
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="1dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

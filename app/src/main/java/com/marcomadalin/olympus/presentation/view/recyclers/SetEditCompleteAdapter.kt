@@ -9,7 +9,8 @@ import com.marcomadalin.olympus.domain.model.Set
 class SetEditCompleteAdapter(
     private val sets: List<Set>,
     private val exercisePosition: Int,
-    private val onItemClick: (exercisePos: Int, setPos: Int, menuItemId: Int) -> Boolean,
+    private val onMenuItemClick: (exercisePos: Int, setPos: Int, menuItemId: Int) -> Boolean,
+    private val onItemClick: (exercisePos: Int, setPos: Int, buttonPressed : Int, value: Double) -> Unit
 ) : RecyclerView.Adapter<SetEditCompletedViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SetEditCompletedViewHolder {
@@ -19,7 +20,7 @@ class SetEditCompleteAdapter(
 
     override fun onBindViewHolder(holder: SetEditCompletedViewHolder, position: Int) {
         val item = sets[position]
-        holder.render(item, exercisePosition, onItemClick)
+        holder.render(item, exercisePosition, onMenuItemClick, onItemClick)
     }
 
     override fun getItemCount(): Int = sets.size

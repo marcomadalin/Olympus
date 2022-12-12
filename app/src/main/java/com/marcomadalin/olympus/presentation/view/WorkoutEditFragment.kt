@@ -1,6 +1,7 @@
 package com.marcomadalin.olympus.presentation.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -63,7 +64,7 @@ class WorkoutEditFragment : Fragment() {
                     workout.exercises.size,
                     mutableListOf()
                 )
-                val set = Set(0, exercise.id, 0.0, 0, 0, 0.0, 0, SetType.Normal, exercise.sets.size, true)
+                val set = Set(0, exercise.id, 0.0, 0, 0, 0.0, 0, 0, SetType.Normal, exercise.sets.size, true)
                 exercise.sets.add(set)
 
                 if (exerciseViewModel.selectOne.value!!) {
@@ -82,7 +83,7 @@ class WorkoutEditFragment : Fragment() {
         binding.button2.setOnClickListener { addExercise() }
 
         binding.editRecycler.layoutManager = LinearLayoutManager(this.context)
-        adapter = ExerciseEditCompletedAdapter({updateNote(it)}, {addSet(it)}, {deleteSet(it)}, {onItemClick(it)}, ::onSetTypeItemClick )
+        adapter = ExerciseEditCompletedAdapter({updateNote(it)}, {addSet(it)}, {deleteSet(it)}, {onItemClick(it)}, ::onSetTypeItemClick, ::onSetItemClick )
         adapter.exercises = workoutViewModel.selectedWorkout.value!!.exercises
         adapter.supersets = workoutViewModel.selectedWorkout.value!!.supersets
 
@@ -152,8 +153,37 @@ class WorkoutEditFragment : Fragment() {
 
         workoutViewModel.saveWorkout(workout)
         adapter.exercises = workout.exercises
-        adapter.notifyItemChanged(exercisePos)
+        binding.editRecycler.post({ adapter.notifyItemChanged(exercisePos) })
         return true
+    }
+
+    private fun onSetItemClick(exercisePos: Int, setPos: Int, buttonPressed : Int, value: Double) {
+        val workout = workoutViewModel.selectedWorkout.value!!
+        val exercise = workout.exercises[exercisePos]
+        val set = exercise.sets[setPos]
+
+        when(buttonPressed) {
+            R.id.prevWeight -> {
+                if (set.lastReps >= 0) {
+                    set.weight = set.lastWeight
+                    set.reps = set.lastReps
+                    set.rir = set.lastRir
+                }
+            }
+            R.id.weightNumber -> {
+                Log.d("TEST", set.weight.toString())
+                set.weight = value
+            }
+            R.id.repsNumber -> {
+                set.reps = value.toInt()
+            }
+            R.id.rirNumber -> {
+                set.rir = value.toInt()
+            }
+        }
+        adapter.exercises = workout.exercises
+        workoutViewModel.saveWorkout(workout)
+        binding.editRecycler.post({ adapter.notifyItemChanged(exercisePos) })
     }
 
     private fun updateWorkoutReview(workout: Workout?) {
@@ -167,7 +197,7 @@ class WorkoutEditFragment : Fragment() {
                 View.OnFocusChangeListener { _, hasFocus ->
                     if (!hasFocus) {
                         workout.note = binding.summarytNote3.text.toString()
-                        workoutViewModel.selectedWorkout.postValue(workout)
+                        workoutViewModel.saveWorkout(workout)
                     }
                 }
 
@@ -196,18 +226,18 @@ class WorkoutEditFragment : Fragment() {
         adapter.exercises = workout.exercises
         workoutViewModel.selectedWorkout.postValue(workout)
         workoutViewModel.saveWorkout(workoutViewModel.selectedWorkout.value!!)
-        adapter.notifyDataSetChanged()
+        binding.editRecycler.post({ adapter.notifyDataSetChanged() })
     }
 
     private fun addSet(exercisePosition : Int) {
         val workout = workoutViewModel.selectedWorkout.value!!
         val exercise = workout.exercises[exercisePosition]
-        val set = Set(0, exercise.id, 0.0, 0, 0, 0.0, 0, SetType.Normal, exercise.sets.size, true)
+        val set = Set(0, exercise.id, 0.0, 0, 0, 0.0, 0, 0, SetType.Normal, exercise.sets.size, true)
         exercise.sets.add(set)
         workoutViewModel.selectedWorkout.postValue(workout)
         adapter.exercises = workout.exercises
         workoutViewModel.saveWorkout(workout)
-        adapter.notifyItemChanged(exercisePosition)
+        binding.editRecycler.post({ adapter.notifyItemChanged(exercisePosition) })
     }
 
     private fun deleteSet(data : Pair<Int, Int>) {
@@ -220,7 +250,7 @@ class WorkoutEditFragment : Fragment() {
             workoutViewModel.selectedWorkout.postValue(workout)
             adapter.exercises = workout.exercises
             workoutViewModel.saveWorkout(workout)
-            adapter.notifyItemChanged(data.first)
+            binding.editRecycler.post({ adapter.notifyItemChanged(data.first) })
         }
     }
 
@@ -236,8 +266,8 @@ class WorkoutEditFragment : Fragment() {
     private fun updateNote(data : Pair<Int, String>) {
         val workout = workoutViewModel.selectedWorkout.value!!
         workout.exercises[data.first].note = data.second
-        workoutViewModel.selectedWorkout.postValue(workout)
-        adapter.notifyItemChanged(data.first)
+        workoutViewModel.saveWorkout(workout)
+        binding.editRecycler.post({ adapter.notifyItemChanged(data.first) })
     }
 
 }

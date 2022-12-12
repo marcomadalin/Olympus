@@ -22,6 +22,8 @@ class ExerciseEditCompletedViewHolder(private val view: View) : RecyclerView.Vie
 
     lateinit var deleteSet: (Pair<Int, Int>) -> Unit
 
+    lateinit var adapter: SetEditCompleteAdapter
+
     private val simpleCallback = object : ItemTouchHelper.SimpleCallback (0, ItemTouchHelper.LEFT) {
         override fun onMove(
             recyclerView: RecyclerView,
@@ -61,6 +63,7 @@ class ExerciseEditCompletedViewHolder(private val view: View) : RecyclerView.Vie
         addSet: (Int) -> Unit,
         onItemClick: (Pair<Int, Int>) -> Boolean,
         onSetItemClick: (exercisePos: Int, setPos: Int, menuItemId: Int) -> Boolean,
+        onSetMenuItemClick: (exercisePos: Int, setPos: Int, buttonPressed: Int, value: Double) -> Unit,
         colors: List<String>,
         supersets: List<Set<Long>>,
     ) {
@@ -74,7 +77,7 @@ class ExerciseEditCompletedViewHolder(private val view: View) : RecyclerView.Vie
         binding.exerciseName4.text = exercise.name
         binding.exerciseNoteEdit.setText(exercise.note)
         binding.setRecycler2.layoutManager = LinearLayoutManager(view.context)
-        binding.setRecycler2.adapter = SetEditCompleteAdapter(exercise.sets, absoluteAdapterPosition, onSetItemClick)
+        binding.setRecycler2.adapter = SetEditCompleteAdapter(exercise.sets, absoluteAdapterPosition, onSetItemClick, onSetMenuItemClick)
         ItemTouchHelper(simpleCallback).attachToRecyclerView(binding.setRecycler2)
         binding.addSet.setOnClickListener{addSet(absoluteAdapterPosition)}
         binding.exerciseNoteEdit.onFocusChangeListener =

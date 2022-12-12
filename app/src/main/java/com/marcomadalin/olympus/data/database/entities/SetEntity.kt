@@ -15,6 +15,7 @@ data class SetEntity(
     var rir : Int = 0,
     var lastWeight : Double = 0.0,
     var lastReps : Int = 0,
+    var lastRir : Int = 0,
     var type : String = "",
     var setNumber : Int = 0,
 )
@@ -26,6 +27,7 @@ fun Set.toData() = SetEntity(
     rir,
     lastWeight,
     lastReps,
+    lastRir,
     type.toString(),
     setNumber
 )

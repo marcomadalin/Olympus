@@ -5,6 +5,7 @@ import android.text.InputType
 import android.util.Log
 import android.view.View
 import android.widget.PopupMenu
+import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.RecyclerView
 import com.marcomadalin.olympus.R
 import com.marcomadalin.olympus.databinding.SetEditItemCompletedBinding
@@ -19,7 +20,8 @@ class SetEditCompletedViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     fun render(
         set: Set,
         exercisePosition: Int,
-        onItemClick: (exercisePos: Int, setPos: Int, menuItemId: Int) -> Boolean
+        onMenuItemClick: (exercisePos: Int, setPos: Int, menuItemId: Int) -> Boolean,
+        onItemClick: (exercisePos: Int, setPos: Int, buttonPressed : Int, value: Double) -> Unit
     ) {
 
         binding.setTypeEdit.text = (1 + set.setNumber).toString() + " - " + set.type.toString()[0].toString()
@@ -28,24 +30,29 @@ class SetEditCompletedViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         binding.rirNumber.filters = arrayOf(InputFilterMinMax(0, 10))
         binding.weightNumber.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
 
-
-        if (set.lastReps > 0) {
-            binding.prevWeight.text = set.lastWeight.toString() + " x " + set.lastReps
-            binding.repsNumber.setText(set.lastReps.toString())
-            binding.weightNumber.setText(set.lastWeight.toString())
-        }
+        if (set.lastReps >= 0) binding.prevWeight.text = set.lastWeight.toString() + " kg x " + set.lastReps + " (RIR " + set.lastRir + ")"
         else binding.prevWeight.text = "-"
 
-        binding.prevWeight.setOnClickListener{
-            if (set.lastReps > 0) {
-                binding.repsNumber.setText(set.lastReps.toString())
-                binding.weightNumber.setText(set.lastWeight.toString())
-            }
+        binding.repsNumber.setText(set.reps.toString())
+        binding.weightNumber.setText(set.weight.toString())
+        binding.rirNumber.setText(set.rir.toString())
+
+        binding.prevWeight.setOnClickListener{onItemClick(exercisePosition, absoluteAdapterPosition, binding.prevWeight.id, 0.0)}
+
+        binding.weightNumber.doOnTextChanged { text, start, before, count ->
+            if (!binding.weightNumber.text.isNullOrBlank()) set.weight = binding.weightNumber.text.toString().toDouble()
+        }
+
+        binding.repsNumber.doOnTextChanged { text, start, before, count ->
+            if (!binding.repsNumber.text.isNullOrBlank()) set.reps = binding.repsNumber.text.toString().toInt()
+        }
+        binding.rirNumber.doOnTextChanged { text, start, before, count ->
+            if (!binding.rirNumber.text.isNullOrBlank()) set.rir = binding.rirNumber.text.toString().toInt()
         }
 
         binding.setTypeEdit.setOnClickListener { view ->
             val popupMenu = PopupMenu(view.context, view)
-            popupMenu.setOnMenuItemClickListener{onItemClick(exercisePosition, absoluteAdapterPosition, it.itemId)}
+            popupMenu.setOnMenuItemClickListener{onMenuItemClick(exercisePosition, absoluteAdapterPosition, it.itemId)}
             popupMenu.inflate(R.menu.set_type_dropdown)
 
             try {

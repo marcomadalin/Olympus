@@ -5,7 +5,10 @@
     android:id="@+id/setEditLayout"
     android:layout_width="match_parent"
     android:layout_height="45dp"
-    android:background="@color/green">
+    android:background="@color/green"
+    android:focusableInTouchMode="true"
+    android:clickable="true"
+    android:focusable="true" >
 
     <Button
         android:id="@+id/setTypeEdit"
