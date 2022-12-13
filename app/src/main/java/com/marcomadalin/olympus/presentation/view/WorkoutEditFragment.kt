@@ -1,10 +1,10 @@
 package com.marcomadalin.olympus.presentation.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
@@ -14,7 +14,6 @@ import com.marcomadalin.olympus.R
 import com.marcomadalin.olympus.databinding.FragmentWorkoutEditBinding
 import com.marcomadalin.olympus.domain.model.Exercise
 import com.marcomadalin.olympus.domain.model.Set
-import com.marcomadalin.olympus.domain.model.Workout
 import com.marcomadalin.olympus.domain.model.enums.SetType
 import com.marcomadalin.olympus.presentation.view.recyclers.ExerciseEditCompletedAdapter
 import com.marcomadalin.olympus.presentation.viewmodel.ExerciseViewModel
@@ -75,7 +74,6 @@ class WorkoutEditFragment : Fragment() {
                 }
                 else workout.exercises.add(exercise)
             }
-            workoutViewModel.saveWorkout(workout)
             exerciseViewModel.selectedExercises.value = mutableMapOf()
         }
 
@@ -83,13 +81,24 @@ class WorkoutEditFragment : Fragment() {
         binding.button2.setOnClickListener { addExercise() }
 
         binding.editRecycler.layoutManager = LinearLayoutManager(this.context)
-        adapter = ExerciseEditCompletedAdapter({updateNote(it)}, {addSet(it)}, {deleteSet(it)}, {onItemClick(it)}, ::onSetTypeItemClick, ::onSetItemClick )
+        adapter = ExerciseEditCompletedAdapter(::addSet, ::deleteSet, ::onItemClick)
+
         adapter.exercises = workoutViewModel.selectedWorkout.value!!.exercises
         adapter.supersets = workoutViewModel.selectedWorkout.value!!.supersets
 
         binding.editRecycler.adapter = adapter
         binding.editRecycler.isNestedScrollingEnabled = false
-        updateWorkoutReview( workoutViewModel.selectedWorkout.value)
+
+        val workout = workoutViewModel.selectedWorkout.value
+
+        if (workout != null) {
+            adapter.supersets = workoutViewModel.selectedWorkout.value!!.supersets
+            binding.summaryTitle2.text = workout.name
+            binding.summaryDate2.text = workout.date.dayOfMonth.toString() + " " +
+                    workout.date.month.toString().lowercase(Locale.ROOT) + " " + workout.date.year
+            binding.summarytNote3.setText(workout.note)
+            binding.summarytNote3.doOnTextChanged { _, _, _, _ -> workout.note = binding.summarytNote3.text.toString() }
+        }
     }
 
     override fun onDestroy() {
@@ -130,80 +139,6 @@ class WorkoutEditFragment : Fragment() {
         }
     }
 
-    private fun onSetTypeItemClick(exercisePos : Int, setPos : Int, menuItemId : Int) : Boolean {
-        val workout = workoutViewModel.selectedWorkout.value!!
-        val exercise = workout.exercises[exercisePos]
-        val set = exercise.sets[setPos]
-
-        when (menuItemId) {
-            R.id.normalSet -> {
-                set.type = SetType.Normal
-            }
-            R.id.warmupSet -> {
-                set.type = SetType.Warmup
-            }
-            R.id.dropSet -> {
-                set.type = SetType.Drop
-            }
-            R.id.failureSet -> {
-                set.type = SetType.Failure
-            }
-            else -> return false
-        }
-
-        workoutViewModel.saveWorkout(workout)
-        adapter.exercises = workout.exercises
-        binding.editRecycler.post({ adapter.notifyItemChanged(exercisePos) })
-        return true
-    }
-
-    private fun onSetItemClick(exercisePos: Int, setPos: Int, buttonPressed : Int, value: Double) {
-        val workout = workoutViewModel.selectedWorkout.value!!
-        val exercise = workout.exercises[exercisePos]
-        val set = exercise.sets[setPos]
-
-        when(buttonPressed) {
-            R.id.prevWeight -> {
-                if (set.lastReps >= 0) {
-                    set.weight = set.lastWeight
-                    set.reps = set.lastReps
-                    set.rir = set.lastRir
-                }
-            }
-            R.id.weightNumber -> {
-                Log.d("TEST", set.weight.toString())
-                set.weight = value
-            }
-            R.id.repsNumber -> {
-                set.reps = value.toInt()
-            }
-            R.id.rirNumber -> {
-                set.rir = value.toInt()
-            }
-        }
-        adapter.exercises = workout.exercises
-        workoutViewModel.saveWorkout(workout)
-        binding.editRecycler.post({ adapter.notifyItemChanged(exercisePos) })
-    }
-
-    private fun updateWorkoutReview(workout: Workout?) {
-        if (workout != null) {
-            adapter.supersets = workoutViewModel.selectedWorkout.value!!.supersets
-            binding.summaryTitle2.text = workout.name
-            binding.summaryDate2.text = workout.date.dayOfMonth.toString() + " " +
-                    workout.date.month.toString().lowercase(Locale.ROOT) + " " + workout.date.year
-            binding.summarytNote3.setText(workout.note)
-            binding.summarytNote3.onFocusChangeListener =
-                View.OnFocusChangeListener { _, hasFocus ->
-                    if (!hasFocus) {
-                        workout.note = binding.summarytNote3.text.toString()
-                        workoutViewModel.saveWorkout(workout)
-                    }
-                }
-
-        }
-    }
-
     private fun addExercise() {
         exerciseViewModel.selectOne.value = false
         navController.navigate(R.id.selectExerciseFragment)
@@ -224,9 +159,7 @@ class WorkoutEditFragment : Fragment() {
         adapter.supersets = workout.supersets
         workout.exercises.removeAt(exercisePosition)
         adapter.exercises = workout.exercises
-        workoutViewModel.selectedWorkout.postValue(workout)
-        workoutViewModel.saveWorkout(workoutViewModel.selectedWorkout.value!!)
-        binding.editRecycler.post({ adapter.notifyDataSetChanged() })
+        adapter.notifyDataSetChanged()
     }
 
     private fun addSet(exercisePosition : Int) {
@@ -234,40 +167,20 @@ class WorkoutEditFragment : Fragment() {
         val exercise = workout.exercises[exercisePosition]
         val set = Set(0, exercise.id, 0.0, 0, 0, 0.0, 0, 0, SetType.Normal, exercise.sets.size, true)
         exercise.sets.add(set)
-        workoutViewModel.selectedWorkout.postValue(workout)
         adapter.exercises = workout.exercises
-        workoutViewModel.saveWorkout(workout)
-        binding.editRecycler.post({ adapter.notifyItemChanged(exercisePosition) })
+        adapter.notifyItemChanged(exercisePosition)
     }
 
-    private fun deleteSet(data : Pair<Int, Int>) {
+    private fun deleteSet(exercisePosition: Int, setPosition : Int) {
         val workout = workoutViewModel.selectedWorkout.value!!
-        val exercise = workout.exercises[data.first]
-        exerciseViewModel.deleteSet(exercise.sets[data.second])
-        exercise.sets.removeAt(data.second)
-        if (exercise.sets.isEmpty()) deleteExercise(data.first)
+        val exercise = workout.exercises[exercisePosition]
+        exerciseViewModel.deleteSet(exercise.sets[setPosition])
+        exercise.sets.removeAt(setPosition)
+
+        if (exercise.sets.isEmpty()) deleteExercise(exercisePosition)
         else {
-            workoutViewModel.selectedWorkout.postValue(workout)
             adapter.exercises = workout.exercises
-            workoutViewModel.saveWorkout(workout)
-            binding.editRecycler.post({ adapter.notifyItemChanged(data.first) })
+            adapter.notifyItemChanged(exercisePosition)
         }
     }
-
-    private fun toggleSet(data : Pair<Int, Int>) {
-        val workout = workoutViewModel.selectedWorkout.value!!
-        val exercise = workout.exercises[data.first]
-        exercise.sets[data.second].completed = !exercise.sets[data.second].completed
-        adapter.exercises = workout.exercises
-        workoutViewModel.selectedWorkout.postValue(workout)
-        adapter.notifyItemChanged(data.first)
-    }
-
-    private fun updateNote(data : Pair<Int, String>) {
-        val workout = workoutViewModel.selectedWorkout.value!!
-        workout.exercises[data.first].note = data.second
-        workoutViewModel.saveWorkout(workout)
-        binding.editRecycler.post({ adapter.notifyItemChanged(data.first) })
-    }
-
 }

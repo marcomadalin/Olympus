@@ -6,12 +6,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.marcomadalin.olympus.R
 import com.marcomadalin.olympus.domain.model.Exercise
 
-class ExerciseEditCompletedAdapter(private val updateNote: (Pair<Int, String>) -> Unit,
-                                   private val addSet: (Int) -> Unit,
-                                   private val deleteSet: (Pair<Int, Int>) -> Unit,
+class ExerciseEditCompletedAdapter(private val addSet: (Int) -> Unit,
+                                   private val deleteSet: (Int, Int) -> Unit,
                                    private val onItemClick: (Pair<Int, Int>) -> Boolean,
-                                   private val onSetMenuItemClick: (exercisePos : Int, setPos : Int, menuItemId : Int) -> Boolean,
-                                   private val onSetItemClick: (exercisePos: Int, setPos: Int, buttonPressed : Int, value: Double) -> Unit,
 ) : RecyclerView.Adapter<ExerciseEditCompletedViewHolder>() {
 
     private val colors : List<String> = listOf("#40ce68", "#460bbc", "#e447ef", "#46dbd6", "#d13b1d", "#e28258", "9b2047", "#edc255")
@@ -27,7 +24,7 @@ class ExerciseEditCompletedAdapter(private val updateNote: (Pair<Int, String>) -
 
     override fun onBindViewHolder(holder: ExerciseEditCompletedViewHolder, position: Int) {
         val item = exercises[position]
-        holder.render(item, updateNote, addSet, onItemClick, onSetMenuItemClick, onSetItemClick, colors, supersets)
+        holder.render(item, addSet, onItemClick, colors, supersets)
     }
 
     override fun getItemCount(): Int = exercises.size

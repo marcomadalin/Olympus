@@ -6,12 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.marcomadalin.olympus.R
 import com.marcomadalin.olympus.domain.model.Set
 
-class SetEditCompleteAdapter(
-    private val sets: List<Set>,
-    private val exercisePosition: Int,
-    private val onMenuItemClick: (exercisePos: Int, setPos: Int, menuItemId: Int) -> Boolean,
-    private val onItemClick: (exercisePos: Int, setPos: Int, buttonPressed : Int, value: Double) -> Unit
-) : RecyclerView.Adapter<SetEditCompletedViewHolder>() {
+class SetEditCompleteAdapter(private val sets: List<Set>) : RecyclerView.Adapter<SetEditCompletedViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SetEditCompletedViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -20,7 +15,7 @@ class SetEditCompleteAdapter(
 
     override fun onBindViewHolder(holder: SetEditCompletedViewHolder, position: Int) {
         val item = sets[position]
-        holder.render(item, exercisePosition, onMenuItemClick, onItemClick)
+        holder.render(item)
     }
 
     override fun getItemCount(): Int = sets.size

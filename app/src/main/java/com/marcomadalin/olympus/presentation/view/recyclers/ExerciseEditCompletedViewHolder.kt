@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.PopupMenu
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,7 +21,7 @@ class ExerciseEditCompletedViewHolder(private val view: View) : RecyclerView.Vie
 
     var binding = ExerciseEditItemCompletedBinding.bind(view)
 
-    lateinit var deleteSet: (Pair<Int, Int>) -> Unit
+    lateinit var deleteSet: (Int, Int) -> Unit
 
     lateinit var adapter: SetEditCompleteAdapter
 
@@ -34,7 +35,7 @@ class ExerciseEditCompletedViewHolder(private val view: View) : RecyclerView.Vie
         }
 
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-            deleteSet(Pair(absoluteAdapterPosition, viewHolder.absoluteAdapterPosition))
+            deleteSet(absoluteAdapterPosition, viewHolder.absoluteAdapterPosition)
         }
 
         override fun onChildDraw(
@@ -59,11 +60,8 @@ class ExerciseEditCompletedViewHolder(private val view: View) : RecyclerView.Vie
 
     fun render(
         exercise: Exercise,
-        updateNote: (Pair<Int, String>) -> Unit,
         addSet: (Int) -> Unit,
         onItemClick: (Pair<Int, Int>) -> Boolean,
-        onSetItemClick: (exercisePos: Int, setPos: Int, menuItemId: Int) -> Boolean,
-        onSetMenuItemClick: (exercisePos: Int, setPos: Int, buttonPressed: Int, value: Double) -> Unit,
         colors: List<String>,
         supersets: List<Set<Long>>,
     ) {
@@ -76,16 +74,16 @@ class ExerciseEditCompletedViewHolder(private val view: View) : RecyclerView.Vie
         }
         binding.exerciseName4.text = exercise.name
         binding.exerciseNoteEdit.setText(exercise.note)
+
         binding.setRecycler2.layoutManager = LinearLayoutManager(view.context)
-        binding.setRecycler2.adapter = SetEditCompleteAdapter(exercise.sets, absoluteAdapterPosition, onSetItemClick, onSetMenuItemClick)
+        binding.setRecycler2.adapter = SetEditCompleteAdapter(exercise.sets)
+
         ItemTouchHelper(simpleCallback).attachToRecyclerView(binding.setRecycler2)
+
         binding.addSet.setOnClickListener{addSet(absoluteAdapterPosition)}
-        binding.exerciseNoteEdit.onFocusChangeListener =
-            View.OnFocusChangeListener { _, hasFocus ->
-            if (!hasFocus) {
-                updateNote(Pair(absoluteAdapterPosition, binding.exerciseNoteEdit.text.toString()))
-            }
-        }
+
+        binding.exerciseNoteEdit.doOnTextChanged { _, _, _, _ -> exercise.note = binding.exerciseNoteEdit.text.toString() }
+
         binding.dropdownEdit.setOnClickListener { view ->
             val popupMenu = PopupMenu(view.context, view)
 

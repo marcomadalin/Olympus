@@ -17,12 +17,7 @@ class SetEditCompletedViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     var binding = SetEditItemCompletedBinding.bind(view)
 
-    fun render(
-        set: Set,
-        exercisePosition: Int,
-        onMenuItemClick: (exercisePos: Int, setPos: Int, menuItemId: Int) -> Boolean,
-        onItemClick: (exercisePos: Int, setPos: Int, buttonPressed : Int, value: Double) -> Unit
-    ) {
+    fun render(set: Set) {
 
         binding.setTypeEdit.text = (1 + set.setNumber).toString() + " - " + set.type.toString()[0].toString()
         val color : Int = Color.parseColor(getColor(set.type))
@@ -37,22 +32,53 @@ class SetEditCompletedViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         binding.weightNumber.setText(set.weight.toString())
         binding.rirNumber.setText(set.rir.toString())
 
-        binding.prevWeight.setOnClickListener{onItemClick(exercisePosition, absoluteAdapterPosition, binding.prevWeight.id, 0.0)}
+        binding.prevWeight.setOnClickListener {
+            if (set.lastReps >= 0) {
+                set.weight = set.lastWeight
+                set.reps = set.lastReps
+                set.rir = set.lastRir
 
-        binding.weightNumber.doOnTextChanged { text, start, before, count ->
+                binding.repsNumber.setText(set.reps.toString())
+                binding.weightNumber.setText(set.weight.toString())
+                binding.rirNumber.setText(set.rir.toString())
+            }
+        }
+
+        binding.weightNumber.doOnTextChanged { _, _, _, _ ->
             if (!binding.weightNumber.text.isNullOrBlank()) set.weight = binding.weightNumber.text.toString().toDouble()
         }
 
-        binding.repsNumber.doOnTextChanged { text, start, before, count ->
+        binding.repsNumber.doOnTextChanged { _, _, _, _ ->
             if (!binding.repsNumber.text.isNullOrBlank()) set.reps = binding.repsNumber.text.toString().toInt()
         }
-        binding.rirNumber.doOnTextChanged { text, start, before, count ->
+        binding.rirNumber.doOnTextChanged { _, _, _, _ ->
             if (!binding.rirNumber.text.isNullOrBlank()) set.rir = binding.rirNumber.text.toString().toInt()
         }
 
         binding.setTypeEdit.setOnClickListener { view ->
             val popupMenu = PopupMenu(view.context, view)
-            popupMenu.setOnMenuItemClickListener{onMenuItemClick(exercisePosition, absoluteAdapterPosition, it.itemId)}
+            popupMenu.setOnMenuItemClickListener{
+                 when (it.itemId) {
+                    R.id.normalSet -> {
+                        set.type = SetType.Normal
+                    }
+                    R.id.warmupSet -> {
+                        set.type = SetType.Warmup
+                    }
+                    R.id.dropSet -> {
+                        set.type = SetType.Drop
+                    }
+                    R.id.failureSet -> {
+                        set.type = SetType.Failure
+                    }
+                }
+
+                binding.setTypeEdit.text = (1 + set.setNumber).toString() + " - " + set.type.toString()[0].toString()
+                val color : Int = Color.parseColor(getColor(set.type))
+                binding.setTypeEdit.setTextColor(color)
+                true
+            }
+
             popupMenu.inflate(R.menu.set_type_dropdown)
 
             try {
