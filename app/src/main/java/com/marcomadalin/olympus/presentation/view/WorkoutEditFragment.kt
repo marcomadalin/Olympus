@@ -68,6 +68,13 @@ class WorkoutEditFragment : Fragment() {
 
                 if (exerciseViewModel.selectOne.value!!) {
                     val position = exerciseViewModel.swappedExercisePosition.value!!
+                    for ((index, superset) in workout.supersets.withIndex()) {
+                        if (superset.contains(exerciseViewModel.oldExerciseId.value!!)) {
+                            superset.remove(exerciseViewModel.oldExerciseId.value!!)
+                            if (superset.size == 1) workout.supersets.removeAt(index)
+                            break
+                        }
+                    }
                     exerciseViewModel.deleteExercise(workout.exercises[position])
                     exercise.exerciseNumber = position
                     workout.exercises[position] = exercise
@@ -106,8 +113,8 @@ class WorkoutEditFragment : Fragment() {
         workoutViewModel.saveWorkout(workoutViewModel.selectedWorkout.value!!)
     }
 
-    private fun onItemClick(data : Pair<Int, Int>) : Boolean {
-        return when (data.first) {
+    private fun onItemClick(itemId: Int, exercisePosition : Int) : Boolean {
+        return when (itemId) {
             R.id.order -> {
                 navController.navigate(R.id.workoutReorderFragment)
                 true
@@ -117,22 +124,14 @@ class WorkoutEditFragment : Fragment() {
                 true
             }
             R.id.swap -> {
-                val workout = workoutViewModel.selectedWorkout.value!!
-                for ((index, superset) in workout.supersets.withIndex()) {
-                    if (superset.contains(workout.exercises[data.second].id)) {
-                        superset.remove(workout.exercises[data.second].id)
-                        if (superset.size == 1) workout.supersets.removeAt(index)
-                        break
-                    }
-                }
-                workoutViewModel.saveWorkout(workout)
                 exerciseViewModel.selectOne.value = true
-                exerciseViewModel.swappedExercisePosition.value = data.second
+                exerciseViewModel.oldExerciseId.value = workoutViewModel.selectedWorkout.value!!.exercises[exercisePosition].id
+                exerciseViewModel.swappedExercisePosition.value = exercisePosition
                 navController.navigate(R.id.selectExerciseFragment)
                 true
             }
             R.id.deleteExercise -> {
-                deleteExercise(data.second)
+                deleteExercise(exercisePosition)
                 true
             }
             else -> false

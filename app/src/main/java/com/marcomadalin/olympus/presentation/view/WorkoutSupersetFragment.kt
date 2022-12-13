@@ -45,12 +45,13 @@ class WorkoutSupersetFragment : Fragment() {
         binding.imageButton3.isEnabled = false
         navController = findNavController()
         binding.supersetRecycler.layoutManager = LinearLayoutManager(this.context)
-        adapter = ExerciseSupersetAdapter(workoutViewModel.selectedWorkout.value!!.exercises, {selectSet(it)})
+        adapter = ExerciseSupersetAdapter(workoutViewModel.selectedWorkout.value!!.exercises, ::selectSet)
         adapter.supersets = workoutViewModel.selectedWorkout.value!!.supersets
         binding.supersetRecycler.adapter = adapter
         binding.supersetRecycler.addItemDecoration(DividerItemDecoration(binding.supersetRecycler.context, DividerItemDecoration.VERTICAL))
         binding.summaryTitle4.text = workoutViewModel.selectedWorkout.value!!.name
         binding.backButtonSummary4.setOnClickListener{ navController.popBackStack() }
+
         binding.imageButton3.setOnClickListener{
             if (binding.imageButton3.isEnabled) {
                 changesDone = true
@@ -69,7 +70,6 @@ class WorkoutSupersetFragment : Fragment() {
                 }
                 binding.imageButton3.setBackgroundResource(R.drawable.lock_disable)
                 binding.imageButton3.isEnabled = false
-                workoutViewModel.selectedWorkout.postValue(workout)
                 adapter.supersets = workoutViewModel.selectedWorkout.value!!.supersets
                 adapter.selected = false
                 adapter.added = false

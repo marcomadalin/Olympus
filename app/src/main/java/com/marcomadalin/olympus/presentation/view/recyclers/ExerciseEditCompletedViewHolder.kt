@@ -61,7 +61,7 @@ class ExerciseEditCompletedViewHolder(private val view: View) : RecyclerView.Vie
     fun render(
         exercise: Exercise,
         addSet: (Int) -> Unit,
-        onItemClick: (Pair<Int, Int>) -> Boolean,
+        onItemClick: (Int, Int) -> Boolean,
         colors: List<String>,
         supersets: List<Set<Long>>,
     ) {
@@ -87,7 +87,7 @@ class ExerciseEditCompletedViewHolder(private val view: View) : RecyclerView.Vie
         binding.dropdownEdit.setOnClickListener { view ->
             val popupMenu = PopupMenu(view.context, view)
 
-            popupMenu.setOnMenuItemClickListener{onItemClick(Pair(it.itemId, absoluteAdapterPosition))}
+            popupMenu.setOnMenuItemClickListener{onItemClick(it.itemId, absoluteAdapterPosition)}
             popupMenu.inflate(R.menu.exercise_edit_dropdown)
             try {
                 val fieldMPopup = PopupMenu::class.java.getDeclaredField("mPopup")

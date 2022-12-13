@@ -196,8 +196,6 @@ class ExerciseSelectFragment : Fragment() {
             binding.complete.setBackgroundResource(R.drawable.tick_grey)
             binding.complete.isEnabled = false
         }
-
-
     }
 
     private fun selectFilter(data : Pair<String,Int>) {

@@ -46,8 +46,6 @@ class ExerciseViewModel @Inject constructor(
 
     val searchFilter = MutableLiveData("")
 
-    val swappedExercisePosition = MutableLiveData<Int>()
-
     //Create exercise fragment
 
     val newExercise = MutableLiveData<ExerciseData>()
@@ -59,6 +57,10 @@ class ExerciseViewModel @Inject constructor(
     val selectedFilters2 = MutableLiveData<Set<String>>(setOf())
 
     val selectOne = MutableLiveData(false)
+
+    val swappedExercisePosition = MutableLiveData<Int>()
+
+    val oldExerciseId = MutableLiveData<Long>()
 
     fun getExercisesData() {
         viewModelScope.launch {exercises.postValue(getExercisesDataUseCase())}
