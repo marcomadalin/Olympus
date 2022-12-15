@@ -113,6 +113,11 @@ class WorkoutEditFragment : Fragment() {
         workoutViewModel.saveWorkout(workoutViewModel.selectedWorkout.value!!)
     }
 
+    override fun onStop() {
+        super.onStop()
+        workoutViewModel.saveWorkout(workoutViewModel.selectedWorkout.value!!)
+    }
+
     private fun onItemClick(itemId: Int, exercisePosition : Int) : Boolean {
         return when (itemId) {
             R.id.order -> {
