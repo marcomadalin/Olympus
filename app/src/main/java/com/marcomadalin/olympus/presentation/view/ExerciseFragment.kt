@@ -42,8 +42,6 @@ class ExerciseFragment : Fragment() {
     private var searchText = ""
     private var textFilteredList : List<ExerciseData> = listOf()
 
-    private var first = true
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -54,7 +52,6 @@ class ExerciseFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        first = true
         searchText = exerciseDataViewModel.searchFilter.value!!
         (activity as MainActivity).showNavigationBar()
         navController = findNavController()
@@ -196,7 +193,7 @@ class ExerciseFragment : Fragment() {
     }
 
     private fun updateExercises(exercises: MutableList<ExerciseData>?) {
-        if (exercises != null && first) {
+        if (exercises != null) {
             exerciseAdapter = ExerciseDataAdapter(exerciseDataViewModel.exercises.value!!, {selectExercise(it)})
             binding.exerciseRecyler.adapter = exerciseAdapter
             filterListWithText()
@@ -204,7 +201,6 @@ class ExerciseFragment : Fragment() {
             updateFirstFavorite()
             exerciseAdapter.notifyDataSetChanged()
             updateTextView()
-            first = false
         }
     }
 

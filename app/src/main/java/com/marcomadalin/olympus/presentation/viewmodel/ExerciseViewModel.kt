@@ -89,7 +89,14 @@ class ExerciseViewModel @Inject constructor(
     }
 
     fun deleteAllExercisesData() {
-        viewModelScope.launch {deleteExercisesDataCase()}
+        viewModelScope.launch {
+            deleteExercisesDataCase()
+            exercises.postValue(getExercisesDataUseCase())
+        }
+    }
+
+    fun deleteExerciseData() {
+        viewModelScope.launch { deleteExerciseDataUseCase(selectedExercise.value!!) }
     }
 
     fun saveNewExercise() {

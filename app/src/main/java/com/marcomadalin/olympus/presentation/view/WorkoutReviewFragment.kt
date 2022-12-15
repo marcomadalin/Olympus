@@ -74,7 +74,6 @@ class WorkoutReviewFragment : Fragment() {
                         workoutViewModel.deleteWorkout(workoutViewModel.selectedWorkout.value!!)
                         navController.navigate(R.id.history)
                         (activity as MainActivity).showNavigationBar()
-                        //TODO FIX BUG DELETE
                         true
                     }
                     else -> false

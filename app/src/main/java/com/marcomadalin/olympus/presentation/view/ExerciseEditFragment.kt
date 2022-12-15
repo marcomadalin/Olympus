@@ -16,69 +16,58 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.marcomadalin.olympus.R
 import com.marcomadalin.olympus.databinding.ExerciseCreateRadioBinding
-import com.marcomadalin.olympus.databinding.FragmentCreateExerciseBinding
-import com.marcomadalin.olympus.domain.model.ExerciseData
+import com.marcomadalin.olympus.databinding.FragmentEditExerciseBinding
 import com.marcomadalin.olympus.domain.model.enums.Equipment
 import com.marcomadalin.olympus.domain.model.enums.Muscle
 import com.marcomadalin.olympus.presentation.viewmodel.ExerciseViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.properties.Delegates
 
 @AndroidEntryPoint
-class ExerciseCreateFragment : Fragment() {
+class ExerciseEditFragment : Fragment() {
 
-    //TODO STORE IMAGE
-
-    private var _binding : FragmentCreateExerciseBinding? = null
+    private var _binding : FragmentEditExerciseBinding? = null
     private val binding get() = _binding!!
 
     private val exerciseDataViewModel : ExerciseViewModel by activityViewModels()
 
     private lateinit var navController: NavController
 
-    private lateinit var exerciseCreated : MutableList<Boolean>
-    private var nameChanged by Delegates.notNull<Boolean>()
     private var radioIndex = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentCreateExerciseBinding.inflate(inflater, container, false)
+        _binding = FragmentEditExerciseBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onStart() {
         super.onStart()
 
-        exerciseCreated = mutableListOf(false, false)
-        nameChanged = false
-
         navController = findNavController()
 
-        exerciseDataViewModel.newExercise.postValue(ExerciseData(default=false))
-
-        binding.backButtonSummary5.setOnClickListener{
-            navController.popBackStack()
+        binding.backButtonExerciseEdit.setOnClickListener{
+            navController.navigate(R.id.action_exerciseEditFragment_to_exerciseReviewFragment)
             (activity as MainActivity).showNavigationBar()
         }
+        val exercise = exerciseDataViewModel.selectedExercise.value!!
 
-        binding.exerciseNameCreate.doOnTextChanged { _, _, _, _ ->
-            val name = binding.exerciseNameCreate.text.toString()
-            if (!name.isNullOrEmpty()) {
-                nameChanged = true
-                exerciseDataViewModel.newExercise.value!!.name = name
-                if (exerciseCreated[0] && exerciseCreated[1] && nameChanged) binding.done.isEnabled = true
-            }
+        binding.exerciseNameEdit2.setText(exerciseDataViewModel.selectedExercise.value!!.name)
+        binding.exerciseNameEdit2.doOnTextChanged { _, _, _, _ ->
+            val name = binding.exerciseNameEdit2.text.toString()
+            if (!name.isNullOrEmpty()) exerciseDataViewModel.selectedExercise.value!!.name = name
         }
 
-        binding.equipmentSelect.setOnClickListener{createDialog(exerciseDataViewModel.equipmentFilters.value!!, "Select equipment", 0)}
-        binding.muscleSelect.setOnClickListener{createDialog(exerciseDataViewModel.muscleFilters.value!!, "Select muscle group", 1)}
+        binding.equipmentSelectEdit.text = exercise.equipment.toString().replace(" ","_")
+        binding.muscleSelectEdit.text = exercise.primaryMuscle.toString().replace(" ","_")
+        binding.equipmentSelectEdit.setOnClickListener{createDialog(exerciseDataViewModel.equipmentFilters.value!!, "Select equipment", 0)}
+        binding.muscleSelectEdit.setOnClickListener{createDialog(exerciseDataViewModel.muscleFilters.value!!, "Select muscle group", 1)}
+    }
 
-        binding.done.setOnClickListener{
-            exerciseDataViewModel.saveNewExercise()
-            navController.popBackStack()
-        }
+    override fun onDestroy() {
+        super.onDestroy()
+        exerciseDataViewModel.saveExerciseData(exerciseDataViewModel.selectedExercise.value!!)
     }
 
     private fun createDialog(items : List<String>, title : String, buttonPressed : Int) {
@@ -112,22 +101,20 @@ class ExerciseCreateFragment : Fragment() {
 
         radioBinding.creatSubmit.setOnClickListener{
             if (buttonPressed == 0) {
-                binding.equipmentSelect.text = items[radioIndex]
-                exerciseDataViewModel.selectedExercise.value!!.equipment = Equipment.valueOf(binding.equipmentSelect.text.toString().replace(" ","_"))
+                binding.equipmentSelectEdit.text = items[radioIndex]
+                exerciseDataViewModel.selectedExercise.value!!.equipment = Equipment.valueOf(binding.equipmentSelectEdit.text.toString().replace(" ","_"))
             }
             else {
-                binding.muscleSelect.text = items[radioIndex]
-                exerciseDataViewModel.selectedExercise.value!!.primaryMuscle = Muscle.valueOf(binding.muscleSelect.text.toString().replace(" ","_"))
+                binding.muscleSelectEdit.text = items[radioIndex]
+                exerciseDataViewModel.selectedExercise.value!!.primaryMuscle = Muscle.valueOf(binding.muscleSelectEdit.text.toString().replace(" ","_"))
             }
-            exerciseCreated[buttonPressed] = true
-            if (exerciseCreated[0] && exerciseCreated[1] && nameChanged) binding.done.isEnabled = true
             alertDialog.dismiss()
         }
 
         radioBinding.createCancel.setOnClickListener {
-            if (buttonPressed == 0) binding.equipmentSelect.text = "Select"
-            else binding.muscleSelect.text = "Select"
-            binding.done.isEnabled = false
+            val exercise = exerciseDataViewModel.selectedExercise.value!!
+            if (buttonPressed == 0) binding.equipmentSelectEdit.text = exercise.equipment.toString().replace(" ","_")
+            else binding.muscleSelectEdit.text = exercise.primaryMuscle.toString().replace(" ","_")
             alertDialog.dismiss()
         }
 
