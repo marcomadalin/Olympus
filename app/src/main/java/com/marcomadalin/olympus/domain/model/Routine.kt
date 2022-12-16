@@ -9,7 +9,9 @@ open class Routine (
     open var note : String = "",
     open var exercises : MutableList<Exercise> = mutableListOf(),
     open var supersets : MutableList<MutableSet<Long>> = mutableListOf()
-)
+) {
+    constructor(r : Routine) : this(0, 0, r.name + " (Copy)", r.note, r.exercises.map{Exercise(it)}.toMutableList(), r.supersets.map { mutableSetOf<Long>() }.toMutableList())
+}
 fun RoutineEntity.toDomain() = Routine(
     id,
     userId,

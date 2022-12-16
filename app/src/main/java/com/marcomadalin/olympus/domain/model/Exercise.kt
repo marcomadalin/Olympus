@@ -14,7 +14,9 @@ data class Exercise(
     var note : String = "",
     var exerciseNumber : Int = 0,
     var sets: MutableList<Set> = mutableListOf()
-)
+) {
+    constructor(e : Exercise) : this (0, e.name, 0, 0, e.exerciseDataId, e.restTime, e.note, e.exerciseNumber, e.sets.map{Set(it)}.toMutableList())
+}
 
 fun ExerciseEntity.toDomain() = Exercise(
     id,

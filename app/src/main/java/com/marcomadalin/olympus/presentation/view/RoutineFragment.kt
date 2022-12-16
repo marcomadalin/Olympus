@@ -70,8 +70,6 @@ class RoutineFragment : Fragment() {
                 return true
             }
         })
-
-        routineViewModel.getRoutines()
     }
 
     override fun onStop() {

@@ -15,7 +15,9 @@ data class Set(
     var type : SetType = SetType.Warmup,
     var setNumber : Int = 0,
     var completed : Boolean = false
-)
+) {
+    constructor(s : Set) : this (0, 0, s.weight, s.reps, s.rir, s.lastWeight, s.lastReps, s.lastRir, s.type, s.setNumber, s.completed)
+}
 fun SetEntity.toDomain() = Set(
     id,
     exerciseId,

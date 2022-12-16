@@ -67,7 +67,7 @@ class RoutineReviewFragment : Fragment() {
             popupMenu.setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.duplicate -> {
-                        //TODO duplicate routine
+                        routineViewModel.createSelectedRoutineCopy()
                         true
                     }
                     R.id.edit -> {
@@ -75,7 +75,7 @@ class RoutineReviewFragment : Fragment() {
                         true
                     }
                     R.id.delete -> {
-                        //TODO delete routine
+                        routineViewModel.deleteRoutine(routineViewModel.selectedRoutine.value!!)
                         navController.navigate(R.id.action_routineReviewFragment_to_workout)
                         (activity as MainActivity).showNavigationBar()
                         true

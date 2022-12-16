@@ -26,18 +26,38 @@ class RoutineViewModel @Inject constructor(
     val selectedRoutine = MutableLiveData<Routine?>()
 
     fun getRoutines() {
-        viewModelScope.launch {routines.postValue(getRoutinesUseCase())}
+        viewModelScope.launch { routines.value = getRoutinesUseCase()}
     }
 
     fun saveRoutine(routine: Routine) {
         viewModelScope.launch {
             saveRoutineUseCase(routine)
-            routines.postValue(getRoutinesUseCase())
+            routines.value = getRoutinesUseCase()
+        }
+    }
+
+    fun createSelectedRoutineCopy() {
+        viewModelScope.launch {
+            val routine = Routine(selectedRoutine.value!!)
+            saveRoutineUseCase(routine)
+            for (i in selectedRoutine.value!!.supersets.indices) {
+                for (j in selectedRoutine.value!!.supersets[i].indices) {
+                    for (k in selectedRoutine.value!!.exercises.indices) {
+                        if (selectedRoutine.value!!.exercises[k].id == selectedRoutine.value!!.supersets[i].elementAt(j))
+                            routine.supersets[i].add(routine.exercises[k].id)
+                    }
+                }
+            }
+            saveRoutineUseCase(routine)
+            routines.value = getRoutinesUseCase()
         }
     }
 
     fun deleteRoutine(routine: Routine) {
-        viewModelScope.launch { deleteRoutineUseCase(routine) }
+        viewModelScope.launch {
+            deleteRoutineUseCase(routine)
+            routines.value = getRoutinesUseCase()
+        }
     }
 
     fun deleteAllRoutines() {
