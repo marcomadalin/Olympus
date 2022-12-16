@@ -6,14 +6,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.marcomadalin.olympus.R
 import com.marcomadalin.olympus.domain.model.Exercise
 
-class RoutineExerciseAdapter(private val exercises: List<Exercise>, private val supersets : List<Set<Long>>) : RecyclerView.Adapter<RoutineExerciseViewHolder>() {
+class RoutineReviewAdapter() : RecyclerView.Adapter<RoutineReviewViewHolder>() {
+    var exercises: List<Exercise> = mutableListOf()
+    var supersets : List<Set<Long>> = listOf()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RoutineExerciseViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RoutineReviewViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return RoutineExerciseViewHolder(layoutInflater.inflate(R.layout.routine_exercise_item, parent, false))
+        return RoutineReviewViewHolder(layoutInflater.inflate(R.layout.routine_exercise_review_item, parent, false))
     }
 
-    override fun onBindViewHolder(holder: RoutineExerciseViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RoutineReviewViewHolder, position: Int) {
         val item = exercises[position]
         holder.render(item, supersets)
     }

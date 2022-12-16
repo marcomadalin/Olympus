@@ -6,12 +6,13 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.marcomadalin.olympus.databinding.RoutineExerciseItemBinding
 import com.marcomadalin.olympus.domain.model.Exercise
+import com.marcomadalin.olympus.presentation.view.util.SupersetColors.colors
 
 class RoutineExerciseViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     var binding = RoutineExerciseItemBinding.bind(view)
 
-    fun render(exercise: Exercise, colors: List<String>, supersets: List<Set<Long>>) {
+    fun render(exercise: Exercise, supersets: List<Set<Long>>) {
         binding.superset2.isVisible = false
 
         for (i in supersets.indices) {

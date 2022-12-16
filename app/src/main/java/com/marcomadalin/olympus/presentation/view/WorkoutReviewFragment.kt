@@ -19,8 +19,6 @@ import com.marcomadalin.olympus.presentation.viewmodel.WorkoutViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
-//TODO FIND BETTER WAY TO SHOW SUPERSETS
-
 @AndroidEntryPoint
 class WorkoutReviewFragment : Fragment() {
 

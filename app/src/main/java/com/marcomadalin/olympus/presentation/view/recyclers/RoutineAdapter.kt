@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.marcomadalin.olympus.R
 import com.marcomadalin.olympus.domain.model.Routine
 
-class RoutineAdapter() : RecyclerView.Adapter<RoutineViewHolder>() {
+class RoutineAdapter(private val onRoutineClick: (Int)->Unit ) : RecyclerView.Adapter<RoutineViewHolder>() {
 
     var routines: List<Routine> = listOf()
 
@@ -17,7 +17,7 @@ class RoutineAdapter() : RecyclerView.Adapter<RoutineViewHolder>() {
 
     override fun onBindViewHolder(holder: RoutineViewHolder, position: Int) {
         val item = routines[position]
-        holder.render(item)
+        holder.render(item, onRoutineClick)
     }
 
     override fun getItemCount(): Int = routines.size

@@ -10,16 +10,17 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.marcomadalin.olympus.databinding.FragmentWorkoutBinding
+import com.marcomadalin.olympus.R
+import com.marcomadalin.olympus.databinding.FragmentRoutineBinding
 import com.marcomadalin.olympus.domain.model.Routine
 import com.marcomadalin.olympus.presentation.view.recyclers.RoutineAdapter
 import com.marcomadalin.olympus.presentation.viewmodel.RoutineViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class WorkoutFragment : Fragment() {
+class RoutineFragment : Fragment() {
 
-    private var _binding: FragmentWorkoutBinding? = null
+    private var _binding: FragmentRoutineBinding? = null
     private val binding get() = _binding!!
 
     private val routineViewModel: RoutineViewModel by activityViewModels()
@@ -34,7 +35,7 @@ class WorkoutFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentWorkoutBinding.inflate(inflater, container, false)
+        _binding = FragmentRoutineBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -47,7 +48,7 @@ class WorkoutFragment : Fragment() {
         binding.startEmpty.setOnClickListener {  }
 
         binding.routineRecycler.layoutManager = LinearLayoutManager(this.context)
-        adapter = RoutineAdapter()
+        adapter = RoutineAdapter(::onRoutineClick)
         binding.routineRecycler.adapter = adapter
         binding.noExercise2.visibility = View.VISIBLE
 
@@ -73,9 +74,14 @@ class WorkoutFragment : Fragment() {
         routineViewModel.getRoutines()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        routineViewModel.searchText.postValue(searchText)
+    override fun onStop() {
+        super.onStop()
+        routineViewModel.searchText.value = searchText
+    }
+
+    private fun onRoutineClick(routinePosition: Int) {
+        routineViewModel.selectedRoutine.value = routineViewModel.routines.value!![routinePosition]
+        navController.navigate(R.id.action_workout_to_routineReviewFragment)
     }
 
     private fun filterRoutines() {

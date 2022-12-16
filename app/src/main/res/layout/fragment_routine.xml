@@ -8,7 +8,7 @@
     android:focusableInTouchMode="true"
     android:clickable="true"
     android:focusable="true"
-    tools:context=".presentation.view.WorkoutFragment">
+    tools:context=".presentation.view.RoutineFragment">
 
     <TextView
         android:id="@+id/noExercise2"

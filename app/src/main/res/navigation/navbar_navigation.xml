@@ -14,7 +14,7 @@
             app:destination="@id/exercise" />
         <action
             android:id="@+id/action_history_to_workout"
-            app:destination="@id/workout" />
+            app:destination="@id/routine" />
         <action
             android:id="@+id/action_history_to_profile"
             app:destination="@id/profile" />
@@ -32,7 +32,7 @@
             app:destination="@id/history" />
         <action
             android:id="@+id/action_exercise_to_workout"
-            app:destination="@id/workout" />
+            app:destination="@id/routine" />
         <action
             android:id="@+id/action_exercise_to_profile"
             app:destination="@id/profile" />
@@ -44,10 +44,10 @@
             app:destination="@id/exerciseReviewFragment" />
     </fragment>
     <fragment
-        android:id="@+id/workout"
-        android:name="com.marcomadalin.olympus.presentation.view.WorkoutFragment"
-        android:label="fragment_workout"
-        tools:layout="@layout/fragment_workout" >
+        android:id="@+id/routine"
+        android:name="com.marcomadalin.olympus.presentation.view.RoutineFragment"
+        android:label="fragment_routine"
+        tools:layout="@layout/fragment_routine">
         <action
             android:id="@+id/action_workout_to_profile"
             app:destination="@id/profile" />
@@ -57,6 +57,9 @@
         <action
             android:id="@+id/action_workout_to_history"
             app:destination="@id/history" />
+        <action
+            android:id="@+id/action_workout_to_routineReviewFragment"
+            app:destination="@id/routineReviewFragment" />
     </fragment>
     <fragment
         android:id="@+id/profile"
@@ -71,7 +74,7 @@
             app:destination="@id/history" />
         <action
             android:id="@+id/action_profile_to_workout3"
-            app:destination="@id/workout" />
+            app:destination="@id/routine" />
         <action
             android:id="@+id/action_profile_to_measureFragment"
             app:destination="@id/measureFragment" />
@@ -171,5 +174,14 @@
         <action
             android:id="@+id/action_exerciseEditFragment_to_exerciseReviewFragment"
             app:destination="@id/exerciseReviewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/routineReviewFragment"
+        android:name="com.marcomadalin.olympus.presentation.view.RoutineReviewFragment"
+        android:label="fragment_routine_review"
+        tools:layout="@layout/fragment_routine_review" >
+        <action
+            android:id="@+id/action_routineReviewFragment_to_workout"
+            app:destination="@id/routine" />
     </fragment>
 </navigation>
