@@ -2,11 +2,12 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutExerciseEdit"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:focusableInTouchMode="true"
     android:clickable="true"
-    android:focusable="true" >
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
     <ImageView
         android:id="@+id/imageView3"
@@ -28,17 +29,6 @@
         android:textColor="@color/black"
         app:layout_constraintStart_toEndOf="@+id/imageView3"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/superset"
-        android:layout_width="80dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="17dp"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <EditText
         android:id="@+id/exerciseNoteEdit"
@@ -126,7 +116,8 @@
         android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toTopOf="@+id/addSet"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/superset5"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
     <Button
@@ -146,6 +137,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/setRecycler2" />
+
+    <View
+        android:id="@+id/superset5"
+        android:layout_width="7dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/dropdownEdit"

@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.marcomadalin.olympus.R
 import com.marcomadalin.olympus.databinding.ExerciseSupersetItemBinding
 import com.marcomadalin.olympus.domain.model.Exercise
+import com.marcomadalin.olympus.presentation.view.util.SupersetColors.colors
 
 
 class ExerciseSupersetViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -17,7 +18,6 @@ class ExerciseSupersetViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         selected: Boolean,
         added: Boolean,
         selectExercise: (Int) -> Unit,
-        colors: List<String>,
         supersets: List<Set<Long>>
     ) {
         binding.view2.background = null

@@ -5,11 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.marcomadalin.olympus.R
 import com.marcomadalin.olympus.domain.model.Exercise
+import com.marcomadalin.olympus.presentation.view.util.SupersetColors.colors
 
 class ExerciseSupersetAdapter(private val exercises : List<Exercise>, private val selectExercise : (Int) -> Unit
  ) : RecyclerView.Adapter<ExerciseSupersetViewHolder>() {
 
-    val colors : List<String> = listOf("#40ce68", "#460bbc", "#e447ef", "#46dbd6", "#d13b1d", "#e28258", "9b2047", "#edc255")
     lateinit var supersets : List<Set<Long>>
 
     var selected : Boolean = false
@@ -22,7 +22,7 @@ class ExerciseSupersetAdapter(private val exercises : List<Exercise>, private va
 
     override fun onBindViewHolder(holder: ExerciseSupersetViewHolder, position: Int) {
         val item = exercises[position]
-        holder.render(item, selected, added, selectExercise, colors, supersets)
+        holder.render(item, selected, added, selectExercise, supersets)
     }
 
     override fun getItemCount(): Int = exercises.size

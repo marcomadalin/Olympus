@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.marcomadalin.olympus.R
 import com.marcomadalin.olympus.databinding.ExerciseEditItemCompletedBinding
 import com.marcomadalin.olympus.domain.model.Exercise
+import com.marcomadalin.olympus.presentation.view.util.SupersetColors.colors
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 
 
@@ -62,14 +63,16 @@ class ExerciseEditCompletedViewHolder(private val view: View) : RecyclerView.Vie
         exercise: Exercise,
         addSet: (Int) -> Unit,
         onItemClick: (Int, Int) -> Boolean,
-        colors: List<String>,
         supersets: List<Set<Long>>,
     ) {
-        binding.superset.isVisible = false
+        binding.superset5.isVisible = false
+
         for (i in supersets.indices) {
             if (supersets[i].contains(exercise.id)) {
-                binding.superset.setBackgroundColor(Color.parseColor(colors[i]))
-                binding.superset.isVisible = true
+                binding.superset5.layoutParams.height = binding.layoutExerciseEdit.height
+                binding.superset5.setBackgroundColor(Color.parseColor(colors[i]))
+                binding.superset5.isVisible = true
+
             }
         }
         binding.exerciseName4.text = exercise.name

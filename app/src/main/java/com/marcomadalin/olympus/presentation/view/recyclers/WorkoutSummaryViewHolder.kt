@@ -5,12 +5,13 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.marcomadalin.olympus.databinding.WorkoutSummaryItemBinding
 import com.marcomadalin.olympus.domain.model.Exercise
+import com.marcomadalin.olympus.presentation.view.util.SupersetColors.colors
 
 class WorkoutSummaryViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     var binding = WorkoutSummaryItemBinding.bind(view)
 
-    fun render(exercise: Exercise, colors: List<String>, supersets: List<Set<Long>>) {
+    fun render(exercise: Exercise, supersets: List<Set<Long>>) {
         binding.superset4.visibility = View.GONE
         for (i in supersets.indices) {
             if (supersets[i].contains(exercise.id)) {

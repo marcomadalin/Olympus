@@ -108,11 +108,6 @@ class WorkoutEditFragment : Fragment() {
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        workoutViewModel.saveWorkout(workoutViewModel.selectedWorkout.value!!)
-    }
-
     override fun onStop() {
         super.onStop()
         workoutViewModel.saveWorkout(workoutViewModel.selectedWorkout.value!!)
