@@ -8,54 +8,61 @@ import android.widget.PopupMenu
 import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.RecyclerView
 import com.marcomadalin.olympus.R
-import com.marcomadalin.olympus.databinding.SetEditItemCompletedBinding
+import com.marcomadalin.olympus.databinding.RoutineSetEditItemBinding
 import com.marcomadalin.olympus.domain.model.Set
 import com.marcomadalin.olympus.domain.model.enums.SetType
 import com.marcomadalin.olympus.presentation.view.util.InputFilterMinMax
 
-class SetEditCompletedViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+class RoutineSetEditViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-    var binding = SetEditItemCompletedBinding.bind(view)
+    var binding = RoutineSetEditItemBinding.bind(view)
 
     fun render(set: Set) {
 
-        binding.setTypeEdit.text = (1 + set.setNumber).toString() + " - " + set.type.toString()[0].toString()
+        if (absoluteAdapterPosition % 2 == 1) {
+            binding.layoutSetRou.setBackgroundResource(R.color.layout)
+            binding.repsNumber2.setBackgroundResource(R.drawable.layout_marble_set)
+            binding.weightNumber2.setBackgroundResource(R.drawable.layout_marble_set)
+            binding.rirNumber2.setBackgroundResource(R.drawable.layout_marble_set)
+        }
+
+        binding.setTypeEdit2.text = (1 + set.setNumber).toString() + " - " + set.type.toString()[0].toString()
         val color : Int = Color.parseColor(getColor(set.type))
-        binding.setTypeEdit.setTextColor(color)
-        binding.rirNumber.filters = arrayOf(InputFilterMinMax(0, 10))
-        binding.weightNumber.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
+        binding.setTypeEdit2.setTextColor(color)
+        binding.rirNumber2.filters = arrayOf(InputFilterMinMax(0, 10))
+        binding.weightNumber2.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
 
-        if (set.lastReps >= 0) binding.prevWeight.text = set.lastWeight.toString() + " kg x " + set.lastReps + "\n RIR " + set.lastRir
-        else binding.prevWeight.text = "-"
+        if (set.lastReps >= 0) binding.prevWeight2.text = set.lastWeight.toString() + " kg x " + set.lastReps + "\n RIR " + set.lastRir
+        else binding.prevWeight2.text = "-"
 
-        binding.repsNumber.setText(set.reps.toString())
-        binding.weightNumber.setText(set.weight.toString())
-        binding.rirNumber.setText(set.rir.toString())
+        binding.repsNumber2.setText(set.reps.toString())
+        binding.weightNumber2.setText(set.weight.toString())
+        binding.rirNumber2.setText(set.rir.toString())
 
-        binding.prevWeight.setOnClickListener {
+        binding.prevWeight2.setOnClickListener {
             if (set.lastReps >= 0) {
                 set.weight = set.lastWeight
                 set.reps = set.lastReps
                 set.rir = set.lastRir
 
-                binding.repsNumber.setText(set.reps.toString())
-                binding.weightNumber.setText(set.weight.toString())
-                binding.rirNumber.setText(set.rir.toString())
+                binding.repsNumber2.setText(set.reps.toString())
+                binding.weightNumber2.setText(set.weight.toString())
+                binding.rirNumber2.setText(set.rir.toString())
             }
         }
 
-        binding.weightNumber.doOnTextChanged { _, _, _, _ ->
-            if (!binding.weightNumber.text.isNullOrBlank()) set.weight = binding.weightNumber.text.toString().toDouble()
+        binding.weightNumber2.doOnTextChanged { _, _, _, _ ->
+            if (!binding.weightNumber2.text.isNullOrBlank()) set.weight = binding.weightNumber2.text.toString().toDouble()
         }
 
-        binding.repsNumber.doOnTextChanged { _, _, _, _ ->
-            if (!binding.repsNumber.text.isNullOrBlank()) set.reps = binding.repsNumber.text.toString().toInt()
+        binding.repsNumber2.doOnTextChanged { _, _, _, _ ->
+            if (!binding.repsNumber2.text.isNullOrBlank()) set.reps = binding.repsNumber2.text.toString().toInt()
         }
-        binding.rirNumber.doOnTextChanged { _, _, _, _ ->
-            if (!binding.rirNumber.text.isNullOrBlank()) set.rir = binding.rirNumber.text.toString().toInt()
+        binding.rirNumber2.doOnTextChanged { _, _, _, _ ->
+            if (!binding.rirNumber2.text.isNullOrBlank()) set.rir = binding.rirNumber2.text.toString().toInt()
         }
 
-        binding.setTypeEdit.setOnClickListener { view ->
+        binding.setTypeEdit2.setOnClickListener { view ->
             val popupMenu = PopupMenu(view.context, view)
             popupMenu.setOnMenuItemClickListener{
                  when (it.itemId) {
@@ -73,9 +80,9 @@ class SetEditCompletedViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                     }
                 }
 
-                binding.setTypeEdit.text = (1 + set.setNumber).toString() + " - " + set.type.toString()[0].toString()
+                binding.setTypeEdit2.text = (1 + set.setNumber).toString() + " - " + set.type.toString()[0].toString()
                 val color : Int = Color.parseColor(getColor(set.type))
-                binding.setTypeEdit.setTextColor(color)
+                binding.setTypeEdit2.setTextColor(color)
                 true
             }
 

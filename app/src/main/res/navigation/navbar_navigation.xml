@@ -183,5 +183,17 @@
         <action
             android:id="@+id/action_routineReviewFragment_to_workout"
             app:destination="@id/routine" />
+        <action
+            android:id="@+id/action_routineReviewFragment_to_routineEditFragment2"
+            app:destination="@id/routineEditFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/routineEditFragment"
+        android:name="com.marcomadalin.olympus.presentation.view.RoutineEditFragment"
+        android:label="fragment_routine_edit"
+        tools:layout="@layout/fragment_routine_edit" >
+        <action
+            android:id="@+id/action_routineEditFragment2_to_routineReviewFragment"
+            app:destination="@id/routineReviewFragment" />
     </fragment>
 </navigation>

@@ -1,6 +1,7 @@
 package com.marcomadalin.olympus.presentation.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,28 +12,27 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.marcomadalin.olympus.R
-import com.marcomadalin.olympus.databinding.FragmentWorkoutEditBinding
+import com.marcomadalin.olympus.databinding.FragmentRoutineEditBinding
 import com.marcomadalin.olympus.domain.model.Exercise
 import com.marcomadalin.olympus.domain.model.Set
 import com.marcomadalin.olympus.domain.model.enums.SetType
-import com.marcomadalin.olympus.presentation.view.recyclers.ExerciseEditCompletedAdapter
+import com.marcomadalin.olympus.presentation.view.recyclers.RoutineExerciseEditAdapter
 import com.marcomadalin.olympus.presentation.viewmodel.ExerciseViewModel
-import com.marcomadalin.olympus.presentation.viewmodel.WorkoutViewModel
+import com.marcomadalin.olympus.presentation.viewmodel.RoutineViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.Duration
-import java.util.*
 
 @AndroidEntryPoint
 class RoutineEditFragment : Fragment() {
 
-    private var _binding : FragmentWorkoutEditBinding? = null
+    private var _binding : FragmentRoutineEditBinding? = null
     private val binding get() = _binding!!
 
-    private val workoutViewModel : WorkoutViewModel by activityViewModels()
+    private val routineViewModel : RoutineViewModel by activityViewModels()
 
     private val exerciseViewModel : ExerciseViewModel by activityViewModels()
 
-    private lateinit var adapter : ExerciseEditCompletedAdapter
+    private lateinit var adapter : RoutineExerciseEditAdapter
 
     private lateinit var navController : NavController
 
@@ -40,7 +40,7 @@ class RoutineEditFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentWorkoutEditBinding.inflate(inflater, container, false)
+        _binding = FragmentRoutineEditBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -50,67 +50,66 @@ class RoutineEditFragment : Fragment() {
         navController = findNavController()
 
         if (exerciseViewModel.selectedExercises.value!!.isNotEmpty()) {
-            val workout = workoutViewModel.selectedWorkout.value!!
+            val routine = routineViewModel.selectedRoutine.value!!
             exerciseViewModel.selectedExercises.value!!.forEach { selectedExercise ->
                 val exercise = Exercise(
                     0,
                     selectedExercise.value,
-                    workout.id,
                     0,
+                    routine.id,
                     selectedExercise.key,
                     Duration.ofSeconds(0),
                     "",
-                    workout.exercises.size,
-                    mutableListOf()
+                    routine.exercises.size,
+                    mutableListOf(),
                 )
-                val set = Set(0, exercise.id, 0.0, 0, 0, 0.0, 0, 0, SetType.Normal, exercise.sets.size, true)
+                Log.d("TEST", exercise.toString())
+                val set = Set(0, exercise.id, 0.0, 0, 0, 0.0, 0, 0, SetType.Normal, exercise.sets.size, false)
                 exercise.sets.add(set)
 
                 if (exerciseViewModel.selectOne.value!!) {
                     val position = exerciseViewModel.swappedExercisePosition.value!!
-                    for ((index, superset) in workout.supersets.withIndex()) {
+                    for ((index, superset) in routine.supersets.withIndex()) {
                         if (superset.contains(exerciseViewModel.oldExerciseId.value!!)) {
                             superset.remove(exerciseViewModel.oldExerciseId.value!!)
-                            if (superset.size == 1) workout.supersets.removeAt(index)
+                            if (superset.size == 1) routine.supersets.removeAt(index)
                             break
                         }
                     }
-                    exerciseViewModel.deleteExercise(workout.exercises[position])
+                    exerciseViewModel.deleteExercise(routine.exercises[position])
                     exercise.exerciseNumber = position
-                    workout.exercises[position] = exercise
+                    routine.exercises[position] = exercise
                 }
-                else workout.exercises.add(exercise)
+                else routine.exercises.add(exercise)
             }
             exerciseViewModel.selectedExercises.value = mutableMapOf()
         }
 
-        binding.backButtonSummary2.setOnClickListener {navController.popBackStack()}
-        binding.button2.setOnClickListener { addExercise() }
+        binding.backRouEd.setOnClickListener {navController.popBackStack()}
+        binding.addExRouEd.setOnClickListener { addExercise() }
 
-        binding.editRecycler.layoutManager = LinearLayoutManager(this.context)
-        adapter = ExerciseEditCompletedAdapter(::addSet, ::deleteSet, ::onItemClick)
+        binding.recyclerRouEd.layoutManager = LinearLayoutManager(this.context)
+        adapter = RoutineExerciseEditAdapter(::addSet, ::deleteSet, ::onItemClick)
 
-        adapter.exercises = workoutViewModel.selectedWorkout.value!!.exercises
-        adapter.supersets = workoutViewModel.selectedWorkout.value!!.supersets
+        adapter.exercises = routineViewModel.selectedRoutine.value!!.exercises
+        adapter.supersets = routineViewModel.selectedRoutine.value!!.supersets
 
-        binding.editRecycler.adapter = adapter
-        binding.editRecycler.isNestedScrollingEnabled = false
+        binding.recyclerRouEd.adapter = adapter
+        binding.recyclerRouEd.isNestedScrollingEnabled = false
 
-        val workout = workoutViewModel.selectedWorkout.value
+        val routine = routineViewModel.selectedRoutine.value
 
-        if (workout != null) {
-            adapter.supersets = workoutViewModel.selectedWorkout.value!!.supersets
-            binding.summaryTitle2.text = workout.name
-            binding.summaryDate2.text = workout.date.dayOfMonth.toString() + " " +
-                    workout.date.month.toString().lowercase(Locale.ROOT) + " " + workout.date.year
-            binding.summarytNote3.setText(workout.note)
-            binding.summarytNote3.doOnTextChanged { _, _, _, _ -> workout.note = binding.summarytNote3.text.toString() }
+        if (routine != null) {
+            adapter.supersets = routineViewModel.selectedRoutine.value!!.supersets
+            binding.titleRouEdit.text = routine.name
+            binding.noteRouEd.setText(routine.note)
+            binding.noteRouEd.doOnTextChanged { _, _, _, _ -> routine.note = binding.noteRouEd.text.toString() }
         }
     }
 
     override fun onStop() {
         super.onStop()
-        workoutViewModel.saveWorkout(workoutViewModel.selectedWorkout.value!!)
+        routineViewModel.saveRoutine(routineViewModel.selectedRoutine.value!!)
     }
 
     private fun onItemClick(itemId: Int, exercisePosition : Int) : Boolean {
@@ -125,7 +124,7 @@ class RoutineEditFragment : Fragment() {
             }
             R.id.swap -> {
                 exerciseViewModel.selectOne.value = true
-                exerciseViewModel.oldExerciseId.value = workoutViewModel.selectedWorkout.value!!.exercises[exercisePosition].id
+                exerciseViewModel.oldExerciseId.value = routineViewModel.selectedRoutine.value!!.exercises[exercisePosition].id
                 exerciseViewModel.swappedExercisePosition.value = exercisePosition
                 navController.navigate(R.id.selectExerciseFragment)
                 true
@@ -144,41 +143,41 @@ class RoutineEditFragment : Fragment() {
     }
 
     private fun deleteExercise(exercisePosition : Int) {
-        val workout = workoutViewModel.selectedWorkout.value!!
-        exerciseViewModel.deleteExercise( workout.exercises[exercisePosition])
-        for (i in exercisePosition until workout.exercises.size) --workout.exercises[i].exerciseNumber
+        val routine = routineViewModel.selectedRoutine.value!!
+        exerciseViewModel.deleteExercise( routine.exercises[exercisePosition])
+        for (i in exercisePosition until routine.exercises.size) --routine.exercises[i].exerciseNumber
 
-        for ((index, superset) in workout.supersets.withIndex()) {
-            if (superset.contains(workout.exercises[exercisePosition].id)) {
-                superset.remove(workout.exercises[exercisePosition].id)
-                if (superset.size == 1) workout.supersets.removeAt(index)
+        for ((index, superset) in routine.supersets.withIndex()) {
+            if (superset.contains(routine.exercises[exercisePosition].id)) {
+                superset.remove(routine.exercises[exercisePosition].id)
+                if (superset.size == 1) routine.supersets.removeAt(index)
                 break
             }
         }
-        adapter.supersets = workout.supersets
-        workout.exercises.removeAt(exercisePosition)
-        adapter.exercises = workout.exercises
+        adapter.supersets = routine.supersets
+        routine.exercises.removeAt(exercisePosition)
+        adapter.exercises = routine.exercises
         adapter.notifyDataSetChanged()
     }
 
     private fun addSet(exercisePosition : Int) {
-        val workout = workoutViewModel.selectedWorkout.value!!
-        val exercise = workout.exercises[exercisePosition]
+        val routine = routineViewModel.selectedRoutine.value!!
+        val exercise = routine.exercises[exercisePosition]
         val set = Set(0, exercise.id, 0.0, 0, 0, 0.0, 0, 0, SetType.Normal, exercise.sets.size, true)
         exercise.sets.add(set)
-        adapter.exercises = workout.exercises
+        adapter.exercises = routine.exercises
         adapter.notifyItemChanged(exercisePosition)
     }
 
     private fun deleteSet(exercisePosition: Int, setPosition : Int) {
-        val workout = workoutViewModel.selectedWorkout.value!!
-        val exercise = workout.exercises[exercisePosition]
+        val routine = routineViewModel.selectedRoutine.value!!
+        val exercise = routine.exercises[exercisePosition]
         exerciseViewModel.deleteSet(exercise.sets[setPosition])
         exercise.sets.removeAt(setPosition)
 
         if (exercise.sets.isEmpty()) deleteExercise(exercisePosition)
         else {
-            adapter.exercises = workout.exercises
+            adapter.exercises = routine.exercises
             adapter.notifyItemChanged(exercisePosition)
         }
     }

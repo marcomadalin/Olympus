@@ -1,6 +1,7 @@
 package com.marcomadalin.olympus.presentation.view.recyclers
 
 import android.graphics.Color
+import android.util.Log
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
@@ -22,6 +23,7 @@ class RoutineExerciseViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                 binding.superset2.left = 10
             }
         }
+        Log.d("TEST", exercise.toString())
         binding.textExerciseRoutine.text = exercise.sets.size.toString() + " x " + exercise.name
     }
 }

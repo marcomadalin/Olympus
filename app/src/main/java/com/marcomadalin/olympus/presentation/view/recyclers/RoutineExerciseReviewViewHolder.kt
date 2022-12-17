@@ -9,7 +9,7 @@ import com.marcomadalin.olympus.databinding.RoutineExerciseReviewItemBinding
 import com.marcomadalin.olympus.domain.model.Exercise
 import com.marcomadalin.olympus.presentation.view.util.SupersetColors.colors
 
-class RoutineReviewViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+class RoutineExerciseReviewViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
     var binding = RoutineExerciseReviewItemBinding.bind(view)
 

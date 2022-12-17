@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.marcomadalin.olympus.R
 import com.marcomadalin.olympus.databinding.FragmentRoutineReviewBinding
 import com.marcomadalin.olympus.domain.model.Routine
-import com.marcomadalin.olympus.presentation.view.recyclers.RoutineReviewAdapter
+import com.marcomadalin.olympus.presentation.view.recyclers.RoutineExerciseReviewAdapter
 import com.marcomadalin.olympus.presentation.viewmodel.RoutineViewModel
 import com.marcomadalin.olympus.presentation.viewmodel.WorkoutViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,7 +29,7 @@ class RoutineReviewFragment : Fragment() {
 
     private val routineViewModel : RoutineViewModel by activityViewModels()
 
-    private lateinit var adapter : RoutineReviewAdapter
+    private lateinit var adapter : RoutineExerciseReviewAdapter
 
     private lateinit var navController : NavController
 
@@ -51,7 +51,7 @@ class RoutineReviewFragment : Fragment() {
             (activity as MainActivity).showNavigationBar()
         }
         binding.exerciseRoutineRecycler.layoutManager = LinearLayoutManager(this.context)
-        adapter = RoutineReviewAdapter()
+        adapter = RoutineExerciseReviewAdapter()
         binding.exerciseRoutineRecycler.adapter = adapter
         routineViewModel.selectedRoutine.observe(viewLifecycleOwner) {updateRoutine(it!!)}
 
@@ -71,7 +71,7 @@ class RoutineReviewFragment : Fragment() {
                         true
                     }
                     R.id.edit -> {
-                        //TODO edit routine
+                        navController.navigate(R.id.action_routineReviewFragment_to_routineEditFragment2)
                         true
                     }
                     R.id.delete -> {
