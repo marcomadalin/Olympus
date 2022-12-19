@@ -21,6 +21,7 @@ class RoutineViewModel @Inject constructor(
     ) : ViewModel() {
 
     val searchText = MutableLiveData("")
+
     val routines = MutableLiveData<List<Routine>?>()
 
     val selectedRoutine = MutableLiveData<Routine?>()

@@ -116,10 +116,12 @@ class WorkoutEditFragment : Fragment() {
     private fun onItemClick(itemId: Int, exercisePosition : Int) : Boolean {
         return when (itemId) {
             R.id.order -> {
+                workoutViewModel.editingRoutine.value = false
                 navController.navigate(R.id.workoutReorderFragment)
                 true
             }
             R.id.superset -> {
+                workoutViewModel.editingRoutine.value = false
                 navController.navigate(R.id.workoutSupersetFragment)
                 true
             }
@@ -164,7 +166,9 @@ class WorkoutEditFragment : Fragment() {
     private fun addSet(exercisePosition : Int) {
         val workout = workoutViewModel.selectedWorkout.value!!
         val exercise = workout.exercises[exercisePosition]
-        val set = Set(0, exercise.id, 0.0, 0, 0, 0.0, 0, 0, SetType.Normal, exercise.sets.size, true)
+        val set = Set(exercise.sets.last())
+        set.setNumber = exercise.sets.size
+        set.type = SetType.Normal
         exercise.sets.add(set)
         adapter.exercises = workout.exercises
         adapter.notifyItemChanged(exercisePosition)

@@ -29,6 +29,8 @@ class WorkoutViewModel @Inject constructor(
 
     val selectedWorkout = MutableLiveData<Workout?>()
 
+    val editingRoutine =MutableLiveData(false)
+
     fun getWorkout() {
         viewModelScope.launch {selectedWorkout.value = getWorkoutUseCase(selectedDate.value!!)}
     }

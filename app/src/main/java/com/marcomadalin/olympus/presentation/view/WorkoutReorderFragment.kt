@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.marcomadalin.olympus.databinding.FragmentWorkoutReorderBinding
 import com.marcomadalin.olympus.presentation.view.recyclers.ExerciseReorderAdapter
+import com.marcomadalin.olympus.presentation.viewmodel.RoutineViewModel
 import com.marcomadalin.olympus.presentation.viewmodel.WorkoutViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
@@ -26,6 +27,8 @@ class WorkoutReorderFragment : Fragment() {
 
     private val workoutViewModel : WorkoutViewModel by activityViewModels()
 
+    private val routineViewModel : RoutineViewModel by activityViewModels()
+
     private lateinit var adapter : ExerciseReorderAdapter
 
     private lateinit var navController: NavController
@@ -37,12 +40,14 @@ class WorkoutReorderFragment : Fragment() {
             changesDone = true
             val startPosition = viewHolder.absoluteAdapterPosition
             val endPosition = target.absoluteAdapterPosition
-            val workout = workoutViewModel.selectedWorkout.value!!
+
+            val workout = if (workoutViewModel.editingRoutine.value!!) routineViewModel.selectedRoutine.value!!
+            else workoutViewModel.selectedWorkout.value!!
+
             workout.exercises[startPosition].exerciseNumber = endPosition
             workout.exercises[endPosition].exerciseNumber = startPosition
             Collections.swap(workout.exercises, startPosition, endPosition)
             recyclerView.adapter?.notifyItemMoved(startPosition, endPosition)
-            workoutViewModel.selectedWorkout.postValue(workout)
             return true
         }
 
@@ -61,17 +66,28 @@ class WorkoutReorderFragment : Fragment() {
         changesDone = false
         navController = findNavController()
         binding.reorderrecycler.layoutManager = LinearLayoutManager(this.context)
-        adapter = ExerciseReorderAdapter(workoutViewModel.selectedWorkout.value!!.exercises)
+
+        if (workoutViewModel.editingRoutine.value!!) {
+            adapter = ExerciseReorderAdapter(routineViewModel.selectedRoutine.value!!.exercises)
+            binding.summaryTitle3.text = routineViewModel.selectedRoutine.value!!.name
+        }
+        else {
+            adapter = ExerciseReorderAdapter(workoutViewModel.selectedWorkout.value!!.exercises)
+            binding.summaryTitle3.text = workoutViewModel.selectedWorkout.value!!.name
+        }
+
         binding.reorderrecycler.adapter = adapter
         ItemTouchHelper(simpleCallback).attachToRecyclerView(binding.reorderrecycler)
         binding.reorderrecycler.addItemDecoration(DividerItemDecoration(binding.reorderrecycler.context, DividerItemDecoration.VERTICAL))
-        binding.summaryTitle3.text = workoutViewModel.selectedWorkout.value!!.name
         binding.backButtonSummary3.setOnClickListener{ navController.popBackStack() }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        if (changesDone) workoutViewModel.saveWorkout(workoutViewModel.selectedWorkout.value!!)
+    override fun onStop() {
+        super.onStop()
+        if (changesDone) {
+            if (workoutViewModel.editingRoutine.value!!) routineViewModel.saveRoutine(routineViewModel.selectedRoutine.value!!)
+            else workoutViewModel.saveWorkout(workoutViewModel.selectedWorkout.value!!)
+        }
     }
 
 }

@@ -12,8 +12,9 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.marcomadalin.olympus.R
 import com.marcomadalin.olympus.databinding.FragmentWorkoutSupersetBinding
-import com.marcomadalin.olympus.domain.model.Workout
+import com.marcomadalin.olympus.domain.model.Routine
 import com.marcomadalin.olympus.presentation.view.recyclers.ExerciseSupersetAdapter
+import com.marcomadalin.olympus.presentation.viewmodel.RoutineViewModel
 import com.marcomadalin.olympus.presentation.viewmodel.WorkoutViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,6 +25,8 @@ class WorkoutSupersetFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val workoutViewModel : WorkoutViewModel by activityViewModels()
+
+    private val routineViewModel : RoutineViewModel by activityViewModels()
 
     private lateinit var adapter : ExerciseSupersetAdapter
 
@@ -42,20 +45,32 @@ class WorkoutSupersetFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         changesDone = false
+
         binding.imageButton3.isEnabled = false
         navController = findNavController()
         binding.supersetRecycler.layoutManager = LinearLayoutManager(this.context)
-        adapter = ExerciseSupersetAdapter(workoutViewModel.selectedWorkout.value!!.exercises, ::selectSet)
-        adapter.supersets = workoutViewModel.selectedWorkout.value!!.supersets
+
+        if (workoutViewModel.editingRoutine.value!!) {
+            adapter = ExerciseSupersetAdapter(routineViewModel.selectedRoutine.value!!.exercises, ::selectSet)
+            adapter.supersets = routineViewModel.selectedRoutine.value!!.supersets
+            binding.summaryTitle4.text = routineViewModel.selectedRoutine.value!!.name
+        }
+        else {
+            adapter = ExerciseSupersetAdapter(workoutViewModel.selectedWorkout.value!!.exercises, ::selectSet)
+            adapter.supersets = workoutViewModel.selectedWorkout.value!!.supersets
+            binding.summaryTitle4.text = workoutViewModel.selectedWorkout.value!!.name
+        }
         binding.supersetRecycler.adapter = adapter
         binding.supersetRecycler.addItemDecoration(DividerItemDecoration(binding.supersetRecycler.context, DividerItemDecoration.VERTICAL))
-        binding.summaryTitle4.text = workoutViewModel.selectedWorkout.value!!.name
         binding.backButtonSummary4.setOnClickListener{ navController.popBackStack() }
 
         binding.imageButton3.setOnClickListener{
             if (binding.imageButton3.isEnabled) {
                 changesDone = true
-                val workout = workoutViewModel.selectedWorkout.value!!
+
+                val workout = if (workoutViewModel.editingRoutine.value!!) routineViewModel.selectedRoutine.value!!
+                else workoutViewModel.selectedWorkout.value!!
+
                 if (superset.isNotEmpty()) {
                     val newSupersets : MutableList<MutableSet<Long>> = removeSingleSupersets(workout, superset)
                     newSupersets.add(superset)
@@ -70,7 +85,10 @@ class WorkoutSupersetFragment : Fragment() {
                 }
                 binding.imageButton3.setBackgroundResource(R.drawable.lock_disable)
                 binding.imageButton3.isEnabled = false
-                adapter.supersets = workoutViewModel.selectedWorkout.value!!.supersets
+
+                adapter.supersets = if (workoutViewModel.editingRoutine.value!!) routineViewModel.selectedRoutine.value!!.supersets
+                else workoutViewModel.selectedWorkout.value!!.supersets
+
                 adapter.selected = false
                 adapter.added = false
                 adapter.notifyDataSetChanged()
@@ -78,12 +96,15 @@ class WorkoutSupersetFragment : Fragment() {
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        if (changesDone) workoutViewModel.saveWorkout(workoutViewModel.selectedWorkout.value!!)
+    override fun onStop() {
+        super.onStop()
+        if (changesDone) {
+            if (workoutViewModel.editingRoutine.value!!) routineViewModel.saveRoutine(routineViewModel.selectedRoutine.value!!)
+            else workoutViewModel.saveWorkout(workoutViewModel.selectedWorkout.value!!)
+        }
     }
 
-    private fun removeSingleSupersets(workout : Workout, exercises : MutableSet<Long> ) : MutableList<MutableSet<Long>> {
+    private fun removeSingleSupersets(workout : Routine, exercises : MutableSet<Long> ) : MutableList<MutableSet<Long>> {
         val newSupersets : MutableList<MutableSet<Long>> = mutableListOf()
         for (set in workout.supersets) {
             set.removeAll(exercises)
@@ -101,8 +122,11 @@ class WorkoutSupersetFragment : Fragment() {
     }
 
     private fun selectSet(exercisePos : Int) {
-        val supersets = workoutViewModel.selectedWorkout.value!!.supersets
-        val exerciseId = workoutViewModel.selectedWorkout.value!!.exercises[exercisePos].id
+        val supersets = if (workoutViewModel.editingRoutine.value!!) routineViewModel.selectedRoutine.value!!.supersets
+        else workoutViewModel.selectedWorkout.value!!.supersets
+
+        val exerciseId = if (workoutViewModel.editingRoutine.value!!) routineViewModel.selectedRoutine.value!!.exercises[exercisePos].id
+        else workoutViewModel.selectedWorkout.value!!.exercises[exercisePos].id
 
         if (superset.isEmpty() && checkSameSuperset(exerciseId, removedExercises, supersets, false)) {
             if (removedExercises.contains(exerciseId)) {

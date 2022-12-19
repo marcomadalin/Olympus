@@ -1,7 +1,6 @@
 package com.marcomadalin.olympus.presentation.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +18,7 @@ import com.marcomadalin.olympus.domain.model.enums.SetType
 import com.marcomadalin.olympus.presentation.view.recyclers.RoutineExerciseEditAdapter
 import com.marcomadalin.olympus.presentation.viewmodel.ExerciseViewModel
 import com.marcomadalin.olympus.presentation.viewmodel.RoutineViewModel
+import com.marcomadalin.olympus.presentation.viewmodel.WorkoutViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.Duration
 
@@ -29,6 +29,8 @@ class RoutineEditFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val routineViewModel : RoutineViewModel by activityViewModels()
+
+    private val workoutViewModel : WorkoutViewModel by activityViewModels()
 
     private val exerciseViewModel : ExerciseViewModel by activityViewModels()
 
@@ -63,7 +65,6 @@ class RoutineEditFragment : Fragment() {
                     routine.exercises.size,
                     mutableListOf(),
                 )
-                Log.d("TEST", exercise.toString())
                 val set = Set(0, exercise.id, 0.0, 0, 0, 0.0, 0, 0, SetType.Normal, exercise.sets.size, false)
                 exercise.sets.add(set)
 
@@ -85,7 +86,7 @@ class RoutineEditFragment : Fragment() {
             exerciseViewModel.selectedExercises.value = mutableMapOf()
         }
 
-        binding.backRouEd.setOnClickListener {navController.popBackStack()}
+        binding.backRouEd.setOnClickListener { navController.popBackStack()}
         binding.addExRouEd.setOnClickListener { addExercise() }
 
         binding.recyclerRouEd.layoutManager = LinearLayoutManager(this.context)
@@ -115,10 +116,12 @@ class RoutineEditFragment : Fragment() {
     private fun onItemClick(itemId: Int, exercisePosition : Int) : Boolean {
         return when (itemId) {
             R.id.order -> {
+                workoutViewModel.editingRoutine.value = true
                 navController.navigate(R.id.workoutReorderFragment)
                 true
             }
             R.id.superset -> {
+                workoutViewModel.editingRoutine.value = true
                 navController.navigate(R.id.workoutSupersetFragment)
                 true
             }
@@ -163,7 +166,9 @@ class RoutineEditFragment : Fragment() {
     private fun addSet(exercisePosition : Int) {
         val routine = routineViewModel.selectedRoutine.value!!
         val exercise = routine.exercises[exercisePosition]
-        val set = Set(0, exercise.id, 0.0, 0, 0, 0.0, 0, 0, SetType.Normal, exercise.sets.size, true)
+        val set = Set(exercise.sets.last())
+        set.setNumber = exercise.sets.size
+        set.type = SetType.Normal
         exercise.sets.add(set)
         adapter.exercises = routine.exercises
         adapter.notifyItemChanged(exercisePosition)
