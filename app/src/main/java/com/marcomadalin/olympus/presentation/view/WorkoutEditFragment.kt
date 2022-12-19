@@ -100,9 +100,12 @@ class WorkoutEditFragment : Fragment() {
 
         if (workout != null) {
             adapter.supersets = workoutViewModel.selectedWorkout.value!!.supersets
-            binding.summaryTitle2.text = workout.name
+            binding.workoutEditTitle.setText(workout.name)
+            binding.workoutEditTitle.doOnTextChanged { _, _, _, _ -> workout.name = binding.workoutEditTitle.text.toString() }
+
             binding.summaryDate2.text = workout.date.dayOfMonth.toString() + " " +
                     workout.date.month.toString().lowercase(Locale.ROOT) + " " + workout.date.year
+
             binding.summarytNote3.setText(workout.note)
             binding.summarytNote3.doOnTextChanged { _, _, _, _ -> workout.note = binding.summarytNote3.text.toString() }
         }

@@ -16,17 +16,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/titleRouEdit"
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/done2"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:text="Routine title"
-            android:textColor="@color/black"
-            android:textSize="25sp"
-            android:textStyle="normal"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/button_layout"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="10dp"
+            android:text="Create"
+            android:textAllCaps="false"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/backRouEd"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
@@ -37,6 +41,22 @@
             android:src="@drawable/back_arrow"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/routineTitleEdit"
+            android:layout_width="260dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="10dp"
+            android:background="@null"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Routine title"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/backRouEd"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -95,7 +115,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/recyclerRouEd" />
+                app:layout_constraintTop_toBottomOf="@+id/recyclerRouEd"
+                app:layout_constraintVertical_bias="0.0" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerRouEd"

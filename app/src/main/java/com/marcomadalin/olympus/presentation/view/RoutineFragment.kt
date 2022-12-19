@@ -44,6 +44,8 @@ class RoutineFragment : Fragment() {
         searchText = routineViewModel.searchText.value!!
         navController = findNavController()
 
+        (activity as MainActivity).showNavigationBar()
+
         binding.createRoutine.setOnClickListener {  }
         binding.startEmpty.setOnClickListener {  }
 
@@ -55,6 +57,13 @@ class RoutineFragment : Fragment() {
         routineViewModel.routines.observe(viewLifecycleOwner) {
             adapter.routines = it!!
             filterRoutines()
+        }
+
+        binding.createRoutine.setOnClickListener{
+            routineViewModel.selectedRoutine.value = Routine()
+            routineViewModel.selectedRoutine.value!!.name = "New routine"
+            routineViewModel.newRoutine.value = true
+            navController.navigate(R.id.routineEditFragment)
         }
 
         binding.searchRoutine.clearFocus()
@@ -79,7 +88,9 @@ class RoutineFragment : Fragment() {
 
     private fun onRoutineClick(routinePosition: Int) {
         routineViewModel.selectedRoutine.value = routineViewModel.routines.value!![routinePosition]
+        routineViewModel.newRoutine.value = false
         navController.navigate(R.id.action_workout_to_routineReviewFragment)
+        (activity as MainActivity).hideNavigationBar()
     }
 
     private fun filterRoutines() {

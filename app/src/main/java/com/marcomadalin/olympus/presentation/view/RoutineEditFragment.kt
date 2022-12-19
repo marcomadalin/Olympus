@@ -86,7 +86,10 @@ class RoutineEditFragment : Fragment() {
             exerciseViewModel.selectedExercises.value = mutableMapOf()
         }
 
-        binding.backRouEd.setOnClickListener { navController.popBackStack()}
+        binding.backRouEd.setOnClickListener {
+            if (routineViewModel.newRoutine.value!!) routineViewModel.deleteRoutine(routineViewModel.selectedRoutine.value!!)
+            navController.popBackStack()
+        }
         binding.addExRouEd.setOnClickListener { addExercise() }
 
         binding.recyclerRouEd.layoutManager = LinearLayoutManager(this.context)
@@ -102,9 +105,22 @@ class RoutineEditFragment : Fragment() {
 
         if (routine != null) {
             adapter.supersets = routineViewModel.selectedRoutine.value!!.supersets
-            binding.titleRouEdit.text = routine.name
+
+            binding.routineTitleEdit.setText(routine.name)
+            binding.routineTitleEdit.doOnTextChanged { _, _, _, _ -> routine.name = binding.routineTitleEdit.text.toString() }
             binding.noteRouEd.setText(routine.note)
             binding.noteRouEd.doOnTextChanged { _, _, _, _ -> routine.note = binding.noteRouEd.text.toString() }
+
+            if (routineViewModel.newRoutine.value!!) {
+                binding.done2.visibility = View.VISIBLE
+                binding.done2.setOnClickListener{
+                    routineViewModel.saveRoutine(routineViewModel.selectedRoutine.value!!)
+                    navController.popBackStack()
+                }
+                routineViewModel.selectedRoutine.observe(viewLifecycleOwner) {
+                    binding.done2.isEnabled  = routineViewModel.selectedRoutine.value!!.exercises.size > 0
+                }
+            }
         }
     }
 

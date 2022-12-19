@@ -52,6 +52,9 @@ class WorkoutReviewFragment : Fragment() {
         adapter.supersets = workoutViewModel.selectedWorkout.value!!.supersets
         binding.exerciseRecycler.adapter = adapter
         workoutViewModel.selectedWorkout.observe(viewLifecycleOwner) {updateWorkoutReview(it)}
+        binding.startWorkoutButton2.setOnClickListener{
+        //TODO tart workout
+        }
     }
 
     private fun popupMenu() {

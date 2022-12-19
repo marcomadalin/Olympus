@@ -59,7 +59,7 @@ class ExerciseCreateFragment : Fragment() {
         exerciseDataViewModel.newExercise.postValue(ExerciseData(default=false))
 
         binding.backButtonSummary5.setOnClickListener{
-            navController.popBackStack()
+            navController.navigate(R.id.exercise)
             (activity as MainActivity).showNavigationBar()
         }
 
@@ -77,7 +77,7 @@ class ExerciseCreateFragment : Fragment() {
 
         binding.done.setOnClickListener{
             exerciseDataViewModel.saveNewExercise()
-            navController.popBackStack()
+            navController.navigate(R.id.exercise)
         }
     }
 

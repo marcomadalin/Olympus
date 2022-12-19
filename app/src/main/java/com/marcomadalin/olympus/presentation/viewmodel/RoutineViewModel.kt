@@ -26,6 +26,8 @@ class RoutineViewModel @Inject constructor(
 
     val selectedRoutine = MutableLiveData<Routine?>()
 
+    val newRoutine = MutableLiveData(false)
+
     fun getRoutines() {
         viewModelScope.launch { routines.value = getRoutinesUseCase()}
     }

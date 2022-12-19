@@ -16,15 +16,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/summaryTitle2"
+        <EditText
+            android:id="@+id/workoutEditTitle"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
             android:layout_marginStart="10dp"
-            android:text="Workout Title"
+            android:background="@null"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Routine title"
             android:textColor="@color/black"
             android:textSize="25sp"
-            android:textStyle="normal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/backButtonSummary2"
             app:layout_constraintTop_toTopOf="parent" />
