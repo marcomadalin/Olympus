@@ -1,21 +1,24 @@
 package com.marcomadalin.olympus.domain.model
 
 import com.marcomadalin.olympus.data.database.entities.UserEntity
-import kotlin.collections.Set
+import com.marcomadalin.olympus.domain.model.enums.Muscle
+import java.time.Duration
 
 open class User (
     var id : Long = 0,
     var name : String = "",
-    var totalWorkouts : Int = 0,
-    var trackingTotalWorkouts : Boolean = false,
-    var trackedExercises : Set<Int> = emptySet(),
-    var trackedMeasures : Set<Int> = emptySet(),
+    var totalRestDays : Int = 0,
+    var totalVolume : Double = 0.0,
+    var totalReps : Int = 0,
+    var totalWorkoutLength : Duration = Duration.ofSeconds(0),
+    var muscleDivision : Map<Muscle,Int> = emptyMap(),
 )
 fun UserEntity.toDomain() = User(
     id,
     name,
-    totalWorkouts,
-    trackingTotalWorkouts,
-    trackedExercises,
-    trackedMeasures
+    totalRestDays,
+    totalVolume,
+    totalReps,
+    Duration.ofSeconds(totalWorkoutLength),
+    muscleDivision.mapKeys{ it -> Muscle.valueOf(it.key) },
 )

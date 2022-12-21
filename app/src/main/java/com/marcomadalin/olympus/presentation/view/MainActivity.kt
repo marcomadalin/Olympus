@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
                 true
             }
         }
-        userViewModel.saveUser(User(0, "Marco", 12, true, emptySet(), emptySet()))
+        userViewModel.saveUser(User(0, "Marco", 0, 51123.0, 123123, Duration.ofSeconds(1231231231), emptyMap()))
 
         val workout = Workout(0, 1, "Legs", "Pretty chill workout",
             Duration.ofSeconds(2350), LocalDate.now(),

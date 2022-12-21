@@ -16,8 +16,6 @@ class MeasureFragment : Fragment() {
     private var _binding: FragmentMeasureBinding? = null
     private val binding get() = _binding!!
 
-    //private val measureViewModel: MeasureViewModel by activityViewModels()
-
     private lateinit var navController: NavController
 
     override fun onCreateView(

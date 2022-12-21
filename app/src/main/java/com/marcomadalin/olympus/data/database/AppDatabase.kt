@@ -25,7 +25,7 @@ import com.marcomadalin.olympus.data.database.entities.UserEntity
 import com.marcomadalin.olympus.data.database.entities.WorkoutEntity
 
 @Database(entities = [ExerciseEntity::class, ExerciseDataEntity::class, MeasureEntity::class, RoutineEntity::class,
-    SetEntity::class, StatisticEntity::class, UserEntity::class, WorkoutEntity::class], version = 48)
+    SetEntity::class, StatisticEntity::class, UserEntity::class, WorkoutEntity::class], version = 49)
 @TypeConverters(MapConverters::class, StringSetConverters::class, IntSetConverters::class, ListSetConverters::class)
 abstract class AppDatabase : RoomDatabase() {
 
