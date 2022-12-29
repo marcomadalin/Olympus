@@ -5,9 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
+import com.marcomadalin.olympus.R
 import com.marcomadalin.olympus.databinding.FragmentMeasureBinding
+import com.marcomadalin.olympus.presentation.view.recyclers.MeasureSelectAdapter
+import com.marcomadalin.olympus.presentation.viewmodel.MeasuresViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -17,6 +22,10 @@ class MeasureFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var navController: NavController
+
+    private val measureViewModel : MeasuresViewModel by viewModels()
+
+    private lateinit var adapter : MeasureSelectAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,5 +40,24 @@ class MeasureFragment : Fragment() {
 
         navController = findNavController()
 
+        binding.backButtonMeasure.setOnClickListener {
+            navController.navigate(R.id.action_measureFragment_to_profile)
+            (activity as MainActivity).showNavigationBar()
+        }
+
+        binding.recylerMeasure.layoutManager = GridLayoutManager(this.context, 2)
+        adapter = MeasureSelectAdapter(::onMeasureClick)
+
+        binding.recylerMeasure.adapter = adapter
+
+        measureViewModel.lastMeasures.observe(viewLifecycleOwner) {
+            adapter.measures = measureViewModel.lastMeasures.value!!
+            adapter.notifyDataSetChanged()
+        }
+
+        measureViewModel.getAllMeasures()
+    }
+
+    private fun onMeasureClick(measurePosition: Int) {
     }
 }

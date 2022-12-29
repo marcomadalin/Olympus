@@ -7,7 +7,7 @@ import java.time.LocalDate
 data class Measure(
     var id: Long = 0,
     var userId: Long = 0,
-    var date: LocalDate = LocalDate.parse(""),
+    var date: LocalDate = LocalDate.now(),
     var value: Double = 0.0,
     var part: MeasurePart = MeasurePart.Weight,
 )

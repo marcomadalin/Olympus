@@ -13,6 +13,12 @@ interface MeasureDAO {
     @Query("SELECT * FROM Measures")
     suspend fun getAllMeasures() : List<MeasureEntity>
 
+    @Query("SELECT * FROM Measures WHERE part like :part ORDER BY date")
+    suspend fun getMeasureValues(part : String) : List<MeasureEntity>
+
+    @Query("SELECT * FROM Measures WHERE part like :part ORDER BY date LIMIT 2")
+    suspend fun getMeasures(part : String) : List<MeasureEntity>
+
     @Query("SELECT * FROM Measures WHERE id = :id")
     suspend fun getMeasure(id: Long) : MeasureEntity
 
@@ -23,7 +29,7 @@ interface MeasureDAO {
     suspend fun insertAllMeasures(measure : List<MeasureEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertMeasure(measure : MeasureEntity)
+    suspend fun insertMeasure(measure : MeasureEntity) : Long
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateMeasure(measure: MeasureEntity)

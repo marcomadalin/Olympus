@@ -44,6 +44,7 @@ class StatsFragment : Fragment() {
 
         binding.backButtonStat.setOnClickListener {
             navController.navigate(R.id.action_statsFragment_to_profile)
+            (activity as MainActivity).showNavigationBar()
         }
 
         userViewModel.selectedUser.observe(viewLifecycleOwner) {updateStats(it!!)}
@@ -51,14 +52,14 @@ class StatsFragment : Fragment() {
     }
 
     private fun updateStats(user : User) {
-        val numWorkouts = workoutViewModel.workouts.value!!.size
+        val numWorkouts = 55
 
         binding.totalVolumeStat6.text = user.totalVolume.toString() + " Kg"
         binding.totalRepStat4.text = user.totalReps.toString()
         binding.totalWorkoutTimeSt.text = ((user.totalWorkoutLength.seconds % 3600)/60).toString() + " min"
         if (user.totalWorkoutLength.toHours().toInt() != 0) binding.totalWorkoutTimeSt.text = user.totalWorkoutLength.toHours().toString() + " h " + binding.totalWorkoutTimeSt.text
 
-        binding.avgVolSt.text = (user.totalVolume / numWorkouts).toString() + "Kg"
+        binding.avgVolSt.text = String.format("%.2f", (user.totalVolume / numWorkouts)) + "Kg"
         binding.avgRepsSt.text = (user.totalReps / numWorkouts).toString()
         binding.avgDurSt.text = (((user.totalWorkoutLength.seconds/numWorkouts) % 3600)/60).toString() + " min"
         if ((user.totalWorkoutLength.toHours().toInt() / numWorkouts) != 0) binding.avgDurSt.text = (user.totalWorkoutLength.toHours() / numWorkouts).toString() + " h " + binding.avgDurSt.text

@@ -27,7 +27,6 @@ class ProfileFragment : Fragment() {
 
     private val workoutViewModel: WorkoutViewModel by activityViewModels()
 
-
     private lateinit var navController: NavController
 
     override fun onCreateView(
@@ -43,7 +42,6 @@ class ProfileFragment : Fragment() {
         super.onStart()
 
         navController = findNavController()
-        (activity as MainActivity).showNavigationBar()
 
         binding.statButton.setOnClickListener {
             navController.navigate(R.id.action_profile_to_statsFragment)
@@ -51,6 +49,7 @@ class ProfileFragment : Fragment() {
         }
 
         binding.measuresButton.setOnClickListener {
+            navController.navigate(R.id.action_profile_to_measureFragment)
             (activity as MainActivity).hideNavigationBar()
         }
 
