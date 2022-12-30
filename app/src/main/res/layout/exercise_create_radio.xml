@@ -53,7 +53,7 @@
         android:minHeight="0dp"
         android:paddingHorizontal="10dp"
         android:paddingVertical="10dp"
-        android:text="Ok"
+        android:text="Save"
         android:textAllCaps="false"
         app:layout_constraintEnd_toStartOf="@+id/createCancel"
         app:layout_constraintHorizontal_bias="0.516"
