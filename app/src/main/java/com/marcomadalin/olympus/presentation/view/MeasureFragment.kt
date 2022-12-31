@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -23,7 +23,7 @@ class MeasureFragment : Fragment() {
 
     private lateinit var navController: NavController
 
-    private val measureViewModel : MeasuresViewModel by viewModels()
+    private val measureViewModel : MeasuresViewModel by activityViewModels()
 
     private lateinit var adapter : MeasureSelectAdapter
 
@@ -59,5 +59,7 @@ class MeasureFragment : Fragment() {
     }
 
     private fun onMeasureClick(measurePosition: Int) {
+        measureViewModel.selectedPart.value = measureViewModel.lastMeasures.value!![measurePosition].first.part
+        navController.navigate(R.id.action_measureFragment_to_measureReviewFragment)
     }
 }

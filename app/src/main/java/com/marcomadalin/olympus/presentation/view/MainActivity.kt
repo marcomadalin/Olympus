@@ -43,8 +43,6 @@ class MainActivity : AppCompatActivity() {
 
     private val measureViewModel : MeasuresViewModel by viewModels()
 
-    //private val measureViewModel: MeasureViewModel by viewModels()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -84,15 +82,12 @@ class MainActivity : AppCompatActivity() {
         val m1 = Measure(0, 0, LocalDate.now(), 94.5, MeasurePart.Weight)
         val m2 = Measure(0, 0, LocalDate.now(), 98.77, MeasurePart.Weight)
 
-        val m3 = Measure(0, 0, LocalDate.now(), 77.0, MeasurePart.Back)
-        val m4 = Measure(0, 0, LocalDate.now(), 78.0, MeasurePart.Back)
-
         val m5 = Measure(0, 0, LocalDate.now(), 44.0, MeasurePart.Chest)
         val m6 = Measure(0, 0, LocalDate.now(), 45.0, MeasurePart.Chest)
 
-        val m7 = Measure(0, 0, LocalDate.now(), 45.5, MeasurePart.Left_Bicep)
+        val m7 = Measure(0, 0, LocalDate.now(), 45.5, MeasurePart.Left_Biceps)
 
-        val measures = listOf(m1,m2,m3,m4,m5,m6,m7)
+        val measures = listOf(m1,m2, m5,m6,m7)
 
         measureViewModel.saveAllMeasures(measures)
 

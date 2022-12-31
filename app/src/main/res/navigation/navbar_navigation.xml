@@ -213,7 +213,7 @@
     </fragment>
     <fragment
         android:id="@+id/measureReviewFragment"
-        android:name="com.marcomadalin.olympus.MeasureReviewFragment"
+        android:name="com.marcomadalin.olympus.presentation.view.MeasureReviewFragment"
         android:label="fragment_measure_review"
         tools:layout="@layout/fragment_measure_review" >
         <action

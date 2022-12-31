@@ -2,7 +2,8 @@
     android:width="32dp"
     android:height="32dp"
     android:viewportWidth="29"
-    android:viewportHeight="29">
+    android:viewportHeight="29"
+    android:tint="@color/buttons">
   <path
       android:pathData="m20.5,11.5 l-6,6 -6,-6"
       android:strokeLineJoin="round"

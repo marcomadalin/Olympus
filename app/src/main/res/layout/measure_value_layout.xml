@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/background">
+    android:background="@drawable/layout_marble">
 
     <Button
-        android:id="@+id/createCancel2"
+        android:id="@+id/valueCancel"
         android:layout_width="130dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
@@ -21,12 +21,12 @@
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/createCancel3"
+        app:layout_constraintStart_toEndOf="@+id/valueSave"
         app:layout_constraintTop_toBottomOf="@+id/measureVal"
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/createCancel3"
+        android:id="@+id/valueSave"
         android:layout_width="130dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
@@ -39,7 +39,7 @@
         android:text="Save"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/createCancel2"
+        app:layout_constraintEnd_toStartOf="@+id/valueCancel"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/measureVal"
         app:layout_constraintVertical_bias="0.0" />
@@ -52,6 +52,7 @@
         android:layout_marginTop="30dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/layout_gray"
+        android:inputType="numberDecimal"
         android:paddingHorizontal="10dp"
         android:paddingVertical="5dp"
         android:text="Workout note"
@@ -74,7 +75,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/buttonDelete"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginTop="10dp"

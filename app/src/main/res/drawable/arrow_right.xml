@@ -3,6 +3,7 @@ android:width="32dp"
 android:height="32dp"
 android:viewportWidth="29"
 android:viewportHeight="29"
+    android:tint="@color/buttons"
     >
 <group
     android:translateY="29"

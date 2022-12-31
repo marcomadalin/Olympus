@@ -13,10 +13,10 @@ interface MeasureDAO {
     @Query("SELECT * FROM Measures")
     suspend fun getAllMeasures() : List<MeasureEntity>
 
-    @Query("SELECT * FROM Measures WHERE part like :part ORDER BY date")
+    @Query("SELECT * FROM Measures WHERE part like :part ORDER BY date DESC")
     suspend fun getMeasureValues(part : String) : List<MeasureEntity>
 
-    @Query("SELECT * FROM Measures WHERE part like :part ORDER BY date LIMIT 2")
+    @Query("SELECT * FROM Measures WHERE part like :part ORDER BY date DESC LIMIT 2")
     suspend fun getMeasures(part : String) : List<MeasureEntity>
 
     @Query("SELECT * FROM Measures WHERE id = :id")

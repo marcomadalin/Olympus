@@ -14,10 +14,11 @@ class GetMeasuresUseCase @Inject constructor(private val measureRepository: Meas
             val measures = measureRepository.getMeasures(part.toString())
             if (measures.isNotEmpty())  {
                 if (measures.size == 1) {
-                    result.add(Pair(measures[0], Measure(value=-1.0)))
+                    result.add(Pair(measures[0], Measure(value=-1.0, part = part)))
                 }
                 else result.add(Pair(measures[0],measures[1]))
             }
+            else result.add(Pair(Measure(value=-1.0, part = part), Measure(value=-1.0, part = part)))
         }
         return result
     }

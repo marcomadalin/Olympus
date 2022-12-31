@@ -59,9 +59,9 @@ class ProfileFragment : Fragment() {
             if (!text.isNullOrEmpty()) userViewModel.selectedUser.value!!.name = text
         }
 
-        binding.numWorkouts.text = workoutViewModel.workouts.value!!.size.toString() + " workouts"
+        binding.numWorkouts.text = "Workouts: " + workoutViewModel.workouts.value!!.size.toString()
         workoutViewModel.workouts.observe(viewLifecycleOwner) {
-            binding.numWorkouts.text = workoutViewModel.workouts.value!!.size.toString() + " workouts"
+            binding.numWorkouts.text = "Workouts: " + workoutViewModel.workouts.value!!.size.toString()
         }
 
         binding.durationButtonStat.setOnClickListener {}

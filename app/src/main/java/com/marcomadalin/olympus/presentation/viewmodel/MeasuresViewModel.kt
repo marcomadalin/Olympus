@@ -29,6 +29,8 @@ class MeasuresViewModel @Inject constructor(
 
     val selectedPart = MutableLiveData<MeasurePart>()
 
+    val insertedValue = MutableLiveData<Double>()
+
     fun getAllMeasures() {
         viewModelScope.launch {
             lastMeasures.value = getMeasuresUseCase()
@@ -60,6 +62,8 @@ class MeasuresViewModel @Inject constructor(
     fun deleteMeasure(measure: Measure) {
         viewModelScope.launch {
             deleteMeasureUseCase(measure)
+            lastMeasures.value = getMeasuresUseCase()
+            measureValues.value = getMeasureValuesUseCase(selectedPart.value.toString())
         }
     }
 }
