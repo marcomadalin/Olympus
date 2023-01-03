@@ -11,6 +11,10 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.marcomadalin.olympus.R
 import com.marcomadalin.olympus.databinding.FragmentMeasureReviewBinding
 import com.marcomadalin.olympus.databinding.MeasureValueLayoutBinding
@@ -82,13 +86,36 @@ class MeasureReviewFragment : Fragment() {
         binding.valueRecycler.adapter = adapter
         binding.valueRecycler.layoutManager = LinearLayoutManager(this.context)
 
-        measureViewModel.measureValues.observe(viewLifecycleOwner) {
-            if (it!!.isEmpty()) binding.textView3.visibility = View.VISIBLE
+        measureViewModel.measureValues.observe(viewLifecycleOwner) { values ->
+            if (values!!.isEmpty()) binding.textView3.visibility = View.VISIBLE
             else binding.textView3.visibility = View.GONE
-            adapter.measures = it!!
+            adapter.measures = values!!
+
+            val dataEntries = LineDataSet(ArrayList(values!!.map{Entry(it.date.dayOfMonth.toFloat(), it.value.toFloat())}), "")
+            dataEntries.color = R.color.black
+            dataEntries.circleColors = mutableListOf(R.color.buttons)
+            dataEntries.lineWidth = 2f
+
+            val dataSets : ArrayList<ILineDataSet> = ArrayList()
+            dataSets.add(dataEntries)
+
+            val plotData = LineData(dataSets)
+            plotData.setValueTextSize(12f)
+            binding.chartMeasure.data = plotData
+            binding.chartMeasure.invalidate()
+
+            binding.chartMeasure.description.isEnabled = false
+            binding.chartMeasure.setNoDataText("No values registered")
+            binding.chartMeasure.axisRight.isEnabled = false
+            binding.chartMeasure.axisLeft.textSize = 12.0f
+            binding.chartMeasure.axisRight.setDrawGridLines(false)
+            binding.chartMeasure.axisLeft.setDrawGridLines(false)
+            binding.chartMeasure.isAutoScaleMinMaxEnabled = true
+            binding.chartMeasure.xAxis.textSize = 12.0f
+            binding.chartMeasure.legend.isEnabled = false
+            binding.chartMeasure.xAxis.setDrawGridLines(false)
             adapter.notifyDataSetChanged()
         }
-
         measureViewModel.getMeasureValues()
     }
 
