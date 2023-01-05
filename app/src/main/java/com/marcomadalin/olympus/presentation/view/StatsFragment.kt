@@ -8,6 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import com.anychart.AnyChart
+import com.anychart.chart.common.dataentry.DataEntry
+import com.anychart.chart.common.dataentry.ValueDataEntry
 import com.marcomadalin.olympus.R
 import com.marcomadalin.olympus.databinding.FragmentStatsBinding
 import com.marcomadalin.olympus.domain.model.User
@@ -49,10 +52,22 @@ class StatsFragment : Fragment() {
 
         userViewModel.selectedUser.observe(viewLifecycleOwner) {updateStats(it!!)}
         workoutViewModel.workouts.observe(viewLifecycleOwner) {updateStats(userViewModel.selectedUser.value!!)}
+        userViewModel.getUser()
     }
 
     private fun updateStats(user : User) {
         val numWorkouts = 55
+
+        val pie = AnyChart.pie()
+        pie.background().stroke("3 #BBA14F")
+
+        val data: MutableList<DataEntry> = ArrayList()
+        val values = user.muscleDivision.toList()
+
+        for (value in values) data.add(ValueDataEntry(value.first.toString().replace("_", " "), value.second))
+
+        pie.data(data)
+        binding.statChart.setChart(pie)
 
         binding.totalVolumeStat6.text = user.totalVolume.toString() + " Kg"
         binding.totalRepStat4.text = user.totalReps.toString()

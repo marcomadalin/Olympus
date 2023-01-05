@@ -60,7 +60,12 @@ class MainActivity : AppCompatActivity() {
                 true
             }
         }
-        userViewModel.saveUser(User(0, "Marco", 0, 51123.0, 123123, Duration.ofSeconds(1231231231), emptyMap()))
+
+        val muscleDivision = Muscle.values().map{ Pair(it, 0) }.toList().associate { Pair(it.first, it.second) }.toMutableMap()
+        muscleDivision[Muscle.Lats] = 55
+        muscleDivision[Muscle.Hamstrings] = 22
+        muscleDivision[Muscle.Chest] = 125
+        userViewModel.saveUser(User(0, "Marco", 0, 51123.0, 123123, Duration.ofSeconds(1231231231), muscleDivision))
 
         val workout = Workout(0, 1, "Legs", "Pretty chill workout",
             Duration.ofSeconds(2350), LocalDate.now(),

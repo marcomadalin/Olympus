@@ -11,7 +11,7 @@ open class User (
     var totalVolume : Double = 0.0,
     var totalReps : Int = 0,
     var totalWorkoutLength : Duration = Duration.ofSeconds(0),
-    var muscleDivision : Map<Muscle,Int> = emptyMap(),
+    var muscleDivision : MutableMap<Muscle,Int> = mutableMapOf(),
 )
 fun UserEntity.toDomain() = User(
     id,
@@ -20,5 +20,5 @@ fun UserEntity.toDomain() = User(
     totalVolume,
     totalReps,
     Duration.ofSeconds(totalWorkoutLength),
-    muscleDivision.mapKeys{ it -> Muscle.valueOf(it.key) },
+    muscleDivision.mapKeys{ it -> Muscle.valueOf(it.key) }.toMutableMap(),
 )
