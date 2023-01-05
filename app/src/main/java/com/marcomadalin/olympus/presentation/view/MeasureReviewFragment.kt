@@ -1,5 +1,4 @@
 package com.marcomadalin.olympus.presentation.view
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,10 +10,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.LineData
-import com.github.mikephil.charting.data.LineDataSet
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
+import com.anychart.AnyChart
+import com.anychart.chart.common.dataentry.DataEntry
+import com.anychart.chart.common.dataentry.ValueDataEntry
 import com.marcomadalin.olympus.R
 import com.marcomadalin.olympus.databinding.FragmentMeasureReviewBinding
 import com.marcomadalin.olympus.databinding.MeasureValueLayoutBinding
@@ -22,6 +20,8 @@ import com.marcomadalin.olympus.domain.model.Measure
 import com.marcomadalin.olympus.presentation.view.recyclers.MeasureReviewAdapter
 import com.marcomadalin.olympus.presentation.viewmodel.MeasuresViewModel
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+
 
 class MeasureReviewFragment : Fragment() {
 
@@ -88,32 +88,20 @@ class MeasureReviewFragment : Fragment() {
 
         measureViewModel.measureValues.observe(viewLifecycleOwner) { values ->
             if (values!!.isEmpty()) binding.textView3.visibility = View.VISIBLE
-            else binding.textView3.visibility = View.GONE
-            adapter.measures = values!!
+            else  {
+                binding.textView3.visibility = View.GONE
 
-            val dataEntries = LineDataSet(ArrayList(values!!.map{Entry(it.date.dayOfMonth.toFloat(), it.value.toFloat())}), "")
-            dataEntries.color = R.color.black
-            dataEntries.circleColors = mutableListOf(R.color.buttons)
-            dataEntries.lineWidth = 2f
+                val line = AnyChart.line()
+                line.background().stroke("3 #BBA14F")
 
-            val dataSets : ArrayList<ILineDataSet> = ArrayList()
-            dataSets.add(dataEntries)
+                val data: MutableList<DataEntry> = ArrayList()
+                val formatter = DateTimeFormatter.ofPattern("dd/MM/YYYY")
+                for (i in values.indices.reversed()) data.add(ValueDataEntry(values[i].date.format(formatter).toString(), values[i].value))
 
-            val plotData = LineData(dataSets)
-            plotData.setValueTextSize(12f)
-            binding.chartMeasure.data = plotData
-            binding.chartMeasure.invalidate()
-
-            binding.chartMeasure.description.isEnabled = false
-            binding.chartMeasure.setNoDataText("No values registered")
-            binding.chartMeasure.axisRight.isEnabled = false
-            binding.chartMeasure.axisLeft.textSize = 12.0f
-            binding.chartMeasure.axisRight.setDrawGridLines(false)
-            binding.chartMeasure.axisLeft.setDrawGridLines(false)
-            binding.chartMeasure.isAutoScaleMinMaxEnabled = true
-            binding.chartMeasure.xAxis.textSize = 12.0f
-            binding.chartMeasure.legend.isEnabled = false
-            binding.chartMeasure.xAxis.setDrawGridLines(false)
+                line.data(data)
+                binding.measureChart.setChart(line)
+            }
+            adapter.measures = values
             adapter.notifyDataSetChanged()
         }
         measureViewModel.getMeasureValues()

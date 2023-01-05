@@ -11,42 +11,28 @@
         android:id="@+id/create3"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_below="@+id/constraintLayout4"
+        android:layout_below="@+id/measureChart"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/button_layout"
         android:src="@drawable/ic_baseline_add_24"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout4" />
+        app:layout_constraintTop_toBottomOf="@+id/measureChart" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout4"
-        android:layout_width="fill_parent"
-        android:layout_height="250dp"
-        android:layout_below="@+id/headerMeasure"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/layout_gray"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/headerMeasure">
-
-        <com.github.mikephil.charting.charts.LineChart
-            android:id="@+id/chartMeasure"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <com.anychart.AnyChartView
+            android:id="@+id/measureChart"
+            android:layout_height="250dp"
+            android:layout_width="fill_parent"
+            android:layout_below="@+id/headerMeasure"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="20dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:background="@color/background"
+            app:layout_constraintTop_toBottomOf="@+id/headerMeasure"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/headerMeasure"
@@ -86,7 +72,7 @@
         android:id="@+id/titleMeasure3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/constraintLayout4"
+        android:layout_below="@+id/measureChart"
         android:layout_marginStart="20dp"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="10dp"
