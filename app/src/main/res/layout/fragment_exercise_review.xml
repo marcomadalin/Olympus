@@ -163,7 +163,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView10">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/chartExercise"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
@@ -175,7 +175,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.github.mikephil.charting.charts.LineChart>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
