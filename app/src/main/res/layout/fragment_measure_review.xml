@@ -11,28 +11,41 @@
         android:id="@+id/create3"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_below="@+id/measureChart"
+        android:layout_below="@+id/layoutChart"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/button_layout"
         android:src="@drawable/ic_baseline_add_24"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/measureChart" />
+        app:layout_constraintTop_toBottomOf="@+id/layoutChart" />
 
-        <com.anychart.AnyChartView
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutChart"
+        android:layout_width="fill_parent"
+        android:layout_height="300dp"
+        android:layout_below="@+id/headerMeasure"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/layout_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/headerMeasure">
+
+        <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/measureChart"
-            android:layout_height="250dp"
             android:layout_width="fill_parent"
-            android:layout_below="@+id/headerMeasure"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="20dp"
+            android:layout_height="fill_parent"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            android:background="@color/background"
-            app:layout_constraintTop_toBottomOf="@+id/headerMeasure"/>
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/headerMeasure"
@@ -72,7 +85,7 @@
         android:id="@+id/titleMeasure3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/measureChart"
+        android:layout_below="@+id/layoutChart"
         android:layout_marginStart="20dp"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="10dp"

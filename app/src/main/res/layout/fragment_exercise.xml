@@ -89,8 +89,7 @@
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:layout_below="@id/filter"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="56dp">
+        android:layout_alignParentStart="true">
 
     </androidx.recyclerview.widget.RecyclerView>
 

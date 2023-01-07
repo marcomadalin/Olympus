@@ -11,7 +11,7 @@ import com.marcomadalin.olympus.data.database.entities.WorkoutEntity
 
 @Dao
 interface WorkoutDAO {
-    @Query("SELECT * FROM Workouts")
+    @Query("SELECT * FROM Workouts ORDER BY date ASC")
     suspend fun getAllWorkouts() : List<WorkoutEntity>
 
     @Query("SELECT * FROM Workouts WHERE id = :id")

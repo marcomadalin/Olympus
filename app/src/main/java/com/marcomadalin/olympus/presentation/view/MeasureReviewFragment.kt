@@ -10,9 +10,12 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.anychart.AnyChart
-import com.anychart.chart.common.dataentry.DataEntry
-import com.anychart.chart.common.dataentry.ValueDataEntry
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.components.YAxis
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.marcomadalin.olympus.R
 import com.marcomadalin.olympus.databinding.FragmentMeasureReviewBinding
 import com.marcomadalin.olympus.databinding.MeasureValueLayoutBinding
@@ -20,7 +23,6 @@ import com.marcomadalin.olympus.domain.model.Measure
 import com.marcomadalin.olympus.presentation.view.recyclers.MeasureReviewAdapter
 import com.marcomadalin.olympus.presentation.viewmodel.MeasuresViewModel
 import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
 
 class MeasureReviewFragment : Fragment() {
@@ -48,6 +50,7 @@ class MeasureReviewFragment : Fragment() {
 
         binding.backButtonMeasure2.setOnClickListener {
             navController.navigate(R.id.action_measureReviewFragment_to_measureFragment)
+            (activity as MainActivity).showNavigationBar()
         }
 
         binding.titleMeasure2.text =
@@ -87,19 +90,39 @@ class MeasureReviewFragment : Fragment() {
         binding.valueRecycler.layoutManager = LinearLayoutManager(this.context)
 
         measureViewModel.measureValues.observe(viewLifecycleOwner) { values ->
-            if (values!!.isEmpty()) binding.textView3.visibility = View.VISIBLE
-            else  {
+            if (values!!.isNullOrEmpty()) {
+                binding.textView3.visibility = View.VISIBLE
+                binding.measureChart.data = null
+                binding.measureChart.invalidate()
+            }
+            else {
                 binding.textView3.visibility = View.GONE
 
-                val line = AnyChart.line()
-                line.background().stroke("3 #BBA14F")
+                val dataEntries = LineDataSet(ArrayList(values!!.reversed().map{ Entry(it.date.dayOfYear.toFloat(), it.value.toFloat()) }), "")
+                dataEntries.axisDependency = YAxis.AxisDependency.LEFT;
+                dataEntries.color = R.color.black
+                dataEntries.circleColors = mutableListOf(R.color.buttons)
+                dataEntries.lineWidth = 2f
 
-                val data: MutableList<DataEntry> = ArrayList()
-                val formatter = DateTimeFormatter.ofPattern("dd/MM/YYYY")
-                for (i in values.indices.reversed()) data.add(ValueDataEntry(values[i].date.format(formatter).toString(), values[i].value))
+                val dataSets : ArrayList<ILineDataSet> = ArrayList()
+                dataSets.add(dataEntries)
 
-                line.data(data)
-                binding.measureChart.setChart(line)
+                val plotData = LineData(dataSets)
+                plotData.setValueTextSize(12f)
+                binding.measureChart.data = plotData
+
+                binding.measureChart.description.isEnabled = false
+                binding.measureChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
+                binding.measureChart.setNoDataText("No values registered")
+                binding.measureChart.axisRight.isEnabled = false
+                binding.measureChart.axisLeft.textSize = 12.0f
+                binding.measureChart.axisRight.setDrawGridLines(false)
+                binding.measureChart.axisLeft.setDrawGridLines(false)
+                binding.measureChart.isAutoScaleMinMaxEnabled = true
+                binding.measureChart.xAxis.textSize = 12.0f
+                binding.measureChart.legend.isEnabled = false
+                binding.measureChart.xAxis.setDrawGridLines(false)
+                binding.measureChart.invalidate()
             }
             adapter.measures = values
             adapter.notifyDataSetChanged()

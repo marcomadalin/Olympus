@@ -1,11 +1,11 @@
 package com.marcomadalin.olympus.presentation.view
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.TooltipCompat
 import androidx.core.view.forEach
-import androidx.core.view.isVisible
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.marcomadalin.olympus.databinding.ActivityMainBinding
@@ -90,7 +90,7 @@ class MainActivity : AppCompatActivity() {
         val m9 = Measure(0, 0, LocalDate.parse("2023-01-03"), 66.77, MeasurePart.Weight)
         val m10 = Measure(0, 0, LocalDate.parse("2023-01-04"), 100.55, MeasurePart.Weight)
         val m11 = Measure(0, 0, LocalDate.parse("2023-01-05"), 22.3, MeasurePart.Weight)
-        val m12 = Measure(0, 0, LocalDate.parse("2023-01-06"), 55.5, MeasurePart.Weight)
+        val m12 = Measure(0, 0, LocalDate.parse("2023-01-07"), 55.5, MeasurePart.Weight)
 
 
         val m5 = Measure(0, 0, LocalDate.now(), 44.0, MeasurePart.Chest)
@@ -109,12 +109,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun hideNavigationBar() {
-        binding.navbar.isVisible = false
-        binding.dropShadow.isVisible = false
+        binding.navbar.visibility = View.GONE
+        binding.dropShadow.visibility = View.GONE
     }
 
     fun showNavigationBar() {
-        binding.navbar.isVisible = true
-        binding.dropShadow.isVisible = true
+        binding.navbar.visibility = View.VISIBLE
+        binding.dropShadow.visibility = View.VISIBLE
     }
 }

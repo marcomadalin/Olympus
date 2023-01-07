@@ -23,13 +23,13 @@ class WorkoutViewModel @Inject constructor(
     private val deleteWorkoutUseCase: DeleteWorkoutUseCase
     ) : ViewModel() {
 
-    val workouts = MutableLiveData<MutableMap<LocalDate, Workout>?>()
+    val workouts = MutableLiveData<MutableList<Workout>?>()
 
     val selectedDate = MutableLiveData(LocalDate.now())
 
     val selectedWorkout = MutableLiveData<Workout?>()
 
-    val editingRoutine =MutableLiveData(false)
+    val editingRoutine = MutableLiveData(false)
 
     fun getWorkout() {
         viewModelScope.launch {selectedWorkout.value = getWorkoutUseCase(selectedDate.value!!)}

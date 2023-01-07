@@ -6,16 +6,20 @@
         android:icon="@drawable/ic_baseline_history_24"
         android:title="@string/history" />
     <item
-        android:id="@+id/routine"
-        android:icon="@drawable/notes"
-        android:title="@string/workout" />
-    <item
         android:id="@+id/exercise"
         android:icon="@drawable/barbell"
         android:title="@string/exercise" />
     <item
+        android:id="@+id/routine"
+        android:icon="@drawable/notes"
+        android:title="@string/workout" />
+    <item
         android:id="@+id/profile"
-        android:icon="@drawable/ic_baseline_person_outline_24"
+        android:icon="@drawable/statistics"
         android:title="@string/profile" />
+    <item
+        android:id="@+id/measure"
+        android:icon="@drawable/ruler"
+        android:title="@string/measure" />
 
 </menu>

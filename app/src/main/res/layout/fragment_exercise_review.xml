@@ -8,52 +8,24 @@
     tools:context=".presentation.view.ExerciseReviewFragment">
 
 
-    <Button
-        android:id="@+id/ormButtonReview"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/button_layout"
-        android:minWidth="0dp"
-        android:minHeight="0dp"
-        android:paddingHorizontal="10dp"
-        android:paddingVertical="10dp"
-        android:text="1 RM"
-        android:textAllCaps="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
-
-    <Button
-        android:id="@+id/weightButtonReview"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/button_layout"
-        android:minWidth="0dp"
-        android:minHeight="0dp"
-        android:paddingHorizontal="10dp"
-        android:paddingVertical="10dp"
-        android:text="Weight"
-        android:textAllCaps="false"
+    <ImageButton
+        android:id="@+id/volumeButtonStat2"
+        android:layout_width="30dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="40dp"
+        android:background="@drawable/button_layout_2"
+        android:src="@drawable/weight2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
 
-    <Button
-        android:id="@+id/volumeButtonReview"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/button_layout"
-        android:minWidth="0dp"
-        android:minHeight="0dp"
-        android:paddingHorizontal="10dp"
-        android:paddingVertical="10dp"
-        android:text="Volume"
-        android:textAllCaps="false"
-        app:layout_constraintEnd_toStartOf="@+id/ormButtonReview"
-        app:layout_constraintStart_toEndOf="@+id/weightButtonReview"
+    <ImageButton
+        android:id="@+id/prButtonStat"
+        android:layout_width="30dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/button_layout_2"
+        android:src="@drawable/trophy"
+        app:layout_constraintStart_toEndOf="@+id/volumeButtonStat2"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
 
     <TextView
@@ -182,15 +154,28 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout3"
         android:layout_width="fill_parent"
-        android:layout_height="180dp"
+        android:layout_height="300dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
-        android:background="@color/layout"
+        android:background="@drawable/layout_gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView10">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/chartExercise"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/layout_gray"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -198,24 +183,27 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/layout_gray"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/volumeButtonReview">
+        app:layout_constraintTop_toBottomOf="@+id/volumeButtonStat2"
+        app:layout_constraintVertical_bias="0.0">
 
         <TextView
             android:id="@+id/textView18"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp"
-            android:text="Weight:"
+            android:layout_marginTop="20dp"
+            android:text="Max weight lifted:"
             android:textColor="@color/text"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView11" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView19"
@@ -237,7 +225,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="15dp"
-            android:text="Volume (Set):"
+            android:text="Best volume (Set):"
             android:textColor="@color/text"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -249,7 +237,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="15dp"
-            android:text="Volume (Weight):"
+            android:text="Best volume (Weight):"
             android:textColor="@color/text"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -266,16 +254,6 @@
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/volumeSetReview" />
-
-        <ImageView
-            android:id="@+id/imageView11"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/trophy_gold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/volumeSetReview"
@@ -305,7 +283,7 @@
             android:id="@+id/weighReview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             android:text="Type:"
             android:textColor="@color/black"
@@ -313,16 +291,5 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/textView17"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
-            android:text="PR's"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            app:layout_constraintStart_toEndOf="@+id/imageView11"
-            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

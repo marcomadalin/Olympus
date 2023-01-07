@@ -124,6 +124,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/button_layout"
         android:minWidth="0dp"
         android:minHeight="0dp"
@@ -131,9 +132,11 @@
         android:paddingVertical="10dp"
         android:text="Select"
         android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/textView10"
-        app:layout_constraintTop_toBottomOf="@+id/equipmentSelectEdit" />
+        app:layout_constraintTop_toBottomOf="@+id/equipmentSelectEdit"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

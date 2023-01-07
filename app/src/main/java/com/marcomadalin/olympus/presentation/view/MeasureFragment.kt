@@ -40,11 +40,6 @@ class MeasureFragment : Fragment() {
 
         navController = findNavController()
 
-        binding.backButtonMeasure.setOnClickListener {
-            navController.navigate(R.id.action_measureFragment_to_profile)
-            (activity as MainActivity).showNavigationBar()
-        }
-
         binding.recylerMeasure.layoutManager = GridLayoutManager(this.context, 2)
         adapter = MeasureSelectAdapter(::onMeasureClick)
 
@@ -59,6 +54,7 @@ class MeasureFragment : Fragment() {
     }
 
     private fun onMeasureClick(measurePosition: Int) {
+        (activity as MainActivity).hideNavigationBar()
         measureViewModel.selectedPart.value = measureViewModel.lastMeasures.value!![measurePosition].first.part
         navController.navigate(R.id.action_measureFragment_to_measureReviewFragment)
     }

@@ -23,7 +23,9 @@
         android:id="@+id/calendarView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
         android:background="@drawable/calendar"
         android:dateTextAppearance="@style/CalendarDays"
         android:theme="@style/CalendarMonth"
@@ -34,17 +36,17 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/workoutSummary"
-        android:layout_width="347dp"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="30dp"
+        android:layout_marginEnd="30dp"
         android:background="@drawable/layout_gray"
         android:clickable="true"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calendarView"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@+id/calendarView">
 
         <TextView
             android:id="@+id/workoutTitle"
@@ -93,7 +95,7 @@
                 android:src="@drawable/weight" />
 
             <TextView
-                android:id="@+id/workoutVolume"
+                android:id="@+id/workoutVolumeText"
                 android:layout_width="wrap_content"
                 android:layout_height="19dp"
                 android:layout_weight="3"

@@ -2,7 +2,8 @@
     <string name="app_name">Olympus</string>
     <string name="workout">workout</string>
     <string name="history">history</string>
-    <string name="profile">profile</string>
+    <string name="profile">statistics</string>
+    <string name="measure">measures</string>
     <string name="exercise">exercise</string>
     <string name="exercise_fragment">Exercise fragment</string>
     <string name="textview">TextView</string>

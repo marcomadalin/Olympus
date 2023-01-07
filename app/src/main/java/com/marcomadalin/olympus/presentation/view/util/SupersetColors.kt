@@ -1,6 +1,24 @@
 package com.marcomadalin.olympus.presentation.view.util
 
 object SupersetColors {
-    val colors : List<String> = listOf("#460bbc", "#e28258", "#46dbd6", "#d13b1d", "#e447ef",
-        "9b2047", "#edc255","#40ce68")
+    val colors : List<String> = listOf("#f44336",
+    "#e81e63",
+    "#9c27b0",
+    "#673ab7",
+    "#3f51b5",
+    "#2196f3",
+    "#03a9f4",
+    "#00bcd4",
+    "#009688",
+    "#4caf50",
+    "#8bc34a",
+    "#cddc39",
+    "#ffeb3b",
+    "#ffc107",
+    "#ff9800",
+    "#ff5722",
+    "#795548",
+    "#9e9e9e",
+    "#607d8b",
+    "#000000")
 }

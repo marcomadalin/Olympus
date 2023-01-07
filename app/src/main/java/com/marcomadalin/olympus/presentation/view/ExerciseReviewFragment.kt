@@ -94,10 +94,8 @@ class ExerciseReviewFragment : Fragment() {
         binding.volumeSetReview.text = exerciseDataViewModel.selectedExercise.value!!.bestSetWeight.toString() + " Kg x " + exerciseDataViewModel.selectedExercise.value!!.bestSetReps
         binding.volumeWeightReview.text = (exerciseDataViewModel.selectedExercise.value!!.bestSetWeight * exerciseDataViewModel.selectedExercise.value!!.bestSetReps).toString() + " Kg"
 
-        binding.ormButtonReview.setOnClickListener{}
-        binding.volumeButtonReview.setOnClickListener{}
-        binding.weightButtonReview.setOnClickListener{}
-    }
+        binding.volumeButtonStat2.setOnClickListener{}
+        binding.prButtonStat.setOnClickListener{} }
 
 
     private fun updateFavorite() {
