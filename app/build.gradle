@@ -90,8 +90,5 @@ dependencies {
     implementation 'com.github.xabaras:RecyclerViewSwipeDecorator:1.4'
 
     //Charts
-    implementation 'com.github.AnyChart:AnyChart-Android:1.1.2'
-
-    //Charts
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 }
