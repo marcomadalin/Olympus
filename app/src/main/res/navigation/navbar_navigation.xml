@@ -27,6 +27,9 @@
         <action
             android:id="@+id/action_history_to_liveWorkoutFragment"
             app:destination="@id/liveWorkoutFragment" />
+        <action
+            android:id="@+id/action_history_to_workoutLiveFinished"
+            app:destination="@id/workoutLiveFinished" />
     </fragment>
     <fragment
         android:id="@+id/exercise"
@@ -255,5 +258,23 @@
         <action
             android:id="@+id/action_liveWorkoutFragment_to_measure"
             app:destination="@id/measure" />
+        <action
+            android:id="@+id/action_liveWorkoutFragment_to_workoutLiveFinished"
+            app:destination="@id/workoutLiveFinished" />
+    </fragment>
+    <fragment
+        android:id="@+id/workoutLiveFinished"
+        android:name="com.marcomadalin.olympus.WorkoutLiveFinished"
+        android:label="fragment_workout_live_finished"
+        tools:layout="@layout/fragment_workout_live_finished" >
+        <action
+            android:id="@+id/action_workoutLiveFinished_to_liveWorkoutFragment"
+            app:destination="@id/liveWorkoutFragment" />
+        <action
+            android:id="@+id/action_workoutLiveFinished_to_liveWorkoutFragment2"
+            app:destination="@id/liveWorkoutFragment" />
+        <action
+            android:id="@+id/action_workoutLiveFinished_to_history"
+            app:destination="@id/history" />
     </fragment>
 </navigation>

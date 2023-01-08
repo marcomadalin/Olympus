@@ -5,51 +5,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".presentation.view.HistoryFragment">
+    tools:context=".presentation.view.WorkoutLiveFinished">
 
-    <TextView
-        android:id="@+id/workoutEmpty"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
-        android:text="@string/no_workouts_registered_this_day"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calendarView" />
-
-    <CalendarView
-        android:id="@+id/calendarView"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/workoutSummaryFinish"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
-        android:background="@drawable/calendar"
-        android:dateTextAppearance="@style/CalendarDays"
-        android:theme="@style/CalendarMonth"
-        android:weekDayTextAppearance="@style/CalendarWeeks"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/workoutSummary"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="30dp"
         android:background="@drawable/layout_gray"
         android:clickable="true"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calendarView">
+        app:layout_constraintTop_toBottomOf="@+id/textView8">
 
         <TextView
-            android:id="@+id/workoutTitle"
+            android:id="@+id/workoutTitle2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -69,7 +42,7 @@
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/workoutTitle">
+            app:layout_constraintTop_toBottomOf="@+id/workoutTitle2">
 
             <ImageView
                 android:id="@+id/imageView"
@@ -144,7 +117,7 @@
             app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/summaryRecycler"
+            android:id="@+id/summaryRecyclerFinish"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -158,4 +131,49 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <ImageButton
+        android:id="@+id/close2"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/background"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/x2" />
+
+    <ImageView
+        android:id="@+id/imageView11"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/laurel_wreath"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/close2" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="Congratualtions"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView11" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="This is your workout number 100 !"
+        android:textColor="@color/text"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
 </androidx.constraintlayout.widget.ConstraintLayout>

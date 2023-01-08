@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/setEditLayout"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:background="@color/background"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+    <Button
+        android:id="@+id/setTypeEdit3"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center|center_horizontal|center_vertical"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="5dp"
+        android:layout_weight="1"
+        android:background="@null"
+        android:gravity="center|center_horizontal|center_vertical"
+        android:text="W"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/prevWeight3"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center|center_horizontal|center_vertical"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_weight="1"
+        android:background="@null"
+        android:gravity="center|center_horizontal|center_vertical"
+        android:text="145.25 kg x 10 RIR 3"
+        android:textAllCaps="false"
+        android:textColor="@color/text"
+        android:textSize="12sp"
+        android:textStyle="normal" />
+
+    <EditText
+        android:id="@+id/weightNumber3"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_weight="1"
+        android:background="@drawable/layout_gray_set"
+        android:ems="10"
+        android:gravity="center|center_horizontal|center_vertical"
+        android:inputType="number"
+        android:minHeight="48dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:textAlignment="center"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/repsNumber3"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center|center_vertical"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_weight="1"
+        android:background="@drawable/layout_gray_set"
+        android:ems="10"
+        android:gravity="center|center_horizontal|center_vertical"
+        android:inputType="number"
+        android:minHeight="48dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:textAlignment="center"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/rirNumber3"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_weight="1"
+        android:background="@drawable/layout_gray_set"
+        android:ems="10"
+        android:gravity="center|center_horizontal|center_vertical"
+        android:inputType="number"
+        android:minHeight="48dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:textAlignment="center"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/rirNumber4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="25dp"
+        android:layout_weight="1"
+        android:background="@drawable/check_box"
+        android:ems="10"
+        android:gravity="center|center_horizontal|center_vertical"
+        android:inputType="number"
+        android:minHeight="48dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:textAlignment="center"
+        android:textSize="14sp" />
+
+</LinearLayout>

@@ -8,7 +8,6 @@ import androidx.appcompat.widget.TooltipCompat
 import androidx.core.view.forEach
 import androidx.navigation.NavController
 import androidx.navigation.Navigation.findNavController
-import androidx.navigation.ui.setupWithNavController
 import com.marcomadalin.olympus.R
 import com.marcomadalin.olympus.databinding.ActivityMainBinding
 import com.marcomadalin.olympus.domain.model.ExerciseData
@@ -55,8 +54,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-
-        binding.navbar.setupWithNavController(findNavController(binding.fragView))
         navController = findNavController(binding.fragView)
 
 
@@ -73,10 +70,14 @@ class MainActivity : AppCompatActivity() {
                 R.id.routine -> {
                     if (workoutViewModel.liveWorkout.value != null) navController.navigate(R.id.liveWorkoutFragment)
                     else navController.navigate(R.id.routine)
-                    true
                     }
-                else -> {true}
+                R.id.history -> navController.navigate(R.id.history)
+                R.id.exercise -> navController.navigate(R.id.exercise)
+                R.id.measure -> navController.navigate(R.id.measure)
+                R.id.profile -> navController.navigate(R.id.profile)
+                else -> {false}
             }
+            true
         }
 
         val muscleDivision = Muscle.values().map{ Pair(it, 0) }.toList().associate { Pair(it.first, it.second) }.toMutableMap()
