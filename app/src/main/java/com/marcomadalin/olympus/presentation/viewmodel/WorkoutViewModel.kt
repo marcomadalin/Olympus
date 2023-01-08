@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.marcomadalin.olympus.domain.cases.DeleteWorkoutUseCase
 import com.marcomadalin.olympus.domain.cases.DeleteWorkoutsUseCase
+import com.marcomadalin.olympus.domain.cases.GetLiveWorkoutUseCase
 import com.marcomadalin.olympus.domain.cases.GetWorkoutUseCase
 import com.marcomadalin.olympus.domain.cases.GetWorkoutsUseCase
 import com.marcomadalin.olympus.domain.cases.SaveWorkoutUseCase
@@ -17,6 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class WorkoutViewModel @Inject constructor(
     private val getWorkoutUseCase: GetWorkoutUseCase,
+    private val getLiveWorkoutUseCase: GetLiveWorkoutUseCase,
     private val getWorkoutsUseCase: GetWorkoutsUseCase,
     private val saveWorkoutUseCase: SaveWorkoutUseCase,
     private val deleteWorkoutsUseCase: DeleteWorkoutsUseCase,
@@ -31,8 +33,14 @@ class WorkoutViewModel @Inject constructor(
 
     val editingRoutine = MutableLiveData(false)
 
+    val liveWorkout = MutableLiveData<Workout?>()
+
     fun getWorkout() {
         viewModelScope.launch {selectedWorkout.value = getWorkoutUseCase(selectedDate.value!!)}
+    }
+
+    fun getLiveWorkout() {
+        viewModelScope.launch {liveWorkout.value = getLiveWorkoutUseCase()}
     }
 
     fun getWorkouts() {
@@ -43,19 +51,23 @@ class WorkoutViewModel @Inject constructor(
         viewModelScope.launch {
             saveWorkoutUseCase(workout)
             selectedWorkout.value = getWorkoutUseCase(selectedDate.value!!)
+            workouts.value = getWorkoutsUseCase()
+        }
+    }
+
+    fun saveLiveWorkout(workout: Workout) {
+        viewModelScope.launch {
+            saveWorkoutUseCase(workout)
+            liveWorkout.value = getLiveWorkoutUseCase()
+            workouts.value = getWorkoutsUseCase()
         }
     }
 
     fun deleteWorkout(workout: Workout) {
         viewModelScope.launch {
             deleteWorkoutUseCase(workout)
-            selectedWorkout.value = getWorkoutUseCase(selectedDate.value!!)
+            workouts.value = getWorkoutsUseCase()
         }
     }
 
-    fun deleteWorkouts() {
-        viewModelScope.launch {
-            deleteWorkoutsUseCase()
-        }
-    }
 }

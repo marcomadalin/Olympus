@@ -19,6 +19,10 @@ class WorkoutRepository @Inject constructor(private val workoutDAO: WorkoutDAO) 
         return workoutDAO.getWorkout(id).toDomain()
     }
 
+    suspend fun getLiveWorkout() : Workout? {
+        return workoutDAO.getLiveWorkout(true)?.toDomain()
+    }
+
     suspend fun getWorkout(date: LocalDate) : Workout? {
         return workoutDAO.getWorkout(date.toString())?.toDomain()
     }

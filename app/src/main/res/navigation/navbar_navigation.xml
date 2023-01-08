@@ -24,6 +24,9 @@
         <action
             android:id="@+id/action_history_to_measureFragment"
             app:destination="@id/measure" />
+        <action
+            android:id="@+id/action_history_to_liveWorkoutFragment"
+            app:destination="@id/liveWorkoutFragment" />
     </fragment>
     <fragment
         android:id="@+id/exercise"
@@ -48,6 +51,12 @@
         <action
             android:id="@+id/action_exercise_to_measureFragment"
             app:destination="@id/measure" />
+        <action
+            android:id="@+id/action_exercise_to_liveWorkoutFragment"
+            app:destination="@id/liveWorkoutFragment" />
+        <action
+            android:id="@+id/action_exercise_to_liveWorkoutFragment2"
+            app:destination="@id/liveWorkoutFragment" />
     </fragment>
     <fragment
         android:id="@+id/routine"
@@ -87,6 +96,9 @@
         <action
             android:id="@+id/action_profile_to_measureFragment"
             app:destination="@id/measure" />
+        <action
+            android:id="@+id/action_profile_to_liveWorkoutFragment"
+            app:destination="@id/liveWorkoutFragment" />
     </fragment>
     <fragment
         android:id="@+id/workoutReview"
@@ -177,6 +189,9 @@
         <action
             android:id="@+id/action_measureFragment_to_routine"
             app:destination="@id/routine" />
+        <action
+            android:id="@+id/action_measure_to_liveWorkoutFragment"
+            app:destination="@id/liveWorkoutFragment" />
     </fragment>
     <fragment
         android:id="@+id/selectExerciseFragment"
@@ -224,6 +239,21 @@
         tools:layout="@layout/fragment_measure_review" >
         <action
             android:id="@+id/action_measureReviewFragment_to_measureFragment"
+            app:destination="@id/measure" />
+    </fragment>
+    <fragment
+        android:id="@+id/liveWorkoutFragment"
+        android:name="com.marcomadalin.olympus.presentation.view.LiveWorkoutFragment"
+        android:label="fragment_live_workout"
+        tools:layout="@layout/fragment_live_workout" >
+        <action
+            android:id="@+id/action_liveWorkoutFragment_to_history"
+            app:destination="@id/history" />
+        <action
+            android:id="@+id/action_liveWorkoutFragment_to_profile"
+            app:destination="@id/profile" />
+        <action
+            android:id="@+id/action_liveWorkoutFragment_to_measure"
             app:destination="@id/measure" />
     </fragment>
 </navigation>

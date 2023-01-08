@@ -6,8 +6,10 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.TooltipCompat
 import androidx.core.view.forEach
+import androidx.navigation.NavController
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.marcomadalin.olympus.R
 import com.marcomadalin.olympus.databinding.ActivityMainBinding
 import com.marcomadalin.olympus.domain.model.ExerciseData
 import com.marcomadalin.olympus.domain.model.Measure
@@ -43,6 +45,8 @@ class MainActivity : AppCompatActivity() {
 
     private val measureViewModel : MeasuresViewModel by viewModels()
 
+    private lateinit var navController: NavController
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -51,13 +55,27 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+
         binding.navbar.setupWithNavController(findNavController(binding.fragView))
+        navController = findNavController(binding.fragView)
+
 
         binding.navbar.menu.forEach { item ->
             item.actionView?.setOnLongClickListener { view ->
                 view.performClick()
                 TooltipCompat.setTooltipText(view, null)
                 true
+            }
+        }
+
+        binding.navbar.setOnItemSelectedListener {
+            when (it.itemId) {
+                R.id.routine -> {
+                    if (workoutViewModel.liveWorkout.value != null) navController.navigate(R.id.liveWorkoutFragment)
+                    else navController.navigate(R.id.routine)
+                    true
+                    }
+                else -> {true}
             }
         }
 
@@ -71,6 +89,11 @@ class MainActivity : AppCompatActivity() {
             Duration.ofSeconds(2350), LocalDate.now(),
             mutableListOf(),
             mutableListOf(), 0)
+
+        val workout2 = Workout(0, 1, "Legs", "Pretty chill workout",
+            Duration.ofSeconds(2350), LocalDate.now(),
+            mutableListOf(),
+            mutableListOf(), 0, true)
 
         val routine = Routine(0, 1, "Legs", "Pretty chill workout",
             mutableListOf(),
@@ -103,9 +126,11 @@ class MainActivity : AppCompatActivity() {
         measureViewModel.saveAllMeasures(measures)
 
         exerciseDataViewModel.saveAllExercisesData(exercises)
+        workoutViewModel.saveLiveWorkout(workout2)
         workoutViewModel.saveWorkout(workout)
         routineViewModel.saveRoutine(routine)
         workoutViewModel.getWorkouts()
+        workoutViewModel.getLiveWorkout()
     }
 
     fun hideNavigationBar() {

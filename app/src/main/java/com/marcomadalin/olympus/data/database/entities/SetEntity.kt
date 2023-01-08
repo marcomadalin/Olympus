@@ -18,6 +18,7 @@ data class SetEntity(
     var lastRir : Int = 0,
     var type : String = "",
     var setNumber : Int = 0,
+    var completed : Boolean = false,
 )
 fun Set.toData() = SetEntity(
     id,
@@ -29,5 +30,6 @@ fun Set.toData() = SetEntity(
     lastReps,
     lastRir,
     type.toString(),
-    setNumber
+    setNumber,
+    completed,
 )

@@ -17,7 +17,8 @@ data class WorkoutEntity (
     var date : String = "",
     @TypeConverters(ListSetConverters::class)
     override var supersets : List<Set<Long>> = emptyList(),
-    var routineId : Long = -1
+    var routineId : Long = -1,
+    var isLive : Boolean = true,
 ) : RoutineEntity()
 fun Workout.toData() = WorkoutEntity(
     id,
@@ -27,5 +28,6 @@ fun Workout.toData() = WorkoutEntity(
     length.seconds,
     date.toString(),
     supersets,
-    routineId
+    routineId,
+    isLive
 )

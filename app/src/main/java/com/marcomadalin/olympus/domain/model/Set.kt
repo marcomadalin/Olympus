@@ -29,5 +29,5 @@ fun SetEntity.toDomain() = Set(
     lastRir,
     SetType.valueOf(type),
     setNumber,
-    true
+    completed,
 )

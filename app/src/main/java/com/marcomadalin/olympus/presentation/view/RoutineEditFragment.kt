@@ -126,7 +126,8 @@ class RoutineEditFragment : Fragment() {
 
     override fun onStop() {
         super.onStop()
-        routineViewModel.saveRoutine(routineViewModel.selectedRoutine.value!!)
+        if (routineViewModel.newRoutine.value!!) routineViewModel.deleteRoutine(routineViewModel.selectedRoutine.value!!)
+        else routineViewModel.saveRoutine(routineViewModel.selectedRoutine.value!!)
     }
 
     private fun onItemClick(itemId: Int, exercisePosition : Int) : Boolean {
