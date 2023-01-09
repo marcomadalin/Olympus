@@ -87,12 +87,12 @@ class MainActivity : AppCompatActivity() {
         userViewModel.saveUser(User(0, "Marco", 0, 51123.0, 123123, Duration.ofSeconds(1231231231), muscleDivision))
 
         val workout = Workout(0, 1, "Legs", "Pretty chill workout",
-            Duration.ofSeconds(2350), LocalDate.now(),
+            Duration.ofMillis(2350), LocalDate.now(),
             mutableListOf(),
             mutableListOf(), 0)
 
         val workout2 = Workout(0, 1, "Legs", "Pretty chill workout",
-            Duration.ofSeconds(2350), LocalDate.now(),
+            Duration.ofMillis(0), LocalDate.now(),
             mutableListOf(),
             mutableListOf(), 0, true)
 
@@ -125,12 +125,9 @@ class MainActivity : AppCompatActivity() {
         val measures = listOf(m1,m2, m5,m6,m7, m8, m9, m10, m11, m12)
 
         measureViewModel.saveAllMeasures(measures)
-
         exerciseDataViewModel.saveAllExercisesData(exercises)
-        workoutViewModel.saveLiveWorkout(workout2)
-        workoutViewModel.saveWorkout(workout)
-        routineViewModel.saveRoutine(routine)
         workoutViewModel.getWorkouts()
+        workoutViewModel.getWorkout()
         workoutViewModel.getLiveWorkout()
     }
 

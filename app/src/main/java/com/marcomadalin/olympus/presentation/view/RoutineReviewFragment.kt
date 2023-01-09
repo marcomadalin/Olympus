@@ -55,9 +55,11 @@ class RoutineReviewFragment : Fragment() {
         binding.exerciseRoutineRecycler.adapter = adapter
         routineViewModel.selectedRoutine.observe(viewLifecycleOwner) {updateRoutine(it!!)}
 
+        binding.startWorkoutButton.isEnabled = workoutViewModel.liveWorkout.value == null
         binding.startWorkoutButton.setOnClickListener{
             //TODO start workout
         }
+        workoutViewModel.getLiveWorkout()
     }
 
     private fun popupMenu() {

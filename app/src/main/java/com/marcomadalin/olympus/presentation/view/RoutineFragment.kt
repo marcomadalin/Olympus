@@ -13,8 +13,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.marcomadalin.olympus.R
 import com.marcomadalin.olympus.databinding.FragmentRoutineBinding
 import com.marcomadalin.olympus.domain.model.Routine
+import com.marcomadalin.olympus.domain.model.Workout
 import com.marcomadalin.olympus.presentation.view.recyclers.RoutineAdapter
 import com.marcomadalin.olympus.presentation.viewmodel.RoutineViewModel
+import com.marcomadalin.olympus.presentation.viewmodel.WorkoutViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -24,6 +26,7 @@ class RoutineFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val routineViewModel: RoutineViewModel by activityViewModels()
+    private val workoutViewModel: WorkoutViewModel by activityViewModels()
 
     private lateinit var adapter : RoutineAdapter
 
@@ -53,6 +56,12 @@ class RoutineFragment : Fragment() {
         adapter = RoutineAdapter(::onRoutineClick)
         binding.routineRecycler.adapter = adapter
         binding.noExercise2.visibility = View.VISIBLE
+
+        binding.startEmpty.setOnClickListener {
+            workoutViewModel.liveWorkout.value = Workout(isLive = true)
+            workoutViewModel.saveLiveWorkout(workoutViewModel.liveWorkout.value!!)
+            navController.navigate(R.id.liveWorkoutFragment)
+        }
 
         routineViewModel.routines.observe(viewLifecycleOwner) {
             adapter.routines = it!!

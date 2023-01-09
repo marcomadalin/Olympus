@@ -33,7 +33,11 @@ class WorkoutViewModel @Inject constructor(
 
     val editingRoutine = MutableLiveData(false)
 
+    val editingLive = MutableLiveData(false)
+
     val liveWorkout = MutableLiveData<Workout?>()
+
+    val chronoValue = MutableLiveData<Long?>(null)
 
     fun getWorkout() {
         viewModelScope.launch {selectedWorkout.value = getWorkoutUseCase(selectedDate.value!!)}
@@ -51,6 +55,7 @@ class WorkoutViewModel @Inject constructor(
         viewModelScope.launch {
             saveWorkoutUseCase(workout)
             selectedWorkout.value = getWorkoutUseCase(selectedDate.value!!)
+            liveWorkout.value = getLiveWorkoutUseCase()
             workouts.value = getWorkoutsUseCase()
         }
     }
@@ -59,6 +64,7 @@ class WorkoutViewModel @Inject constructor(
         viewModelScope.launch {
             saveWorkoutUseCase(workout)
             liveWorkout.value = getLiveWorkoutUseCase()
+            selectedWorkout.value = getWorkoutUseCase(selectedDate.value!!)
             workouts.value = getWorkoutsUseCase()
         }
     }

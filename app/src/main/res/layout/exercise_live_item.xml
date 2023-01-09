@@ -32,17 +32,19 @@
         android:id="@+id/exerciseName7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="24dp"
         android:text="Exercise name"
         android:textColor="@color/black"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="90dp" />
+        app:layout_constraintStart_toEndOf="@+id/imageView14"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/exerciseNoteEdit4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/layout_gray"
         android:ems="10"
@@ -54,18 +56,19 @@
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="80dp" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView14" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="130dp">
+        app:layout_constraintTop_toBottomOf="@+id/exerciseNoteEdit4">
 
         <TextView
             android:id="@+id/set"

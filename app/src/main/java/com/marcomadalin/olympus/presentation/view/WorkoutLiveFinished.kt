@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import com.marcomadalin.olympus.R
 import com.marcomadalin.olympus.databinding.FragmentWorkoutLiveFinishedBinding
 import com.marcomadalin.olympus.presentation.view.recyclers.WorkoutSummaryAdapter
 import com.marcomadalin.olympus.presentation.viewmodel.WorkoutViewModel
@@ -31,5 +32,11 @@ class WorkoutLiveFinished : Fragment() {
     override fun onStart() {
         super.onStart()
         navController = findNavController()
+
+        binding.close2.setOnClickListener {
+            (activity as MainActivity).showNavigationBar()
+            workoutViewModel.liveWorkout.value = null
+            navController.navigate(R.id.routine)
+        }
     }
 }

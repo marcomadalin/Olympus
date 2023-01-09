@@ -56,9 +56,16 @@ class WorkoutSupersetFragment : Fragment() {
             binding.summaryTitle4.text = routineViewModel.selectedRoutine.value!!.name
         }
         else {
-            adapter = ExerciseSupersetAdapter(workoutViewModel.selectedWorkout.value!!.exercises, ::selectSet)
-            adapter.supersets = workoutViewModel.selectedWorkout.value!!.supersets
-            binding.summaryTitle4.text = workoutViewModel.selectedWorkout.value!!.name
+            if (workoutViewModel.editingLive.value!!) {
+                adapter = ExerciseSupersetAdapter(workoutViewModel.liveWorkout.value!!.exercises, ::selectSet)
+                adapter.supersets = workoutViewModel.liveWorkout.value!!.supersets
+                binding.summaryTitle4.text = workoutViewModel.liveWorkout.value!!.name
+            }
+            else {
+                adapter = ExerciseSupersetAdapter(workoutViewModel.selectedWorkout.value!!.exercises, ::selectSet)
+                adapter.supersets = workoutViewModel.selectedWorkout.value!!.supersets
+                binding.summaryTitle4.text = workoutViewModel.selectedWorkout.value!!.name
+            }
         }
         binding.supersetRecycler.adapter = adapter
         binding.supersetRecycler.addItemDecoration(DividerItemDecoration(binding.supersetRecycler.context, DividerItemDecoration.VERTICAL))
@@ -69,7 +76,10 @@ class WorkoutSupersetFragment : Fragment() {
                 changesDone = true
 
                 val workout = if (workoutViewModel.editingRoutine.value!!) routineViewModel.selectedRoutine.value!!
-                else workoutViewModel.selectedWorkout.value!!
+                else {
+                    if (workoutViewModel.editingLive.value!!) workoutViewModel.liveWorkout.value!!
+                    else workoutViewModel.selectedWorkout.value!!
+                }
 
                 if (superset.isNotEmpty()) {
                     val newSupersets : MutableList<MutableSet<Long>> = removeSingleSupersets(workout, superset)
@@ -87,7 +97,10 @@ class WorkoutSupersetFragment : Fragment() {
                 binding.imageButton3.isEnabled = false
 
                 adapter.supersets = if (workoutViewModel.editingRoutine.value!!) routineViewModel.selectedRoutine.value!!.supersets
-                else workoutViewModel.selectedWorkout.value!!.supersets
+                else {
+                    if (workoutViewModel.editingLive.value!!) workoutViewModel.liveWorkout.value!!.supersets
+                    else workoutViewModel.selectedWorkout.value!!.supersets
+                }
 
                 adapter.selected = false
                 adapter.added = false
@@ -100,7 +113,10 @@ class WorkoutSupersetFragment : Fragment() {
         super.onStop()
         if (changesDone) {
             if (workoutViewModel.editingRoutine.value!!) routineViewModel.saveRoutine(routineViewModel.selectedRoutine.value!!)
-            else workoutViewModel.saveWorkout(workoutViewModel.selectedWorkout.value!!)
+            else {
+                if (workoutViewModel.editingLive.value!!) workoutViewModel.saveLiveWorkout(workoutViewModel.liveWorkout.value!!)
+                else workoutViewModel.saveWorkout(workoutViewModel.selectedWorkout.value!!)
+            }
         }
     }
 
@@ -123,10 +139,16 @@ class WorkoutSupersetFragment : Fragment() {
 
     private fun selectSet(exercisePos : Int) {
         val supersets = if (workoutViewModel.editingRoutine.value!!) routineViewModel.selectedRoutine.value!!.supersets
-        else workoutViewModel.selectedWorkout.value!!.supersets
+        else  {
+            if (workoutViewModel.editingLive.value!!) workoutViewModel.liveWorkout.value!!.supersets
+            else workoutViewModel.selectedWorkout.value!!.supersets
+        }
 
         val exerciseId = if (workoutViewModel.editingRoutine.value!!) routineViewModel.selectedRoutine.value!!.exercises[exercisePos].id
-        else workoutViewModel.selectedWorkout.value!!.exercises[exercisePos].id
+        else {
+            if (workoutViewModel.editingLive.value!!) workoutViewModel.liveWorkout.value!!.exercises[exercisePos].id
+            else workoutViewModel.selectedWorkout.value!!.exercises[exercisePos].id
+        }
 
         if (superset.isEmpty() && checkSameSuperset(exerciseId, removedExercises, supersets, false)) {
             if (removedExercises.contains(exerciseId)) {

@@ -120,11 +120,13 @@ class WorkoutEditFragment : Fragment() {
         return when (itemId) {
             R.id.order -> {
                 workoutViewModel.editingRoutine.value = false
+                workoutViewModel.editingLive.value = false
                 navController.navigate(R.id.workoutReorderFragment)
                 true
             }
             R.id.superset -> {
                 workoutViewModel.editingRoutine.value = false
+                workoutViewModel.editingLive.value = false
                 navController.navigate(R.id.workoutSupersetFragment)
                 true
             }

@@ -11,8 +11,8 @@ import com.marcomadalin.olympus.data.database.entities.WorkoutEntity
 
 @Dao
 interface WorkoutDAO {
-    @Query("SELECT * FROM Workouts ORDER BY date ASC")
-    suspend fun getAllWorkouts() : List<WorkoutEntity>
+    @Query("SELECT * FROM Workouts WHERE isLive = :isLive ORDER BY date ASC")
+    suspend fun getAllWorkouts(isLive: Boolean = false) : List<WorkoutEntity>
 
     @Query("SELECT * FROM Workouts WHERE id = :id")
     suspend fun getWorkout(id: Long) : WorkoutEntity
@@ -20,8 +20,8 @@ interface WorkoutDAO {
     @Query("SELECT * FROM Workouts WHERE isLive = :isLive")
     suspend fun getLiveWorkout(isLive : Boolean) : WorkoutEntity?
 
-    @Query("SELECT * FROM Workouts WHERE date like :date")
-    suspend fun getWorkout(date: String): WorkoutEntity?
+    @Query("SELECT * FROM Workouts WHERE date like :date and isLive = :isLive")
+    suspend fun getWorkout(date: String, isLive: Boolean = false): WorkoutEntity?
 
     @Query("SELECT * FROM Workouts JOIN Exercises On Workouts.id = Exercises.workoutId " +
             "WHERE Workouts.id = :id ORDER BY Exercises.exerciseNumber")

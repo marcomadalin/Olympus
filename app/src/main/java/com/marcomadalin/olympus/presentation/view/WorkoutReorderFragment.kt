@@ -42,7 +42,10 @@ class WorkoutReorderFragment : Fragment() {
             val endPosition = target.absoluteAdapterPosition
 
             val workout = if (workoutViewModel.editingRoutine.value!!) routineViewModel.selectedRoutine.value!!
-            else workoutViewModel.selectedWorkout.value!!
+            else {
+                if (workoutViewModel.editingLive.value!!) workoutViewModel.liveWorkout.value!!
+                else workoutViewModel.selectedWorkout.value!!
+            }
 
             workout.exercises[startPosition].exerciseNumber = endPosition
             workout.exercises[endPosition].exerciseNumber = startPosition
@@ -72,8 +75,14 @@ class WorkoutReorderFragment : Fragment() {
             binding.summaryTitle3.text = routineViewModel.selectedRoutine.value!!.name
         }
         else {
-            adapter = ExerciseReorderAdapter(workoutViewModel.selectedWorkout.value!!.exercises)
-            binding.summaryTitle3.text = workoutViewModel.selectedWorkout.value!!.name
+            if (workoutViewModel.editingLive.value!!) {
+                adapter = ExerciseReorderAdapter(workoutViewModel.liveWorkout.value!!.exercises)
+                binding.summaryTitle3.text = workoutViewModel.liveWorkout.value!!.name
+            }
+            else {
+                adapter = ExerciseReorderAdapter(workoutViewModel.selectedWorkout.value!!.exercises)
+                binding.summaryTitle3.text = workoutViewModel.selectedWorkout.value!!.name
+            }
         }
 
         binding.reorderrecycler.adapter = adapter
@@ -86,7 +95,10 @@ class WorkoutReorderFragment : Fragment() {
         super.onStop()
         if (changesDone) {
             if (workoutViewModel.editingRoutine.value!!) routineViewModel.saveRoutine(routineViewModel.selectedRoutine.value!!)
-            else workoutViewModel.saveWorkout(workoutViewModel.selectedWorkout.value!!)
+            else {
+                if (workoutViewModel.editingLive.value!!) workoutViewModel.saveLiveWorkout(workoutViewModel.liveWorkout.value!!)
+                else workoutViewModel.saveWorkout(workoutViewModel.selectedWorkout.value!!)
+            }
         }
     }
 

@@ -7,10 +7,10 @@ import java.time.LocalDate
 data class Workout (
     override var id : Long = 0,
     override var userId : Long = 0,
-    override var name : String = "",
+    override var name : String = "New workout",
     override var note : String = "",
     var length : Duration = Duration.ofSeconds(0),
-    var date : LocalDate = LocalDate.parse(""),
+    var date : LocalDate = LocalDate.now(),
     override var exercises : MutableList<Exercise> = mutableListOf(),
     override var supersets : MutableList<MutableSet<Long>> = mutableListOf(),
     var routineId : Long = -1,

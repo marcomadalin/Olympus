@@ -264,7 +264,7 @@
     </fragment>
     <fragment
         android:id="@+id/workoutLiveFinished"
-        android:name="com.marcomadalin.olympus.WorkoutLiveFinished"
+        android:name="com.marcomadalin.olympus.presentation.view.WorkoutLiveFinished"
         android:label="fragment_workout_live_finished"
         tools:layout="@layout/fragment_workout_live_finished" >
         <action
