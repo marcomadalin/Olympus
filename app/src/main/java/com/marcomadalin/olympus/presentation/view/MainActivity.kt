@@ -84,7 +84,7 @@ class MainActivity : AppCompatActivity() {
         muscleDivision[Muscle.Lats] = 55
         muscleDivision[Muscle.Hamstrings] = 22
         muscleDivision[Muscle.Chest] = 125
-        userViewModel.saveUser(User(0, "Marco", 0, 51123.0, 123123, Duration.ofSeconds(1231231231), muscleDivision))
+        userViewModel.saveUser(User(0, "User", 0, 51123.0, 123123, Duration.ofSeconds(1231231231), muscleDivision))
 
         val workout = Workout(0, 1, "Legs", "Pretty chill workout",
             Duration.ofMillis(2350), LocalDate.now(),
