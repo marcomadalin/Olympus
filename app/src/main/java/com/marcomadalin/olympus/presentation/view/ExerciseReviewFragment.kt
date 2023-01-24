@@ -22,6 +22,7 @@ import com.marcomadalin.olympus.databinding.FragmentExerciseReviewBinding
 import com.marcomadalin.olympus.presentation.viewmodel.ExerciseViewModel
 import com.marcomadalin.olympus.presentation.viewmodel.WorkoutViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.math.max
 import kotlin.math.roundToInt
 
 @AndroidEntryPoint
@@ -100,15 +101,6 @@ class ExerciseReviewFragment : Fragment() {
             exerciseDataViewModel.selectedExercise.value!!.primaryMuscle.toString()
                 .replace("_", " ")
 
-        binding.weighReview.text =
-            exerciseDataViewModel.selectedExercise.value!!.maxWeight.toString() + " Kg"
-        binding.ormReview.text =
-            exerciseDataViewModel.selectedExercise.value!!.orm.toString() + " Kg"
-        binding.volumeSetReview.text =
-            exerciseDataViewModel.selectedExercise.value!!.bestSetWeight.toString() + " Kg x " + exerciseDataViewModel.selectedExercise.value!!.bestSetReps
-        binding.volumeWeightReview.text =
-            (exerciseDataViewModel.selectedExercise.value!!.bestSetWeight * exerciseDataViewModel.selectedExercise.value!!.bestSetReps).toString() + " Kg"
-
         binding.volumeButtonStat2.setOnClickListener { updateChart() }
         binding.prButtonStat.setOnClickListener { updateChart(false) }
 
@@ -145,10 +137,24 @@ class ExerciseReviewFragment : Fragment() {
             lateinit var dataEntries : LineDataSet
             lateinit var dataEntries2 : LineDataSet
 
+            var maxWeight = 0.0
+            var maxVolReps = 0
+            var maxVolWeight = 0.0
+            var totalExercise = 0
+
+
             for (workout in values) {
                 for (exercise in workout.exercises) {
                     if (exercise.exerciseDataId == selectedExerciseId) {
+                        ++totalExercise
                         for (set in exercise.sets) {
+                            maxWeight = max(set.weight, maxWeight)
+
+                            if (set.reps * set.weight > maxVolReps * maxVolWeight) {
+                                maxVolReps = set.reps
+                                maxVolWeight = set.weight
+                            }
+
                             if (volumeSelected) {
                                 entriesVolume.add(
                                     Entry(
@@ -174,6 +180,13 @@ class ExerciseReviewFragment : Fragment() {
                     }
                 }
             }
+
+            binding.weighReview.text = maxWeight.toString() + " Kg"
+            binding.ormReview.text = ((((maxVolWeight / (1.0278 - 0.0278 * maxVolReps)) * 100.0).roundToInt() / 100.0)).toString() + " Kg"
+            binding.volumeSetReview.text = maxVolWeight.toString() + " Kg x " + maxVolReps
+            binding.volumeWeightReview.text = (maxVolWeight * maxVolReps).toString() + " Kg"
+            binding.performed.text = totalExercise.toString()
+
 
             if (volumeSelected) dataEntries = LineDataSet(entriesVolume, "")
             else {

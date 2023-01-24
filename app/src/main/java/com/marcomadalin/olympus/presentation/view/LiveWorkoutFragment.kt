@@ -97,6 +97,8 @@ class LiveWorkoutFragment : Fragment() {
             workoutViewModel.liveWorkout.value!!.date = LocalDate.now()
             workoutViewModel.liveWorkout.value!!.isLive = false
 
+            workoutViewModel.selectedWorkout.value = workoutViewModel.liveWorkout.value
+
             workoutViewModel.saveLiveWorkout(workoutViewModel.liveWorkout.value!!)
             navController.navigate(R.id.action_liveWorkoutFragment_to_workoutLiveFinished)
             (activity as MainActivity).hideNavigationBar()

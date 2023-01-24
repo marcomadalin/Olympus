@@ -11,13 +11,11 @@ import androidx.navigation.Navigation.findNavController
 import com.marcomadalin.olympus.R
 import com.marcomadalin.olympus.databinding.ActivityMainBinding
 import com.marcomadalin.olympus.domain.model.ExerciseData
-import com.marcomadalin.olympus.domain.model.Measure
 import com.marcomadalin.olympus.domain.model.Routine
 import com.marcomadalin.olympus.domain.model.User
 import com.marcomadalin.olympus.domain.model.Workout
 import com.marcomadalin.olympus.domain.model.enums.Equipment
 import com.marcomadalin.olympus.domain.model.enums.ExerciseType
-import com.marcomadalin.olympus.domain.model.enums.MeasurePart
 import com.marcomadalin.olympus.domain.model.enums.Muscle
 import com.marcomadalin.olympus.presentation.viewmodel.ExerciseViewModel
 import com.marcomadalin.olympus.presentation.viewmodel.MeasuresViewModel
@@ -80,11 +78,7 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-        val muscleDivision = Muscle.values().map{ Pair(it, 0) }.toList().associate { Pair(it.first, it.second) }.toMutableMap()
-        muscleDivision[Muscle.Lats] = 55
-        muscleDivision[Muscle.Hamstrings] = 22
-        muscleDivision[Muscle.Chest] = 125
-        userViewModel.saveUser(User(0, "User", 0, 51123.0, 123123, Duration.ofSeconds(1231231231), muscleDivision))
+        userViewModel.saveUser(User(0, "User", 0, 51123.0, 123123, Duration.ofSeconds(1231231231), mutableMapOf()))
 
         val workout = Workout(0, 1, "Legs", "Pretty chill workout",
             Duration.ofMillis(2350), LocalDate.now(),
@@ -108,27 +102,14 @@ class MainActivity : AppCompatActivity() {
 
         val exercises : List<ExerciseData> = listOf(e1, e2 , e3, e4, e5)
 
-        val m1 = Measure(0, 0, LocalDate.now(), 94.5, MeasurePart.Weight)
-        val m2 = Measure(0, 0, LocalDate.parse("2023-01-01"), 98.77, MeasurePart.Weight)
-        val m8 = Measure(0, 0, LocalDate.parse("2023-01-02"), 78.33, MeasurePart.Weight)
-        val m9 = Measure(0, 0, LocalDate.parse("2023-01-03"), 66.77, MeasurePart.Weight)
-        val m10 = Measure(0, 0, LocalDate.parse("2023-01-04"), 100.55, MeasurePart.Weight)
-        val m11 = Measure(0, 0, LocalDate.parse("2023-01-05"), 22.3, MeasurePart.Weight)
-        val m12 = Measure(0, 0, LocalDate.parse("2023-01-07"), 55.5, MeasurePart.Weight)
 
-
-        val m5 = Measure(0, 0, LocalDate.now(), 44.0, MeasurePart.Chest)
-        val m6 = Measure(0, 0, LocalDate.now(), 45.0, MeasurePart.Chest)
-
-        val m7 = Measure(0, 0, LocalDate.now(), 45.5, MeasurePart.Left_Biceps)
-
-        val measures = listOf(m1,m2, m5,m6,m7, m8, m9, m10, m11, m12)
-
-        measureViewModel.saveAllMeasures(measures)
         exerciseDataViewModel.saveAllExercisesData(exercises)
+        routineViewModel.getRoutines()
         workoutViewModel.getWorkouts()
         workoutViewModel.getWorkout()
         workoutViewModel.getLiveWorkout()
+        exerciseDataViewModel.getExercisesData()
+        measureViewModel.getAllMeasures()
     }
 
     fun hideNavigationBar() {

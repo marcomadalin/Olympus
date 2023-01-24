@@ -72,6 +72,7 @@ class WorkoutViewModel @Inject constructor(
     fun deleteWorkout(workout: Workout) {
         viewModelScope.launch {
             deleteWorkoutUseCase(workout)
+            selectedWorkout.value = null
             workouts.value = getWorkoutsUseCase()
         }
     }

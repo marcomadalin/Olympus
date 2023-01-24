@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.marcomadalin.olympus.R
 import com.marcomadalin.olympus.databinding.FragmentWorkoutLiveFinishedBinding
 import com.marcomadalin.olympus.presentation.view.recyclers.WorkoutSummaryAdapter
@@ -31,12 +32,41 @@ class WorkoutLiveFinished : Fragment() {
 
     override fun onStart() {
         super.onStart()
+
+        workoutViewModel.workouts.observe(viewLifecycleOwner) {
+            binding.textView8.text  = "This is your workout number " + workoutViewModel.workouts.value!!.size + " !"
+
+        }
+
+        workoutViewModel.getWorkouts()
         navController = findNavController()
 
+        binding.workoutSummaryFinish.setOnClickListener {
+            navController.navigate(R.id.workoutReview)
+            (activity as MainActivity).hideNavigationBar()
+        }
+
         binding.close2.setOnClickListener {
+            navController.navigate(R.id.history)
             (activity as MainActivity).showNavigationBar()
-            workoutViewModel.liveWorkout.value = null
-            navController.navigate(R.id.routine)
+        }
+
+        binding.summaryRecyclerFinish.layoutManager = LinearLayoutManager(this.context)
+        adapter = WorkoutSummaryAdapter(workoutViewModel.selectedWorkout.value!!.exercises)
+        binding.summaryRecyclerFinish.adapter = adapter
+
+        adapter.supersets = workoutViewModel.selectedWorkout.value!!.supersets
+        val workout = workoutViewModel.selectedWorkout.value!!
+
+        binding.workoutTitle2.text = workout.name
+        var volume = 0.0
+        workout.exercises.forEach{
+                it -> it.sets.forEach{volume += it.weight}
+        }
+        binding.workoutVolumeText.text = "$volume kg"
+        binding.workoutTime.text = ((workout.length.seconds%3600)/60).toString() + " min"
+        if (workout.length.toHours().toInt() != 0) {
+            binding.workoutTime.text = workout.length.toHours().toString() + " h " + binding.workoutTime.text
         }
     }
 }

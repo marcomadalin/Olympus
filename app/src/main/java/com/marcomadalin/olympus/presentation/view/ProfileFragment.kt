@@ -21,10 +21,12 @@ import com.github.mikephil.charting.formatter.PercentFormatter
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.marcomadalin.olympus.R
 import com.marcomadalin.olympus.databinding.FragmentProfileBinding
-import com.marcomadalin.olympus.domain.model.User
+import com.marcomadalin.olympus.domain.model.enums.Muscle
+import com.marcomadalin.olympus.presentation.viewmodel.ExerciseViewModel
 import com.marcomadalin.olympus.presentation.viewmodel.UserViewModel
 import com.marcomadalin.olympus.presentation.viewmodel.WorkoutViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import java.time.Duration
 
 @AndroidEntryPoint
 class ProfileFragment : Fragment() {
@@ -35,6 +37,8 @@ class ProfileFragment : Fragment() {
     private val userViewModel: UserViewModel by activityViewModels()
 
     private val workoutViewModel: WorkoutViewModel by activityViewModels()
+
+    private val exerciseViewModel : ExerciseViewModel by activityViewModels()
 
     private lateinit var navController: NavController
 
@@ -57,14 +61,11 @@ class ProfileFragment : Fragment() {
             if (!text.isNullOrEmpty()) userViewModel.selectedUser.value!!.name = text
         }
 
-        binding.numWorkouts.text = "Total workouts: " + workoutViewModel.workouts.value!!.size.toString()
-
         workoutViewModel.workouts.observe(viewLifecycleOwner) {
             binding.numWorkouts.text = "Total workouts: " + workoutViewModel.workouts.value!!.size.toString()
             updateWorkoutChart()
-            updateStats(userViewModel.selectedUser.value!!)
+            updateStats()
         }
-        userViewModel.selectedUser.observe(viewLifecycleOwner) {updateStats(it!!)}
 
         binding.volumeButtonStat.setOnClickListener {
             updateWorkoutChart()
@@ -74,8 +75,9 @@ class ProfileFragment : Fragment() {
             updateWorkoutChart(false)
         }
 
-        workoutViewModel.getWorkouts()
+        exerciseViewModel.getExercisesData()
         userViewModel.getUser()
+        workoutViewModel.getWorkouts()
     }
 
     override fun onStop() {
@@ -92,25 +94,21 @@ class ProfileFragment : Fragment() {
             val values = workoutViewModel.workouts.value!!
             val entriesVolume : ArrayList<Entry> = arrayListOf()
             val entriesDuration : ArrayList<Entry> = arrayListOf()
-            lateinit var dataEntries : LineDataSet
 
-            if (volumeSelected) {
-                for (workout in values) {
+            for (workout in values) {
+                if (volumeSelected) {
+                    var volume = 0.0
                     for (exercise in workout.exercises) {
-                        for (set in exercise.sets) {
-                            entriesVolume.add(
-                                Entry(
-                                    workout.date.dayOfYear.toFloat(),
-                                    (set.reps * set.weight).toFloat()
-                                )
-                            )
-                        }
+                        for (set in exercise.sets) volume += set.reps * set.weight
                     }
+                    entriesVolume.add(
+                        Entry(
+                            workout.date.dayOfYear.toFloat(),
+                            volume.toFloat()
+                        )
+                    )
                 }
-                dataEntries = LineDataSet(entriesVolume, "")
-            }
-            else {
-                for (workout in values) {
+                else {
                     entriesDuration.add(
                         Entry(
                             workout.date.dayOfYear.toFloat(),
@@ -118,8 +116,9 @@ class ProfileFragment : Fragment() {
                         )
                     )
                 }
-                dataEntries = LineDataSet(entriesDuration, "")
             }
+            val dataEntries : LineDataSet = if (volumeSelected) LineDataSet(entriesVolume, "")
+            else LineDataSet(entriesVolume, "")
 
             dataEntries.axisDependency = YAxis.AxisDependency.LEFT;
             dataEntries.color = R.color.black
@@ -148,12 +147,33 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    private fun updateStats(user : User) {
-        val numWorkouts = 55
+    private fun updateStats() {
+        val values = workoutViewModel.workouts.value!!
+        val muscleDivision = Muscle.values().map{ Pair(it, 0) }.toList().associate { Pair(it.first, it.second) }.toMutableMap()
+        var totalVolume = 0.0
+        var totalReps = 0.0
+        var totalTime = Duration.ofSeconds(0)
+
+        for (workout in values) {
+            var volume = 0.0
+            var reps = 0
+            for (exercise in workout.exercises) {
+                val muscle = (exerciseViewModel.exercises.value!!.first {it.id == exercise.exerciseDataId}).primaryMuscle
+                muscleDivision[muscle] = muscleDivision[muscle]!! + 1
+                for (set in exercise.sets) {
+                    volume += set.reps * set.weight
+                    reps += set.reps
+                }
+            }
+            totalVolume += volume
+            totalReps += reps
+            totalTime += Duration.ofSeconds(workout.length.seconds)
+
+        }
 
         val entries: MutableList<PieEntry> = ArrayList()
-        val values = user.muscleDivision.toList()
-        for (value in values) {
+        val muscleValues = muscleDivision.toList()
+        for (value in muscleValues) {
             if (value.second > 0) entries.add(PieEntry(value.second.toFloat(), value.first.toString().replace("_", " ")))
         }
 
@@ -175,14 +195,18 @@ class ProfileFragment : Fragment() {
         binding.statChart.legend.textSize = 12f
         binding.statChart.invalidate()
 
-        binding.totalVolumeStat6.text = user.totalVolume.toString() + " Kg"
-        binding.totalRepStat4.text = user.totalReps.toString()
-        binding.totalWorkoutTimeSt.text = ((user.totalWorkoutLength.seconds % 3600)/60).toString() + " min"
-        if (user.totalWorkoutLength.toHours().toInt() != 0) binding.totalWorkoutTimeSt.text = user.totalWorkoutLength.toHours().toString() + " h " + binding.totalWorkoutTimeSt.text
+        binding.totalVolumeStat6.text = totalVolume.toString() + " Kg"
+        binding.totalRepStat4.text = totalReps.toString()
+        binding.totalWorkoutTimeSt.text = ((totalTime.seconds % 3600)/60).toString() + " min"
+        if (totalTime.toHours().toInt() != 0) binding.totalWorkoutTimeSt.text = totalTime.toHours().toString() + " h " + binding.totalWorkoutTimeSt.text
 
-        binding.avgVolSt.text = String.format("%.2f", (user.totalVolume / numWorkouts)) + "Kg"
-        binding.avgRepsSt.text = (user.totalReps / numWorkouts).toString()
-        binding.avgDurSt.text = (((user.totalWorkoutLength.seconds/numWorkouts) % 3600)/60).toString() + " min"
-        if ((user.totalWorkoutLength.toHours().toInt() / numWorkouts) != 0) binding.avgDurSt.text = (user.totalWorkoutLength.toHours() / numWorkouts).toString() + " h " + binding.avgDurSt.text
+        if (values.isNotEmpty()) {
+            binding.avgVolSt.text = String.format("%.2f", (totalVolume / values.size)) + "Kg"
+            binding.avgRepsSt.text = (totalReps / values.size).toString()
+            binding.avgDurSt.text =
+                (((totalTime.seconds / values.size) % 3600) / 60).toString() + " min"
+            if ((totalTime.toHours().toInt() / values.size) != 0) binding.avgDurSt.text =
+                (totalTime.toHours() / values.size).toString() + " h " + binding.avgDurSt.text
+        }
     }
 }
