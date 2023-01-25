@@ -82,7 +82,7 @@ class HistoryFragment : Fragment() {
             binding.workoutTitle.text = workout.name
             var volume = 0.0
             workout.exercises.forEach{
-                    it -> it.sets.forEach{volume += it.weight}
+                    it -> it.sets.forEach{volume += it.weight * it.reps}
             }
             binding.workoutVolumeText.text = "$volume kg"
             binding.workoutTime.text = ((workout.length.seconds%3600)/60).toString() + " min"

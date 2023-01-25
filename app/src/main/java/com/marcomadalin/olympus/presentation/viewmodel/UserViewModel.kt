@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.marcomadalin.olympus.domain.cases.DeleteUsersUseCase
 import com.marcomadalin.olympus.domain.cases.GetUserUseCase
 import com.marcomadalin.olympus.domain.cases.SaveUserUseCase
+import com.marcomadalin.olympus.domain.cases.checkUserUseCase
 import com.marcomadalin.olympus.domain.model.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -15,7 +16,8 @@ import javax.inject.Inject
 class UserViewModel @Inject constructor(
     private val getUsersUseCase: GetUserUseCase,
     private val saveUserUseCase: SaveUserUseCase,
-    private val deleteUsersUseCase: DeleteUsersUseCase
+    private val deleteUsersUseCase: DeleteUsersUseCase,
+    private val checkUserUserCase: checkUserUseCase,
 ) : ViewModel() {
 
     val selectedUser = MutableLiveData<User>()
@@ -35,5 +37,9 @@ class UserViewModel @Inject constructor(
         viewModelScope.launch {
             deleteUsersUseCase()
         }
+    }
+
+    fun existsUser() : Boolean {
+        return checkUserUserCase()
     }
 }

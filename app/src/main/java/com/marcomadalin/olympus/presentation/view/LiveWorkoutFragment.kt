@@ -1,5 +1,9 @@
 package com.marcomadalin.olympus.presentation.view
 
+import android.media.AudioManager
+import android.media.MediaPlayer
+import android.media.RingtoneManager
+import android.net.Uri
 import android.os.Bundle
 import android.os.SystemClock
 import android.view.LayoutInflater
@@ -23,7 +27,7 @@ import com.marcomadalin.olympus.presentation.viewmodel.ExerciseViewModel
 import com.marcomadalin.olympus.presentation.viewmodel.WorkoutViewModel
 import java.time.Duration
 import java.time.LocalDate
-import java.util.*
+
 
 class LiveWorkoutFragment : Fragment() {
     private var _binding: FragmentLiveWorkoutBinding? = null
@@ -98,8 +102,8 @@ class LiveWorkoutFragment : Fragment() {
             workoutViewModel.liveWorkout.value!!.isLive = false
 
             workoutViewModel.selectedWorkout.value = workoutViewModel.liveWorkout.value
-
-            workoutViewModel.saveLiveWorkout(workoutViewModel.liveWorkout.value!!)
+            workoutViewModel.liveWorkout.value = null
+            workoutViewModel.saveWorkout(workoutViewModel.selectedWorkout.value!!)
             navController.navigate(R.id.action_liveWorkoutFragment_to_workoutLiveFinished)
             (activity as MainActivity).hideNavigationBar()
         }
@@ -124,39 +128,52 @@ class LiveWorkoutFragment : Fragment() {
                     dialogBinding.timer.stop()
                     SystemClock.elapsedRealtime()
                     workoutViewModel.chronoValue.value = null
+                    val defaultRingtoneUri: Uri =
+                        RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+
+                    val mediaPlayer = MediaPlayer()
+
+                    try {
+                        mediaPlayer.setDataSource(requireContext(), defaultRingtoneUri)
+                        mediaPlayer.setAudioStreamType(AudioManager.STREAM_NOTIFICATION)
+                        mediaPlayer.prepare()
+                        mediaPlayer.setOnCompletionListener { mp -> mp.release() }
+                        mediaPlayer.start()
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 }
             }
 
             dialogBinding.min1.setOnClickListener{
-                dialogBinding.timer.start()
                 dialogBinding.timer.base = SystemClock.elapsedRealtime() + 60000
+                dialogBinding.timer.start()
                 workoutViewModel.chronoValue.value = dialogBinding.timer.base
 
             }
 
             dialogBinding.min3.setOnClickListener{
-                dialogBinding.timer.start()
                 dialogBinding.timer.base = SystemClock.elapsedRealtime() + 180000
+                dialogBinding.timer.start()
                 workoutViewModel.chronoValue.value = dialogBinding.timer.base
             }
 
             dialogBinding.min5.setOnClickListener{
-                dialogBinding.timer.start()
                 dialogBinding.timer.base = SystemClock.elapsedRealtime() + 300000
+                dialogBinding.timer.start()
                 workoutViewModel.chronoValue.value = dialogBinding.timer.base
             }
 
             dialogBinding.secMore.setOnClickListener{
+                dialogBinding.timer.base = dialogBinding.timer.base + 30000
                 dialogBinding.timer.start()
-                if (dialogBinding.timer.base > SystemClock.elapsedRealtime()) dialogBinding.timer.base = 30000
-                else dialogBinding.timer.base = dialogBinding.timer.base + 30000
                 workoutViewModel.chronoValue.value = dialogBinding.timer.base
             }
 
             dialogBinding.secLess.setOnClickListener {
                 if (dialogBinding.timer.base - 30000 > SystemClock.elapsedRealtime()) {
-                    dialogBinding.timer.start()
                     dialogBinding.timer.base = dialogBinding.timer.base - 30000
+                    dialogBinding.timer.start()
                     workoutViewModel.chronoValue.value = dialogBinding.timer.base
                 }
                 else dialogBinding.timer.base = SystemClock.elapsedRealtime()
@@ -201,19 +218,14 @@ class LiveWorkoutFragment : Fragment() {
         binding.recyclerViewLive.adapter = adapter
         binding.recyclerViewLive.isNestedScrollingEnabled = false
 
-        val workout = workoutViewModel.liveWorkout.value
+        val workout = workoutViewModel.liveWorkout.value!!
 
-        if (workout != null) {
-            adapter.supersets = workoutViewModel.liveWorkout.value!!.supersets
-            binding.workoutEditTitle2.setText(workout.name)
-            binding.workoutEditTitle2.doOnTextChanged { _, _, _, _ -> workout.name = binding.workoutEditTitle2.text.toString() }
+        adapter.supersets = workoutViewModel.liveWorkout.value!!.supersets
+        binding.workoutEditTitle2.setText(workout.name)
+        binding.workoutEditTitle2.doOnTextChanged { _, _, _, _ -> workout.name = binding.workoutEditTitle2.text.toString() }
 
-            binding.time.text = workout.date.dayOfMonth.toString() + " " +
-                    workout.date.month.toString().lowercase(Locale.ROOT) + " " + workout.date.year
-
-            binding.summarytNote4.setText(workout.note)
-            binding.summarytNote4.doOnTextChanged { _, _, _, _ -> workout.note = binding.summarytNote4.text.toString() }
-        }
+        binding.summarytNote4.setText(workout.note)
+        binding.summarytNote4.doOnTextChanged { _, _, _, _ -> workout.note = binding.summarytNote4.text.toString() }
     }
 
     override fun onStop() {

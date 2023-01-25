@@ -32,10 +32,9 @@ class WorkoutLiveFinished : Fragment() {
 
     override fun onStart() {
         super.onStart()
-
+        (activity as MainActivity).hideNavigationBar()
         workoutViewModel.workouts.observe(viewLifecycleOwner) {
             binding.textView8.text  = "This is your workout number " + workoutViewModel.workouts.value!!.size + " !"
-
         }
 
         workoutViewModel.getWorkouts()
@@ -47,7 +46,7 @@ class WorkoutLiveFinished : Fragment() {
         }
 
         binding.close2.setOnClickListener {
-            navController.navigate(R.id.history)
+            navController.navigate(R.id.routine)
             (activity as MainActivity).showNavigationBar()
         }
 
@@ -61,7 +60,7 @@ class WorkoutLiveFinished : Fragment() {
         binding.workoutTitle2.text = workout.name
         var volume = 0.0
         workout.exercises.forEach{
-                it -> it.sets.forEach{volume += it.weight}
+                it -> it.sets.forEach{volume += it.weight * it.reps}
         }
         binding.workoutVolumeText.text = "$volume kg"
         binding.workoutTime.text = ((workout.length.seconds%3600)/60).toString() + " min"

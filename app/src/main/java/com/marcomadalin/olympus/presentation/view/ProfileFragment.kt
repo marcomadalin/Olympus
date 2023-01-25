@@ -118,7 +118,7 @@ class ProfileFragment : Fragment() {
                 }
             }
             val dataEntries : LineDataSet = if (volumeSelected) LineDataSet(entriesVolume, "")
-            else LineDataSet(entriesVolume, "")
+            else LineDataSet(entriesDuration, "")
 
             dataEntries.axisDependency = YAxis.AxisDependency.LEFT;
             dataEntries.color = R.color.black

@@ -64,4 +64,8 @@ class UserRepository @Inject constructor(private val userDAO: UserDAO) {
     suspend fun deleteAllUsers() {
         userDAO.deleteAllUsers()
     }
+
+    fun checkUser(): Boolean {
+        return userDAO.countUsers() > 0
+    }
 }

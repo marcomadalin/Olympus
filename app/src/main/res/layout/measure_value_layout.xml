@@ -55,7 +55,7 @@
         android:inputType="numberDecimal"
         android:paddingHorizontal="10dp"
         android:paddingVertical="5dp"
-        android:text="Workout note"
+        android:hint="Insert value"
         android:textColor="@color/text"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"

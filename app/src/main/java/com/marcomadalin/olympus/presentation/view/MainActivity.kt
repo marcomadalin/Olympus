@@ -78,32 +78,121 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-        userViewModel.saveUser(User(0, "User", 0, 51123.0, 123123, Duration.ofSeconds(1231231231), mutableMapOf()))
+        if (!userViewModel.existsUser()) {
 
-        val workout = Workout(0, 1, "Legs", "Pretty chill workout",
-            Duration.ofMillis(2350), LocalDate.now(),
-            mutableListOf(),
-            mutableListOf(), 0)
+            userViewModel.saveUser(
+                User(
+                    0,
+                    "User",
+                    0,
+                    51123.0,
+                    123123,
+                    Duration.ofSeconds(1231231231),
+                    mutableMapOf()
+                )
+            )
 
-        val workout2 = Workout(0, 1, "Legs", "Pretty chill workout",
-            Duration.ofMillis(0), LocalDate.now(),
-            mutableListOf(),
-            mutableListOf(), 0, true)
+            val workout = Workout(
+                0, 1, "Legs", "Pretty chill workout",
+                Duration.ofMillis(2350), LocalDate.now(),
+                mutableListOf(),
+                mutableListOf(), 0
+            )
 
-        val routine = Routine(0, 1, "Legs", "Pretty chill workout",
-            mutableListOf(),
-            mutableListOf())
+            val workout2 = Workout(
+                0, 1, "Legs", "Pretty chill workout",
+                Duration.ofMillis(0), LocalDate.now(),
+                mutableListOf(),
+                mutableListOf(), 0, true
+            )
 
-        val e1 = ExerciseData(0, 1, "Deadlift", ExerciseType.Weight_Reps, true, Equipment.Barbell, Muscle.Hamstrings, emptySet(), 220.0, 230.75, 220.0, 3, true)
-        val e2 = ExerciseData(0, 1, "Squat", ExerciseType.Weight_Reps, true, Equipment.Barbell, Muscle.Hamstrings, emptySet(), 190.0, 200.00, 190.0, 3, true)
-        val e3 = ExerciseData(0, 1, "Bench Press", ExerciseType.Weight_Reps, true, Equipment.Barbell, Muscle.Hamstrings, emptySet(), 120.0, 130.75, 120.0, 3, true)
-        val e4 = ExerciseData(0, 1, "Lat Pulldown", ExerciseType.Weight_Reps, false, Equipment.Machine, Muscle.Lats, emptySet(), 82.5, 100.25, 82.5, 10, true)
-        val e5 = ExerciseData(0, 1, "Barbell Row", ExerciseType.Weight_Reps, false, Equipment.Barbell, Muscle.Upper_Back, emptySet(), 120.0, 150.75, 120.0, 10, true)
+            val routine = Routine(
+                0, 1, "Legs", "Pretty chill workout",
+                mutableListOf(),
+                mutableListOf()
+            )
 
-        val exercises : List<ExerciseData> = listOf(e1, e2 , e3, e4, e5)
+            val e1 = ExerciseData(
+                0,
+                1,
+                "Deadlift",
+                ExerciseType.Weight_Reps,
+                true,
+                Equipment.Barbell,
+                Muscle.Hamstrings,
+                emptySet(),
+                220.0,
+                230.75,
+                220.0,
+                3,
+                true
+            )
+            val e2 = ExerciseData(
+                0,
+                1,
+                "Squat",
+                ExerciseType.Weight_Reps,
+                true,
+                Equipment.Barbell,
+                Muscle.Quads,
+                emptySet(),
+                190.0,
+                200.00,
+                190.0,
+                3,
+                true
+            )
+            val e3 = ExerciseData(
+                0,
+                1,
+                "Bench Press",
+                ExerciseType.Weight_Reps,
+                true,
+                Equipment.Machine,
+                Muscle.Chest,
+                emptySet(),
+                120.0,
+                130.75,
+                120.0,
+                3,
+                true
+            )
+            val e4 = ExerciseData(
+                0,
+                1,
+                "Lat Pulldown",
+                ExerciseType.Weight_Reps,
+                false,
+                Equipment.Machine,
+                Muscle.Lats,
+                emptySet(),
+                82.5,
+                100.25,
+                82.5,
+                10,
+                true
+            )
+            val e5 = ExerciseData(
+                0,
+                1,
+                "Barbell Row",
+                ExerciseType.Weight_Reps,
+                false,
+                Equipment.Barbell,
+                Muscle.Upper_Back,
+                emptySet(),
+                120.0,
+                150.75,
+                120.0,
+                10,
+                true
+            )
+
+            val exercises: List<ExerciseData> = listOf(e1, e2, e3, e4, e5)
 
 
-        exerciseDataViewModel.saveAllExercisesData(exercises)
+            exerciseDataViewModel.saveAllExercisesData(exercises)
+        }
         routineViewModel.getRoutines()
         workoutViewModel.getWorkouts()
         workoutViewModel.getWorkout()

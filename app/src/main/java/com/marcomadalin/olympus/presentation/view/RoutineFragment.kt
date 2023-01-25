@@ -49,9 +49,6 @@ class RoutineFragment : Fragment() {
 
         (activity as MainActivity).showNavigationBar()
 
-        binding.createRoutine.setOnClickListener {  }
-        binding.startEmpty.setOnClickListener {  }
-
         binding.routineRecycler.layoutManager = LinearLayoutManager(this.context)
         adapter = RoutineAdapter(::onRoutineClick)
         binding.routineRecycler.adapter = adapter
