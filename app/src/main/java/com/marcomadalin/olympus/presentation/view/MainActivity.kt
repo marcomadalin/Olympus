@@ -11,7 +11,6 @@ import androidx.navigation.Navigation.findNavController
 import com.marcomadalin.olympus.R
 import com.marcomadalin.olympus.databinding.ActivityMainBinding
 import com.marcomadalin.olympus.domain.model.ExerciseData
-import com.marcomadalin.olympus.domain.model.Routine
 import com.marcomadalin.olympus.domain.model.User
 import com.marcomadalin.olympus.domain.model.Workout
 import com.marcomadalin.olympus.domain.model.enums.Equipment
@@ -30,7 +29,7 @@ import java.time.LocalDate
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
+    lateinit var binding: ActivityMainBinding
 
     private val userViewModel: UserViewModel by viewModels()
 
@@ -84,32 +83,21 @@ class MainActivity : AppCompatActivity() {
                 User(
                     0,
                     "User",
-                    0,
-                    51123.0,
-                    123123,
-                    Duration.ofSeconds(1231231231),
-                    mutableMapOf()
                 )
             )
 
             val workout = Workout(
                 0, 1, "Legs", "Pretty chill workout",
-                Duration.ofMillis(2350), LocalDate.now(),
+                Duration.ofMillis(235066), LocalDate.parse("2023-01-23"),
                 mutableListOf(),
                 mutableListOf(), 0
             )
 
             val workout2 = Workout(
-                0, 1, "Legs", "Pretty chill workout",
-                Duration.ofMillis(0), LocalDate.now(),
+                0, 1, "Legs", "Felt quite fresh, but weak on squats",
+                Duration.ofMillis(123123), LocalDate.parse("2023-01-24"),
                 mutableListOf(),
-                mutableListOf(), 0, true
-            )
-
-            val routine = Routine(
-                0, 1, "Legs", "Pretty chill workout",
-                mutableListOf(),
-                mutableListOf()
+                mutableListOf(), 0,
             )
 
             val e1 = ExerciseData(
@@ -121,11 +109,6 @@ class MainActivity : AppCompatActivity() {
                 Equipment.Barbell,
                 Muscle.Hamstrings,
                 emptySet(),
-                220.0,
-                230.75,
-                220.0,
-                3,
-                true
             )
             val e2 = ExerciseData(
                 0,
@@ -135,12 +118,6 @@ class MainActivity : AppCompatActivity() {
                 true,
                 Equipment.Barbell,
                 Muscle.Quads,
-                emptySet(),
-                190.0,
-                200.00,
-                190.0,
-                3,
-                true
             )
             val e3 = ExerciseData(
                 0,
@@ -151,11 +128,6 @@ class MainActivity : AppCompatActivity() {
                 Equipment.Machine,
                 Muscle.Chest,
                 emptySet(),
-                120.0,
-                130.75,
-                120.0,
-                3,
-                true
             )
             val e4 = ExerciseData(
                 0,
@@ -166,11 +138,6 @@ class MainActivity : AppCompatActivity() {
                 Equipment.Machine,
                 Muscle.Lats,
                 emptySet(),
-                82.5,
-                100.25,
-                82.5,
-                10,
-                true
             )
             val e5 = ExerciseData(
                 0,
@@ -181,17 +148,14 @@ class MainActivity : AppCompatActivity() {
                 Equipment.Barbell,
                 Muscle.Upper_Back,
                 emptySet(),
-                120.0,
-                150.75,
-                120.0,
-                10,
-                true
             )
 
             val exercises: List<ExerciseData> = listOf(e1, e2, e3, e4, e5)
 
 
             exerciseDataViewModel.saveAllExercisesData(exercises)
+            workoutViewModel.saveWorkout(workout)
+            workoutViewModel.saveWorkout(workout2)
         }
         routineViewModel.getRoutines()
         workoutViewModel.getWorkouts()

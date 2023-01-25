@@ -150,7 +150,6 @@ class ExerciseFragment : Fragment() {
                 ViewGroup.LayoutParams.WRAP_CONTENT
             )
             params.addRule(RelativeLayout.BELOW, binding.filterRecycler.id)
-            params.setMargins(0,0,0,150)
             binding.exerciseRecyler.layoutParams = params
             filterShown = true
         }

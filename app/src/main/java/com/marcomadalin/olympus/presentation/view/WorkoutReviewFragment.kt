@@ -15,6 +15,7 @@ import com.marcomadalin.olympus.R
 import com.marcomadalin.olympus.databinding.FragmentWorkoutReviewBinding
 import com.marcomadalin.olympus.domain.model.Workout
 import com.marcomadalin.olympus.presentation.view.recyclers.ExerciseReviewAdapter
+import com.marcomadalin.olympus.presentation.viewmodel.RoutineViewModel
 import com.marcomadalin.olympus.presentation.viewmodel.WorkoutViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
@@ -26,6 +27,8 @@ class WorkoutReviewFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val workoutViewModel : WorkoutViewModel by activityViewModels()
+
+    private val routineViewModel : RoutineViewModel by activityViewModels()
 
     private lateinit var adapter : ExerciseReviewAdapter
 
@@ -54,8 +57,9 @@ class WorkoutReviewFragment : Fragment() {
         workoutViewModel.selectedWorkout.observe(viewLifecycleOwner) {updateWorkoutReview(it)}
         binding.startWorkoutButton2.isEnabled = workoutViewModel.liveWorkout.value == null
         binding.startWorkoutButton2.setOnClickListener{
-        //TODO tart workout
+            workoutViewModel.createLiveWorkoutFromWorkout(navController)
         }
+        workoutViewModel.getWorkout()
     }
 
     private fun popupMenu() {
@@ -65,7 +69,7 @@ class WorkoutReviewFragment : Fragment() {
             popupMenu.setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.save -> {
-                        //TODO SAVE
+                        routineViewModel.createRoutineFromWorkout(workoutViewModel.selectedWorkout.value!!)
                         true
                     }
                     R.id.edit -> {
@@ -97,6 +101,10 @@ class WorkoutReviewFragment : Fragment() {
 
     private fun updateWorkoutReview(workout: Workout?) {
         if (workout != null) {
+            adapter = ExerciseReviewAdapter(workoutViewModel.selectedWorkout.value!!.exercises)
+            adapter.supersets = workoutViewModel.selectedWorkout.value!!.supersets
+            binding.exerciseRecycler.adapter = adapter
+
             adapter.supersets = workoutViewModel.selectedWorkout.value!!.supersets
             binding.summaryTitle.text = workout.name
             binding.summaryDate.text = workout.date.dayOfMonth.toString() + " " +

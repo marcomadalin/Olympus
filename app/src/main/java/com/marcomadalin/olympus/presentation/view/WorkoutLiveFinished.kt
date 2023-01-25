@@ -46,8 +46,11 @@ class WorkoutLiveFinished : Fragment() {
         }
 
         binding.close2.setOnClickListener {
-            navController.navigate(R.id.routine)
-            (activity as MainActivity).showNavigationBar()
+            val mainActivity = (activity as MainActivity)
+            mainActivity.showNavigationBar()
+            navController.navigate(R.id.history)
+            mainActivity.binding.navbar.menu.performIdentifierAction(R.id.history,0)
+            navController.navigate(R.id.history)
         }
 
         binding.summaryRecyclerFinish.layoutManager = LinearLayoutManager(this.context)

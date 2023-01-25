@@ -15,7 +15,12 @@ data class Workout (
     override var supersets : MutableList<MutableSet<Long>> = mutableListOf(),
     var routineId : Long = -1,
     var isLive : Boolean = false,
-) : Routine()
+) : Routine() {
+    constructor(r : Routine) : this(0, 0, r.name + " (Copy)", r.note, Duration.ofSeconds(0), LocalDate.now(), r.exercises.map{Exercise(it)}.toMutableList(), r.supersets.map { mutableSetOf<Long>() }.toMutableList(), r.id, true)
+    constructor(w : Workout) : this(0, 0, w.name + " (Copy)", w.note, Duration.ofSeconds(0), LocalDate.now(), w.exercises.map{Exercise(it)}.toMutableList(), w.supersets.map { mutableSetOf<Long>() }.toMutableList(), w.id, true)
+
+
+}
 fun WorkoutEntity.toDomain() = Workout(
     id,
     userId,

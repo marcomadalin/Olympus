@@ -8,6 +8,7 @@ import com.marcomadalin.olympus.domain.cases.DeleteRoutinesUseCase
 import com.marcomadalin.olympus.domain.cases.GetRoutinesUseCase
 import com.marcomadalin.olympus.domain.cases.SaveRoutineUseCase
 import com.marcomadalin.olympus.domain.model.Routine
+import com.marcomadalin.olympus.domain.model.Workout
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -63,8 +64,21 @@ class RoutineViewModel @Inject constructor(
         }
     }
 
-    fun deleteAllRoutines() {
-        viewModelScope.launch { deleteAllRoutines() }
+    fun createRoutineFromWorkout(workout: Workout) {
+        viewModelScope.launch {
+            val routine = Routine(workout)
+            saveRoutineUseCase(routine)
+            for (i in workout.supersets.indices) {
+                for (j in workout.supersets[i].indices) {
+                    for (k in workout.exercises.indices) {
+                        if (workout.exercises[k].id == workout.supersets[i].elementAt(j))
+                            routine.supersets[i].add(routine.exercises[k].id)
+                    }
+                }
+            }
+            saveRoutineUseCase(routine)
+            routines.value = getRoutinesUseCase()
+        }
     }
 
 }

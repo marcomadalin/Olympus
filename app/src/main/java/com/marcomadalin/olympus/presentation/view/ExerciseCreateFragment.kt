@@ -113,11 +113,11 @@ class ExerciseCreateFragment : Fragment() {
         radioBinding.creatSubmit.setOnClickListener{
             if (buttonPressed == 0) {
                 binding.equipmentSelect.text = items[radioIndex]
-                exerciseDataViewModel.selectedExercise.value!!.equipment = Equipment.valueOf(binding.equipmentSelect.text.toString().replace(" ","_"))
+                exerciseDataViewModel.selectedExercise.value!!.equipment = Equipment.valueOf(binding.equipmentSelect.text.toString().replace("_"," "))
             }
             else {
                 binding.muscleSelect.text = items[radioIndex]
-                exerciseDataViewModel.selectedExercise.value!!.primaryMuscle = Muscle.valueOf(binding.muscleSelect.text.toString().replace(" ","_"))
+                exerciseDataViewModel.selectedExercise.value!!.primaryMuscle = Muscle.valueOf(binding.muscleSelect.text.toString().replace("_"," "))
             }
             exerciseCreated[buttonPressed] = true
             if (exerciseCreated[0] && exerciseCreated[1] && nameChanged) binding.done.isEnabled = true

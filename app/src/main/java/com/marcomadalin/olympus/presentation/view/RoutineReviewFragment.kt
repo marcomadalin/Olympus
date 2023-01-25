@@ -57,7 +57,7 @@ class RoutineReviewFragment : Fragment() {
 
         binding.startWorkoutButton.isEnabled = workoutViewModel.liveWorkout.value == null
         binding.startWorkoutButton.setOnClickListener{
-            //TODO start workout
+            workoutViewModel.createLiveWorkoutFromRoutine(routineViewModel.selectedRoutine.value!!, navController)
         }
         workoutViewModel.getLiveWorkout()
     }

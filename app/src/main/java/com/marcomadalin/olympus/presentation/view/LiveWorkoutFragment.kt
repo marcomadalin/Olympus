@@ -6,6 +6,7 @@ import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.SystemClock
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -52,6 +53,7 @@ class LiveWorkoutFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
+        workoutViewModel.selectedDate.value = LocalDate.now()
         (activity as MainActivity).showNavigationBar()
 
         navController = findNavController()
@@ -97,7 +99,8 @@ class LiveWorkoutFragment : Fragment() {
             for (exercise in workoutViewModel.liveWorkout.value!!.exercises) {
                 for (set in exercise.sets) set.completed = true
             }
-            workoutViewModel.liveWorkout.value!!.length = Duration.ofSeconds((SystemClock.elapsedRealtime() - workoutViewModel.liveWorkout.value!!.length.toMillis())/1000)
+            workoutViewModel.liveWorkout.value!!.length = Duration.ofSeconds((SystemClock.elapsedRealtime() - binding.time.base)/1000)
+            Log.d("TEST", workoutViewModel.liveWorkout.value!!.length.toString())
             workoutViewModel.liveWorkout.value!!.date = LocalDate.now()
             workoutViewModel.liveWorkout.value!!.isLive = false
 

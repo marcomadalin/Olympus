@@ -17,6 +17,7 @@ import com.marcomadalin.olympus.presentation.view.recyclers.WorkoutSummaryAdapte
 import com.marcomadalin.olympus.presentation.viewmodel.WorkoutViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
+import java.util.*
 
 //TODO TRANSITION
 
@@ -48,6 +49,22 @@ class HistoryFragment : Fragment() {
             navController.navigate(R.id.workoutReview)
             (activity as MainActivity).hideNavigationBar()
         }
+        val date = workoutViewModel.selectedDate.value!!.toString()
+        val parts = date.split("-".toRegex()).dropLastWhile { it.isEmpty() }
+            .toTypedArray()
+
+        val day = parts[2].toInt()
+        val month = parts[1].toInt()-1
+        val year = parts[0].toInt()
+
+        val calendar: Calendar = Calendar.getInstance()
+        calendar.set(Calendar.YEAR, year)
+        calendar.set(Calendar.MONTH, month)
+        calendar.set(Calendar.DAY_OF_MONTH, day)
+
+        val milliTime: Long = calendar.timeInMillis
+        binding.calendarView.setDate (milliTime, true, true);
+
         binding.calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
             workoutViewModel.selectedDate.value = LocalDate.of(year, month+1, dayOfMonth)
             workoutViewModel.getWorkout()
@@ -56,16 +73,10 @@ class HistoryFragment : Fragment() {
         adapter = WorkoutSummaryAdapter(emptyList())
         binding.summaryRecycler.adapter = adapter
         workoutViewModel.selectedWorkout.observe(viewLifecycleOwner) {updateWorkoutSummary(it)}
+        workoutViewModel.getWorkout()
     }
 
     private fun updateWorkoutSummary(workout: Workout?) {
-        if (workout != null && initAdapter) {
-            adapter = WorkoutSummaryAdapter(workoutViewModel.selectedWorkout.value!!.exercises)
-            adapter.supersets = workoutViewModel.selectedWorkout.value!!.supersets
-            binding.summaryRecycler.adapter = adapter
-            initAdapter = false
-        }
-
         if (workout == null) {
             adapter = WorkoutSummaryAdapter(emptyList())
             adapter.supersets = emptyList()
@@ -77,7 +88,9 @@ class HistoryFragment : Fragment() {
             binding.workoutEmpty.isVisible = true;
         }
         else {
+            adapter = WorkoutSummaryAdapter(workoutViewModel.selectedWorkout.value!!.exercises)
             adapter.supersets = workoutViewModel.selectedWorkout.value!!.supersets
+            binding.summaryRecycler.adapter = adapter
             binding.workoutEmpty.isVisible = false;
             binding.workoutTitle.text = workout.name
             var volume = 0.0
