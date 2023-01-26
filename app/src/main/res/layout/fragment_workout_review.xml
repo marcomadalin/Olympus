@@ -165,25 +165,11 @@
                     android:id="@+id/workoutVolume2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
                     android:layout_weight="3"
                     android:text="- kg"
                     android:textColor="@color/black" />
 
-                <ImageView
-                    android:id="@+id/imageView6"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_weight="2"
-                    android:src="@drawable/trophy" />
-
-                <TextView
-                    android:id="@+id/workoutRecord2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="20sp"
-                    android:layout_weight="1.2"
-                    android:text="PRs"
-                    android:textColor="@color/black" />
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

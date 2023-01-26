@@ -25,7 +25,7 @@ class SetLiveViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         binding.rirNumber3.filters = arrayOf(InputFilterMinMax(0, 10))
         binding.weightNumber3.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
 
-        if (set.lastReps >= 0) binding.prevWeight3.text = set.lastWeight.toString() + " kg x " + set.lastReps + "\n RIR " + set.lastRir
+        if (set.lastReps >= 0) binding.prevWeight3.text = set.lastWeight.toString() + " kg x " + set.lastReps + " RIR " + set.lastRir
         else binding.prevWeight3.text = "-"
 
         setBackgroundColor(set)

@@ -48,8 +48,7 @@ class WorkoutLiveFinished : Fragment() {
         binding.close2.setOnClickListener {
             val mainActivity = (activity as MainActivity)
             mainActivity.showNavigationBar()
-            navController.navigate(R.id.history)
-            mainActivity.binding.navbar.menu.performIdentifierAction(R.id.history,0)
+            (mainActivity).binding.navbar.menu.findItem(R.id.history).isChecked = true
             navController.navigate(R.id.history)
         }
 

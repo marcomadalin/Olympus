@@ -25,7 +25,7 @@ class SetEditCompletedViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         binding.rirNumber.filters = arrayOf(InputFilterMinMax(0, 10))
         binding.weightNumber.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
 
-        if (set.lastReps >= 0) binding.prevWeight.text = set.lastWeight.toString() + " kg x " + set.lastReps + "\n RIR " + set.lastRir
+        if (set.lastReps >= 0) binding.prevWeight.text = set.lastWeight.toString() + " kg x " + set.lastReps + " RIR " + set.lastRir
         else binding.prevWeight.text = "-"
 
         binding.repsNumber.setText(set.reps.toString())

@@ -32,7 +32,7 @@ class RoutineSetEditViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         binding.rirNumber2.filters = arrayOf(InputFilterMinMax(0, 10))
         binding.weightNumber2.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
 
-        if (set.lastReps >= 0) binding.prevWeight2.text = set.lastWeight.toString() + " kg x " + set.lastReps + "\n RIR " + set.lastRir
+        if (set.lastReps >= 0) binding.prevWeight2.text = set.lastWeight.toString() + " kg x " + set.lastReps + " RIR " + set.lastRir
         else binding.prevWeight2.text = "-"
 
         binding.repsNumber2.setText(set.reps.toString())

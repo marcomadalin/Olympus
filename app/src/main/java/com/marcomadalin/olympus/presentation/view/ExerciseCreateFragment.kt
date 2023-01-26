@@ -1,6 +1,7 @@
 package com.marcomadalin.olympus.presentation.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -59,8 +60,8 @@ class ExerciseCreateFragment : Fragment() {
         exerciseDataViewModel.newExercise.postValue(ExerciseData(default=false))
 
         binding.backButtonSummary5.setOnClickListener{
-            navController.navigate(R.id.exercise)
             (activity as MainActivity).showNavigationBar()
+            navController.popBackStack()
         }
 
         binding.exerciseNameCreate.doOnTextChanged { _, _, _, _ ->
@@ -77,7 +78,7 @@ class ExerciseCreateFragment : Fragment() {
 
         binding.done.setOnClickListener{
             exerciseDataViewModel.saveNewExercise()
-            navController.navigate(R.id.exercise)
+            navController.popBackStack()
         }
     }
 
@@ -112,12 +113,14 @@ class ExerciseCreateFragment : Fragment() {
 
         radioBinding.creatSubmit.setOnClickListener{
             if (buttonPressed == 0) {
-                binding.equipmentSelect.text = items[radioIndex]
-                exerciseDataViewModel.selectedExercise.value!!.equipment = Equipment.valueOf(binding.equipmentSelect.text.toString().replace("_"," "))
+                binding.equipmentSelect.text = items[radioIndex].replace("_"," ")
+                Log.d("TEST", binding.equipmentSelect.text.toString().replace(" ","_"))
+                Log.d("TEST", Equipment.valueOf(binding.equipmentSelect.text.toString().replace(" ","_")).toString())
+                exerciseDataViewModel.newExercise.value!!.equipment = Equipment.valueOf(binding.equipmentSelect.text.toString().replace(" ","_"))
             }
             else {
-                binding.muscleSelect.text = items[radioIndex]
-                exerciseDataViewModel.selectedExercise.value!!.primaryMuscle = Muscle.valueOf(binding.muscleSelect.text.toString().replace("_"," "))
+                binding.muscleSelect.text = items[radioIndex].replace("_"," ")
+                exerciseDataViewModel.newExercise.value!!.primaryMuscle = Muscle.valueOf(binding.muscleSelect.text.toString().replace(" ","_"))
             }
             exerciseCreated[buttonPressed] = true
             if (exerciseCreated[0] && exerciseCreated[1] && nameChanged) binding.done.isEnabled = true

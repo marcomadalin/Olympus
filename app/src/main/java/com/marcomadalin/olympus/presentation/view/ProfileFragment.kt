@@ -55,10 +55,13 @@ class ProfileFragment : Fragment() {
 
         navController = findNavController()
 
-        binding.username.setText(userViewModel.selectedUser.value!!.name)
         binding.username.doOnTextChanged { _, _, _, _ ->
             val text = binding.username.text.toString()
             if (!text.isNullOrEmpty()) userViewModel.selectedUser.value!!.name = text
+        }
+
+        userViewModel.selectedUser.observe(viewLifecycleOwner) {
+            binding.username.setText(userViewModel.selectedUser.value!!.name)
         }
 
         workoutViewModel.workouts.observe(viewLifecycleOwner) {

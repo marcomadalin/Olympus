@@ -63,6 +63,12 @@ class WorkoutViewModel @Inject constructor(
         }
     }
 
+    fun saveWorkout2(workout: Workout) {
+        viewModelScope.launch {
+            saveWorkoutUseCase(workout)
+        }
+    }
+
     fun saveLiveWorkout(workout: Workout) {
         viewModelScope.launch {
             saveWorkoutUseCase(workout)
@@ -93,6 +99,15 @@ class WorkoutViewModel @Inject constructor(
                     }
                 }
             }
+
+            for (i in routine.exercises.indices) {
+                for (j in routine.exercises[i].sets.indices) {
+                    workout.exercises[i].sets[j].lastReps = routine.exercises[i].sets[j].reps
+                    workout.exercises[i].sets[j].lastRir = routine.exercises[i].sets[j].rir
+                    workout.exercises[i].sets[j].lastWeight = routine.exercises[i].sets[j].weight
+                    workout.exercises[i].sets[j].completed = false
+                }
+            }
             saveWorkoutUseCase(workout)
             liveWorkout.value = getLiveWorkoutUseCase()
             selectedWorkout.value = getWorkoutUseCase(selectedDate.value!!)
@@ -113,6 +128,15 @@ class WorkoutViewModel @Inject constructor(
                         if (selectedWorkout.value!!.exercises[k].id == selectedWorkout.value!!.supersets[i].elementAt(j))
                             workout.supersets[i].add(workout.exercises[k].id)
                     }
+                }
+            }
+
+            for (i in selectedWorkout.value!!.exercises.indices) {
+                for (j in selectedWorkout.value!!.exercises[i].sets.indices) {
+                    workout.exercises[i].sets[j].lastReps = selectedWorkout.value!!.exercises[i].sets[j].reps
+                    workout.exercises[i].sets[j].lastRir = selectedWorkout.value!!.exercises[i].sets[j].rir
+                    workout.exercises[i].sets[j].lastWeight = selectedWorkout.value!!.exercises[i].sets[j].weight
+                    workout.exercises[i].sets[j].completed = false
                 }
             }
             saveWorkoutUseCase(workout)

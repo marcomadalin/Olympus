@@ -60,6 +60,7 @@ class ExerciseReviewFragment : Fragment() {
             exerciseDataViewModel.selectedExercise.value!!.favourite =
                 !exerciseDataViewModel.selectedExercise.value!!.favourite
             updateFavorite()
+            exerciseDataViewModel.saveExerciseData(exerciseDataViewModel.selectedExercise.value!!)
         }
 
         binding.exerciseReviewDropdown.setOnClickListener { view ->
@@ -72,8 +73,17 @@ class ExerciseReviewFragment : Fragment() {
                         true
                     }
                     R.id.delete -> {
-                        navController.popBackStack()
+                        for (i in workoutViewModel.workouts.value!!.indices) {
+                            for (j in workoutViewModel.workouts.value!![i].exercises.indices) {
+                                if (workoutViewModel.workouts.value!![i].exercises[j].exerciseDataId == exerciseDataViewModel.selectedExercise.value!!.id){
+                                    exerciseDataViewModel.deleteExercise(workoutViewModel.workouts.value!![i].exercises[j])
+                                    workoutViewModel.workouts.value!![i].exercises.removeAt(j)
+                                    workoutViewModel.saveWorkout2(workoutViewModel.workouts.value!![i])
+                                }
+                            }
+                        }
                         exerciseDataViewModel.deleteExerciseData()
+                        navController.popBackStack()
                         true
                     }
                     else -> false

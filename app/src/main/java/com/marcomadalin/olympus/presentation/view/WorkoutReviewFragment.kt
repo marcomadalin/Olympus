@@ -57,6 +57,7 @@ class WorkoutReviewFragment : Fragment() {
         workoutViewModel.selectedWorkout.observe(viewLifecycleOwner) {updateWorkoutReview(it)}
         binding.startWorkoutButton2.isEnabled = workoutViewModel.liveWorkout.value == null
         binding.startWorkoutButton2.setOnClickListener{
+            (activity as MainActivity).binding.navbar.menu.findItem(R.id.routine).isChecked = true
             workoutViewModel.createLiveWorkoutFromWorkout(navController)
         }
         workoutViewModel.getWorkout()
