@@ -52,7 +52,7 @@ class ExerciseReviewFragment : Fragment() {
 
         binding.backButtonReview.setOnClickListener {
             (activity as MainActivity).showNavigationBar()
-            navController.popBackStack()
+            navController.navigate(R.id.exercise)
         }
 
         updateFavorite()
@@ -83,7 +83,7 @@ class ExerciseReviewFragment : Fragment() {
                             }
                         }
                         exerciseDataViewModel.deleteExerciseData()
-                        navController.popBackStack()
+                        navController.navigate(R.id.exercise)
                         true
                     }
                     else -> false

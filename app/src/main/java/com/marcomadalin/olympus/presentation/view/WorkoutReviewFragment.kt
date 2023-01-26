@@ -112,7 +112,7 @@ class WorkoutReviewFragment : Fragment() {
                     workout.date.month.toString().lowercase(Locale.ROOT) + " " + workout.date.year
             var volume = 0.0
             workout.exercises.forEach{
-                    it -> it.sets.forEach{volume += it.weight}
+                    it -> it.sets.forEach{volume += it.weight * it.reps}
             }
             binding.workoutVolume2.text = "$volume kg"
             binding.workoutTime2.text = ((workout.length.seconds%3600)/60).toString() + " min"
